@@ -26,7 +26,6 @@ class SavedWeatherViewModel : ViewModel() {
     fun update(){
         WeatherRepository.update()
     }
-
     override fun onCleared() {
         super.onCleared()
         Log.e("err","onCleared SavedViewModel")

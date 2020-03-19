@@ -36,6 +36,14 @@ object WeatherRepository {
             result.getCompleted().list?: emptyList())
     }
 
+    suspend fun getWeatherByCoord(lat:Double, lon:Double):WeatherData{
+        val result = weatherApiService.getWeatherByCoord(appid, units, language,lat = lat, lon = lon)
+        result.await()
+        return Mapper.mapWeatherListToWeatherData(
+            result.getCompleted()
+        )
+    }
+
     suspend fun getWeatherByCityId(id: Int):WeatherData{
         val result = weatherApiService.getWeatherByCityId(appid, units, language,id)
         result.await()

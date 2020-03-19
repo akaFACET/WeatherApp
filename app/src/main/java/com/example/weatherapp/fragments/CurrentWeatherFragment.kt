@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.current_weather_fragment.view.*
 
 class CurrentWeatherFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = CurrentWeatherFragment()
-    }
-
     private lateinit var viewModel: CurrentWeatherViewModel
 
     override fun onCreateView(
@@ -30,17 +26,13 @@ class CurrentWeatherFragment : Fragment() {
 
         val navController = NavHostFragment.findNavController(this)
 
-        fragmentLayout.button1.setOnClickListener {
-            navController.navigate(R.id.savedWeatherFragment)
-        }
-
         return fragmentLayout
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
 
