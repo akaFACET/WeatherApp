@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
+
+            <ImageView
+                android:id="@+id/image_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_na"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="name"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/country_tv"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/image_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="date"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/image_iv"
+                app:layout_constraintTop_toBottomOf="@+id/name_tv" />
+
+            <TextView
+                android:id="@+id/description_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_iv"
+                app:layout_constraintTop_toBottomOf="@+id/date_tv" />
+
+            <TextView
+                android:id="@+id/temp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="-23"
+                android:textSize="70sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_iv"
+                app:layout_constraintTop_toBottomOf="@+id/description_tv"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/country_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="BY"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tempDesc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="°C"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/temp_tv"
+                app:layout_constraintTop_toTopOf="@+id/temp_tv" />
+
+            <TextView
+                android:id="@+id/windSpeed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="NA m/s"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/windSpeedDesc_tv"
+                app:layout_constraintTop_toTopOf="@+id/windSpeedDesc_tv"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/windSpeedDesc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Ветер: "
+                android:textSize="8sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
+
+            <TextView
+                android:id="@+id/humidityDesc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Влажность: "
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/windSpeedDesc_tv"
+                app:layout_constraintStart_toEndOf="@+id/temp_tv" />
+
+            <TextView
+                android:id="@+id/humidity_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 %"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/windSpeed_tv"
+                app:layout_constraintStart_toEndOf="@+id/humidityDesc_tv"
+                app:layout_constraintTop_toTopOf="@+id/humidityDesc_tv" />
+
+            <TextView
+                android:id="@+id/pressureDesc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Давление: "
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
+
+            <TextView
+                android:id="@+id/pressure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000 мм р.с"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
+                app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
+                app:layout_constraintTop_toTopOf="@+id/pressureDesc_tv" />
+
+            <TextView
+                android:id="@+id/cloudsDesc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Облачность: "
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tempDesc_tv"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/clouds_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 %"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
+                app:layout_constraintStart_toEndOf="@+id/cloudsDesc_tv"
+                app:layout_constraintTop_toTopOf="@+id/cloudsDesc_tv" />
+
+            <TextView
+                android:id="@+id/updateDt_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="03/17/2020 12:57 pm"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
