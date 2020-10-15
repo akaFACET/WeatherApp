@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,13 +23,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment? ?: return
 
 
-        val navController = host.navController
+        navController = host.navController
 
         val sideBar = findViewById<NavigationView>(R.id.nav_view)
 
@@ -42,15 +42,52 @@ class MainActivity : AppCompatActivity() {
 //            }
 //            false
 //        }
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
-        val toolBar = findViewById<Toolbar>(R.id.toolbar)
-        toolBar.setupWithNavController(navController,appBarConfiguration)
 
+        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
+
+        val toolBar = findViewById<Toolbar>(R.id.toolbar)
+
+        nav_view.setNavigationItemSelectedListener {
+
+            when (it.itemId) {
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+                }
+                R.id.savedWeatherFragment -> {
+                    navController.navigate(R.id.savedWeatherFragment)
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+                }
+                R.id.settingsFragment -> {
+                    navController.navigate(R.id.settingsFragment)
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+                }
+                else -> {
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    false
+                }
+                }
+
+        }
+        setSupportActionBar(toolBar)
+        toolBar.setupWithNavController(navController,appBarConfiguration)
 
 
     }
 
 
 }
+
 
 

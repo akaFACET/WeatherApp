@@ -1,37 +1,38 @@
 package com.example.weatherapp.network
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity
 data class WeatherData(
-    @PrimaryKey
-    val id: Int,
-    val currentDate: String,
+    val cityId: Int,
+    var isLastKnownLocation: Boolean,
+    val name: String,
+    val country: String,
+    val updateDt: String,
+    val sunrise: Int,
+    val sunset: Int,
     val coordLon: Double,
     val coordLat: Double,
+    val subWeather: List<SubWeather>
+)
+
+data class SubWeather(
+    val id: Int,
+    val cityId: Int,
+    var isLastKnownLocation: Boolean,
     val weatherId: Int,
     val weatherMain: String,
     val weatherDescription: String,
     val weatherIcon: String,
-    val base: String,
+    val dt: Int,
+    val dt_txt: String,
     val mainTemp: Int,
     val mainFeels_like: Double,
     val mainTemp_min: Int,
     val mainTemp_max: Int,
     val mainPressure: Int,
     val mainHumidity: Int,
-    val visability: Int,
     val windSpeed: Int,
     val windDeg: Int,
     val cloudsAll: Int,
-    val dt: Int,
-    val sysType: Int,
-    val sysId: Int,
-    val sysCountry: String,
-    val sysSunrise: Int,
-    val sysSunset: Int,
-    val timezone: Int,
-    val name: String,
-    val cod: Int
+    val rain: Double,
+    val snow: Double
 )

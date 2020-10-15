@@ -2,7 +2,9 @@ package com.example.weatherapp
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.db.WeatherDB
+import com.example.weatherapp.network.FoundCities
 import com.example.weatherapp.network.NetworkModule
 import com.example.weatherapp.network.WeatherData
 import kotlinx.coroutines.*
@@ -13,33 +15,65 @@ object WeatherRepository {
     private val appid="b7f532dcad2190c9ee565b091e2d8290"
     private val language = "ru"
     private val units = "metric"
-    var isLoading = MutableLiveData<Boolean>()
+
+
 
     val db = WeatherDB.getInstance(App.instance).getSavedWeatherDAO()
 
     val weatherApiService = NetworkModule.weatherApiService
 
-    fun saveData(weatherData: WeatherData){
+//    fun getDataAndSave(foundCities: FoundCities){
+//        GlobalScope.launch {
+//            try {
+//                withContext(Dispatchers.IO){
+//                    val response = WeatherRepository.getWeatherByCityId(foundCities.cityId)
+//                    saveData(response)
+//                }
+//            }catch (ex: Throwable){
+//                Log.e("error", ex.message)
+//            }
+//        }
+//    }
 
-        db.saveData(weatherData)
+
+
+    fun saveData(weatherData: WeatherData){
+        db.saveWeatherData(weatherData)
     }
 
+    fun saveLastKnownLocation(weatherData: WeatherData){
+        db.deleteLastKnownWeather()
+        db.saveLastKnownLocation(weatherData)
+    }
     fun deleteData(weatherData: WeatherData){
         db.delete(weatherData)
     }
 
+//    fun deleteLastKnownWeather(){
+//        db.deleteLastKnownWeather()
+//    }
 
-    suspend fun getWeatherByCity(query: String):List<WeatherData>{
+
+    suspend fun getWeatherDataByCityIdFromDb(cityId:Int):WeatherData{
+        return Mapper.mapWeatherDataEntityToWeatherData(db.getWeatherDataByCityId(cityId))
+    }
+
+    suspend fun getWeatherByCity(query: String):List<FoundCities>{
         val result = weatherApiService.getWeatherByCity(appid, units, language,query)
         result.await()
-        return Mapper.mapWeatherResponseToWeatherData(
-            result.getCompleted().list?: emptyList())
+        return Mapper.mapFoundCitiesResponseToFoundCities(
+            result.getCompleted()
+        )
+    }
+
+    suspend fun getLastKnownWeather(): WeatherData{
+        return Mapper.mapWeatherDataEntityToWeatherData(db.getLastKnownWeatherData())
     }
 
     suspend fun getWeatherByCoord(lat:Double, lon:Double):WeatherData{
         val result = weatherApiService.getWeatherByCoord(appid, units, language,lat = lat, lon = lon)
         result.await()
-        return Mapper.mapWeatherListToWeatherData(
+        return Mapper.mapWeatherResponseToWeatherData(
             result.getCompleted()
         )
     }
@@ -47,41 +81,8 @@ object WeatherRepository {
     suspend fun getWeatherByCityId(id: Int):WeatherData{
         val result = weatherApiService.getWeatherByCityId(appid, units, language,id)
         result.await()
-        return Mapper.mapWeatherListToWeatherData(
+        return Mapper.mapWeatherResponseToWeatherData(
             result.getCompleted())
     }
 
-
-    private fun getIds(): List<Int>{
-        val tmp = GlobalScope.async(Dispatchers.IO) {
-            db.getIds()
-        }
-        val result = runBlocking {
-            tmp.await()
-        }
-        return result
-    }
-
-    fun update(){
-        isLoading.postValue(false)
-        val ids = getIds()
-        if (!ids.isEmpty()){
-            val result = mutableListOf<WeatherData>()
-                GlobalScope.launch {
-                    ids.map {
-                        async(Dispatchers.IO) {
-                            try {
-                                val tmp: WeatherData = getWeatherByCityId(it)
-                                result.add(tmp)
-                            }catch (ex:Throwable){
-                                isLoading.postValue(false)
-                            }
-                        }
-                    }.awaitAll()
-                    db.update(result)
-                    isLoading.postValue(false)
-                }
-        }else
-            isLoading.postValue(false)
-    }
 }

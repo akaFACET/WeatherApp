@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/savedWeatherFragment"
-        android:title="Saved"/>
-    <item
-        android:id="@+id/searchFragment"
-        android:title="Search"/>
-    <item
-        android:id="@+id/settingsFragment"
-        android:title="Settings"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "nav_view">
+
+
+
+    <item android:title="Menu">
+        <menu>
+            <item
+                android:id="@+id/savedWeatherFragment"
+                android:title="Saved"
+                android:icon="@drawable/ic_saved"/>
+            <item
+                android:id="@+id/searchFragment"
+                android:title="Search"
+                android:icon="@drawable/ic__search"/>
+            <item
+                android:id="@+id/settingsFragment"
+                android:title="Settings"
+                android:icon="@drawable/ic_settings"/>
+        </menu>
+    </item>
+
+
+
 </menu>

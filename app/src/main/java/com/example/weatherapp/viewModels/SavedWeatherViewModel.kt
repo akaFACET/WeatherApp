@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
 class SavedWeatherViewModel : ViewModel() {
 
     val data = MutableLiveData<List<WeatherData>>()
-    val isUpdate = WeatherRepository.isLoading
 
     fun deleteData(weatherData: WeatherData){
         viewModelScope.launch {
@@ -23,9 +22,9 @@ class SavedWeatherViewModel : ViewModel() {
         }
     }
 
-    fun update(){
-        WeatherRepository.update()
-    }
+//    fun update(){
+//        WeatherRepository.update()
+//    }
     override fun onCleared() {
         super.onCleared()
         Log.e("err","onCleared SavedViewModel")

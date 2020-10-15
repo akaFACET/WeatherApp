@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.core.content.getSystemService
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.CurrentWeatherViewModelFactory
@@ -39,8 +40,12 @@ class SettingsFragment : Fragment() {
 
     val PERMISSION_ID = 42
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //ViewCompat.setTranslationZ(view, 1f)
+    }
     private fun checkPermissions(): Boolean {
-        if (checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED){
+        if (checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED){
             return true
         }
         return false

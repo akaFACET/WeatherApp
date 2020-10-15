@@ -1,82 +1,125 @@
 package com.example.weatherapp
 
 import android.Manifest
+import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
-import androidx.core.content.PermissionChecker
-import androidx.lifecycle.LiveData
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.android.synthetic.main.settings_fragment.*
 
-class Location(context: Context) {
+class Location(private val application: Application) {
 
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
+
     lateinit var locationManager: LocationManager
-    val context = context
     var currentLocation = MutableLiveData<LocationData>()
+    private var mFusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(application.applicationContext)
+    private val GmsStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application.applicationContext)
 
 
     fun getLastLocation() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-        mFusedLocationClient.lastLocation.addOnCompleteListener { task ->
-            var location: Location? = task.result
-            if (location == null) {
-                Log.e("err", "requestNewLocationData()")
-                requestNewLocationData()
-            } else {
-                Log.e("err", "class Location  = $location.latitude")
-                currentLocation.value = LocationData(location.latitude, location.longitude)
-            }
-        }
+        Log.e("errorGMS", "GMS = ${GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application.applicationContext)}")
+        if (GmsStatus == ConnectionResult.SUCCESS){
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
+            if (ActivityCompat.checkSelfPermission(
+                    application.applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    application.applicationContext,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            mFusedLocationClient.lastLocation.addOnCompleteListener { task ->
+                var location: Location? = task.result
+                if (location == null) {
+                    Log.e("errorGPS", "requestNewLocationData()")
+                    getLocationFromLocationManager()
+                } else {
+                    Log.e("errorGPS", "class Location  = $location.latitude")
+                    currentLocation.value = LocationData(location.latitude, location.longitude)
+                }
+            }
+        }else{
+            getLocationFromLocationManager()
+        }
     }
 
 
-    private fun requestNewLocationData() {
+
+
+    private fun getLocationFromLocationManager() {
         locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         try {
-            locationManager.requestSingleUpdate(
-                LocationManager.NETWORK_PROVIDER, locationListener,
-                Looper.myLooper()
-            )
+
+            Log.e("errorGPS", "requestSingleUpdate")
+            val providers = locationManager.getAllProviders()
+
+            if (providers.contains(LocationManager.NETWORK_PROVIDER)){
+                locationManager.requestSingleUpdate(
+                    LocationManager.NETWORK_PROVIDER, locationListener,
+                    Looper.getMainLooper()
+                )
+            }
+
+            if (providers.contains(LocationManager.GPS_PROVIDER)){
+                locationManager.requestSingleUpdate(
+                    LocationManager.GPS_PROVIDER, locationListener,
+                    Looper.getMainLooper()
+                )
+            }
+
+
+
         } catch (ex: SecurityException) {
-            Log.e("err", "SecurityException = $ex")
+            Log.e("errorGPS", "SecurityException = $ex")
         }
 
     }
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            Log.e("err", "onLocationChanged has null")
+            Log.e("errorGPS", "onLocationChanged has null")
             if (location != null) {
+                Log.e("errorGPS", "location = ${location.latitude},${location.longitude} ")
+               // locTest = LocationData(location.latitude, location.longitude)
                 currentLocation.value = LocationData(location.latitude, location.longitude)
             }
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-            TODO("Not yet implemented")
+            Log.e("errorGPS", "onStatusChanged")
         }
 
         override fun onProviderEnabled(provider: String?) {
-            TODO("Not yet implemented")
+            Log.e("errorGPS", "onProviderEnabled")
         }
 
         override fun onProviderDisabled(provider: String?) {
+            Log.e("errorGPS", "onProviderDisabled")
         }
 
     }
 
 }
+

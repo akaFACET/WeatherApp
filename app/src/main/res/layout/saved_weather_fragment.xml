@@ -7,21 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SavedWeatherFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_to_refresh_saved"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/saved_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/saved_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/saved_weather_item_row" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/saved_weather_item_row" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button"

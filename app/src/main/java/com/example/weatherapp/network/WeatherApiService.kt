@@ -9,18 +9,18 @@ interface WeatherApiService {
     fun getWeatherByCity(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("q") q: String
-    ): Deferred<WeatherResponse>
+    ): Deferred<FoundCitiesResponse>
 
-    @GET("weather")
+    @GET("forecast")
     fun getWeatherByCoord(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("lat") lat: Double,
         @Query("lon") lon: Double
-    ): Deferred<WeatherList>
+    ): Deferred<WeatherResponse>
 
-    @GET("weather")
+    @GET("forecast")
     fun getWeatherByCityId(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("id") id: Int
-    ): Deferred<WeatherList>
+    ): Deferred<WeatherResponse>
 }

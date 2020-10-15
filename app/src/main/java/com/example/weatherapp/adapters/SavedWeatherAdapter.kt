@@ -14,7 +14,7 @@ import com.example.weatherapp.network.WeatherData
 class SavedWeatherAdapter(
     var values: List<WeatherData>,
     val context: Context,
-    val listener: OnItemClickListener
+    val listenerSaved: OnSavedItemClickListener
 ): RecyclerView.Adapter<SavedWeatherAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -29,23 +29,23 @@ class SavedWeatherAdapter(
         private val pressure: TextView = itemView.findViewById(R.id.pressure_tv)
         private val clouds:TextView = itemView.findViewById(R.id.clouds_tv)
 
-        fun bind(weatherData: WeatherData, listener: OnItemClickListener){
+        fun bind(weatherData: WeatherData, listenerSaved: OnSavedItemClickListener){
 
             itemView.setOnClickListener {
-                listener.onItemClick(weatherData)
+                listenerSaved.onSavedItemClick(weatherData.cityId)
             }
 
             image.setImageResource(Selector
-                .iconPathSelector(weatherData.weatherId,weatherData.weatherIcon))
+                .iconPathSelector(weatherData.subWeather[0].weatherId,weatherData.subWeather[0].weatherIcon))
             name.text = weatherData.name
-            currentDate.text = weatherData.currentDate
-            description.text = weatherData.weatherDescription
-            temp.text = weatherData.mainTemp.toString()
-            country.text = weatherData.sysCountry
-            windSpeed.text = weatherData.windSpeed.toString() + " м/с"
-            humidity.text = weatherData.mainHumidity.toString() +" %"
-            pressure.text = weatherData.mainPressure.toString() + " мм"
-            clouds.text = weatherData.cloudsAll.toString() + " %"
+            currentDate.text = weatherData.updateDt
+            description.text = weatherData.subWeather[0].weatherDescription
+            temp.text = weatherData.subWeather[0].mainTemp.toString()
+            country.text = weatherData.country
+            windSpeed.text = weatherData.subWeather[0].windSpeed.toString() + " м/с"
+            humidity.text = weatherData.subWeather[0].mainHumidity.toString() +" %"
+            pressure.text = weatherData.subWeather[0].mainPressure.toString() + " мм"
+            clouds.text = weatherData.subWeather[0].cloudsAll.toString() + " %"
 
         }
 
@@ -62,7 +62,7 @@ class SavedWeatherAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(values.get(position), listener)
+        holder.bind(values.get(position), listenerSaved)
     }
 
 

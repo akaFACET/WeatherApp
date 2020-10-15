@@ -6,7 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.weatherapp.network.WeatherData
 
-@Database(entities = [WeatherData::class],version = 1, exportSchema = false)
+@Database(entities = arrayOf(CitiesEntity::class, SubWeatherEntity::class),version = 2)
+
 abstract class WeatherDB : RoomDatabase(){
     companion object {
         private const val DB_NAME: String = "WeatherDB.db"

@@ -1,52 +1,64 @@
 package com.example.weatherapp.fragments
 
 import android.Manifest
-import android.app.Activity
-import android.content.Context
+import android.app.Application
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.PermissionChecker
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.weatherapp.App
 import com.example.weatherapp.CurrentWeatherViewModelFactory
-
+import com.example.weatherapp.Exceptions
 import com.example.weatherapp.R
 import com.example.weatherapp.Selector
+import com.example.weatherapp.Utils.Util
+import com.example.weatherapp.adapters.*
 import com.example.weatherapp.viewModels.CurrentWeatherViewModel
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.charts_layout.*
+import kotlinx.android.synthetic.main.content_bottom.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.android.synthetic.main.current_weather_fragment.view.*
-import kotlinx.android.synthetic.main.current_weather_fragment.view.test_btn
+import kotlinx.android.synthetic.main.layout_header.*
+import java.util.*
+
 
 class CurrentWeatherFragment : Fragment() {
 
     private lateinit var viewModel: CurrentWeatherViewModel
-
+    private lateinit var adapterRv: DaysScrollAdapter
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
     val PERMISSION_ID = 42
+    private lateinit var navController: NavController
+    private lateinit var refreshItem: View
+    private lateinit var animation: Animation
 
     private fun checkPermissions(): Boolean {
         if (PermissionChecker.checkSelfPermission(
-                context!!,
+                requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PermissionChecker.PERMISSION_GRANTED){
             return true
         }
         return false
     }
+
+
 
     private fun requestPermissions() {
         requestPermissions(
@@ -55,20 +67,21 @@ class CurrentWeatherFragment : Fragment() {
         )
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Granted. Start getting the location information
-                Log.e("err", "Permissons Garanted")
                 getLastLocation()
+
             }else{
-                Log.e("err", "Permissons not Garanted")
+                viewModel.exception.value = Exceptions.noGPS
+                Log.e("err1", "Permissons not Garanted")
             }
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = activity!!.getSystemService(LOCATION_SERVICE) as LocationManager
+        var locationManager: LocationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -80,7 +93,6 @@ class CurrentWeatherFragment : Fragment() {
             if (isLocationEnabled()) {
                 viewModel.getLocation()
             } else {
-                Toast.makeText(context, "Turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -94,48 +106,196 @@ class CurrentWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("err", "CreateCurrentFragment")
         val fragmentLayout = inflater.inflate(R.layout.current_weather_fragment, container, false)
-
-        val navController = NavHostFragment.findNavController(this)
-
+        navController = NavHostFragment.findNavController(this)
+        setHasOptionsMenu(true)
         return fragmentLayout
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, CurrentWeatherViewModelFactory(context!!)).get(CurrentWeatherViewModel::class.java)
-        test_btn.setOnClickListener {
-            getLastLocation()
-        }
-        viewModel.currentWeather.observe(viewLifecycleOwner, Observer {weather ->
+        viewModel = ViewModelProviders.of(this, CurrentWeatherViewModelFactory(requireActivity().application)).get(CurrentWeatherViewModel::class.java)
 
-            if (weather != null){
-                title_tv.text = weather.name
-
-                    image_iv.setImageResource(
-                    Selector.iconPathSelector(weather.weatherId,weather.weatherIcon)
-                )
-                dateTime_tv.text = weather.currentDate
-                weatherDesc_tv.text = weather.weatherDescription
-                temp_tv.text = weather.mainTemp.toString()
-                humidity_tv.text = weather.mainHumidity.toString() +" %"
-                wind_tv.text = weather.windSpeed.toString() + " м/с"
-                feelsTemp_tv.text = weather.mainFeels_like.toString()
-                pressure_tv.text = weather.mainPressure.toString() + " мм"
+        viewPagerAdapter = ViewPagerAdapter(requireContext(), emptyList(), object : OnChartItemClickListener {
+            override fun onChartItemClick(weatherPerHour: WeatherPerHour) {
+                setBottomData(weatherPerHour)
             }
-
         })
 
 
+        viewPager.isUserInputEnabled = false
+        viewPager.offscreenPageLimit = 1
+        viewPager.adapter = viewPagerAdapter
+
+        adapterRv = DaysScrollAdapter(
+            emptyList(),
+            requireContext(),
+            object : OnDaysScrollItemClickListener {
+                override fun onItemClick(weatherPerHour: List<WeatherPerHour>) {
+                    viewPagerAdapter.data = weatherPerHour
+                    viewPagerAdapter.notifyDataSetChanged()
+                }
+
+            }
+        )
+        content_bottom_rv.adapter = adapterRv
+
+        viewModel.exception.observe(viewLifecycleOwner, Observer {
+            Log.e("exc", "$it")
+        })
+
+        TabLayoutMediator(tabLayout, viewPager,
+            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+                when (position) {
+                    0 -> {
+                        tab.text = "Температура"
+                    }
+                    1 -> {
+                        tab.text = "Осадки"
+                    }
+                    2 -> {
+                        tab.text = "Ветер"
+                    }
+                    3 -> {
+                        tab.text = "Облачность"
+                    }
+                }
+            }).attach()
+
+        viewModel.listWeatherPerDay.observe(viewLifecycleOwner, Observer { listWeatherPerDay ->
+            if (listWeatherPerDay!=null){
+                setBottomData(listWeatherPerDay[0].weatherPerHour[0])
+                viewPagerAdapter.data = listWeatherPerDay[0].weatherPerHour
+                viewPagerAdapter.notifyDataSetChanged()
+                adapterRv.values = listWeatherPerDay
+                adapterRv.selectedPosition = -1
+                adapterRv.notifyDataSetChanged()
+            }
+        })
+
+
+        viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
+            when(exception){
+                Exceptions.noInternet -> {
+                    Snackbar.make(current_weather_fragment,
+                        "No Internet Connection",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                Exceptions.others -> {
+                    Snackbar.make(current_weather_fragment,
+                        "Error",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                Exceptions.noGPS -> {
+                    Snackbar.make(current_weather_fragment,
+                        "No GPS",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                Exceptions.noCity -> {
+                    Snackbar.make(current_weather_fragment,
+                        "No City",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        })
+        viewModel.currentWeather.observe(viewLifecycleOwner, Observer {weather ->
+            if (weather != null){
+                title_tv.text = weather.name
+                requireActivity().toolbar.title = weather.name // its work!
+                    image_iv.setImageResource(
+                    Selector.iconPathSelector(
+                        weather.subWeather[0].weatherId,
+                        weather.subWeather[0].weatherIcon)
+                )
+                dateTime_tv.text = weather.updateDt
+                weatherDesc_tv.text = weather.subWeather[0].weatherDescription
+                temp_tv.text = weather.subWeather[0].mainTemp.toString()
+                humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
+                wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
+                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString()
+                pressure_tv.text = weather.subWeather[0].mainPressure.toString() + " мм"
+            }
+        })
+
 
     }
 
 
+    private fun setBottomData(weatherPerHour: WeatherPerHour){
+        imageBottom_iv.setImageResource(
+            Selector.iconPathSelector(
+                weatherPerHour.weatherId,
+                weatherPerHour.weatherIcon)
+        )
+        weatherDescBottom_tv.text = weatherPerHour.weatherDescription.capitalize()
+        tempBottom_tv.text = weatherPerHour.mainTemp.toString() + "°C"
+        precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
+        pressureBottom_tv.text = weatherPerHour.mainPressure.toString() + " мм"
+        humidityBottom_tv.text = weatherPerHour.mainHumidity.toString() + " %"
+        windBottom_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
+        cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
+        dateTimeBottom_tv.text = Util.getDataFromUnixTime(weatherPerHour.dt)
+        //dateTimeBottom_tv.text = weatherPerHour.dt_txt
+
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.refresh_item, menu)
+
+        Log.e("RefreshError", "OptionsMenu create")
+
+        animation= RotateAnimation(
+            0.0f, 360.0f,
+            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+            0.5f
+        ).apply {
+            repeatCount = -1
+            duration = 1500
+        }
+
+        refreshItem = menu.findItem(R.id.action_refresh).actionView
+        refreshItem.setOnClickListener {
+            getLastLocation()
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {isLoading->
+
+            Log.e("RefreshError", "isLoading = $isLoading")
+
+            if (isLoading)
+                refreshItem.startAnimation(animation)
+            else
+                refreshItem.clearAnimation()
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onDestroyOptionsMenu() {
+        Log.e("RefreshError", "OptionsMenu destroy")
+        refreshItem.clearAnimation()
+        super.onDestroyOptionsMenu()
+    }
+
+    override fun onDestroyView() {
+        Log.e("RefreshError", "CurrentWeather has destroyView")
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        Log.e("RefreshError", "CurrentWeather has destroy")
+        super.onDestroy()
+    }
 
     override fun onDetach() {
+        Log.e("RefreshError", "CurrentWeather has detach")
         super.onDetach()
-        Log.e("err", "DetachCurrentFragment")
     }
-
 }
