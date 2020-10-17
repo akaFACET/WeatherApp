@@ -1,5 +1,8 @@
 package com.example.weatherapp
 
+import android.util.Log
+import com.example.weatherapp.Utils.Util
+import com.example.weatherapp.Utils.Util.getMDFromUnixTime
 import com.example.weatherapp.adapters.WeatherPerDay
 import com.example.weatherapp.adapters.WeatherPerHour
 import com.example.weatherapp.db.CitiesEntity
@@ -161,18 +164,38 @@ class Mapper {
             )
 
         }
+//        fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
+//            var day = getDay(weather[0].dt_txt)
+//            var result:MutableList<WeatherPerDay> = arrayListOf()
+//            var weatherPerHour: MutableList<WeatherPerHour> = arrayListOf()
+//
+//            for (item in weather){
+//                if (getDay(item.dt_txt) == day){
+//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
+//                }else{
+//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
+//                    result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
+//                    day = getDay(item.dt_txt)
+//                    weatherPerHour = arrayListOf()
+//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
+//                }
+//            }
+//            result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
+//            return result
+//        }
+
         fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
-            var day = getDay(weather[0].dt_txt)
+            var day = getDay(weather[0].dt)
             var result:MutableList<WeatherPerDay> = arrayListOf()
             var weatherPerHour: MutableList<WeatherPerHour> = arrayListOf()
 
             for (item in weather){
-                if (getDay(item.dt_txt) == day){
+                if (getDay(item.dt) == day){
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }else{
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                     result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
-                    day = getDay(item.dt_txt)
+                    day = getDay(item.dt)
                     weatherPerHour = arrayListOf()
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }
@@ -180,7 +203,6 @@ class Mapper {
             result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
             return result
         }
-
 
         private fun mapSubWeatherToWeatherPerHour(subWeather: SubWeather):WeatherPerHour{
             return WeatherPerHour(
@@ -205,8 +227,8 @@ class Mapper {
             )
         }
 
-        private fun getDay(data:String):String{
-            return data.substring(5,10)
+        private fun getDay(data:Int):String{
+            return getMDFromUnixTime(data)
         }
 
         private fun mapWeatherListToSubWeather(subWeatherList: SubWeatherList, cityId: Int): SubWeather {

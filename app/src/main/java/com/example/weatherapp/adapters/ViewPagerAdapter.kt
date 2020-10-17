@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
+import com.example.weatherapp.Utils.Util
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.MarkerImage
@@ -83,7 +84,8 @@ class ViewPagerAdapter(
             var values = mutableListOf<BarEntry>()
 
             val time: List<String> = data.map {
-                it.dt_txt
+                //it.dt_txt
+                Util.getTimeFromUnixTime(it.dt)
             }
 
             when (position) {
@@ -231,7 +233,7 @@ class ViewPagerAdapter(
             var values = mutableListOf<Entry>()
 
             val time: List<String> = data.map {
-                it.dt_txt
+                Util.getTimeFromUnixTime(it.dt)
             }
 
             when (position) {

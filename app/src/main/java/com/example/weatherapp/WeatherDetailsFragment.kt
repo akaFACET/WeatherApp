@@ -134,7 +134,7 @@ class WeatherDetailsFragment : Fragment() {
         })
         viewModel.currentWeather.observe(viewLifecycleOwner, Observer {weather ->
             if (weather != null){
-                title_tv.text = weather.name
+                //title_tv.text = weather.name
                 requireActivity().toolbar.title = weather.name // its work!
                 image_iv.setImageResource(
                     Selector.iconPathSelector(
@@ -146,7 +146,7 @@ class WeatherDetailsFragment : Fragment() {
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
                 humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
                 wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
-                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString()
+                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString() + "°C"
                 pressure_tv.text = weather.subWeather[0].mainPressure.toString() + " мм"
             }
         })
@@ -155,19 +155,19 @@ class WeatherDetailsFragment : Fragment() {
     }
 
     private fun setBottomData(weatherPerHour: WeatherPerHour){
-        imageBottom_iv.setImageResource(
+        image_iv.setImageResource(
             Selector.iconPathSelector(
                 weatherPerHour.weatherId,
                 weatherPerHour.weatherIcon)
         )
-        weatherDescBottom_tv.text = weatherPerHour.weatherDescription.capitalize()
-        tempBottom_tv.text = weatherPerHour.mainTemp.toString() + "°C"
-        precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
-        pressureBottom_tv.text = weatherPerHour.mainPressure.toString() + " мм"
-        humidityBottom_tv.text = weatherPerHour.mainHumidity.toString() + " %"
-        windBottom_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
-        cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
-        dateTimeBottom_tv.text = Util.getDataFromUnixTime(weatherPerHour.dt)
+        weatherDesc_tv.text = weatherPerHour.weatherDescription.capitalize()
+        temp_tv.text = weatherPerHour.mainTemp.toString()
+        //precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
+        pressure_tv.text = weatherPerHour.mainPressure.toString() + " мм"
+        humidity_tv.text = weatherPerHour.mainHumidity.toString() + " %"
+        wind_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
+        //cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
+        dateTime_tv.text = Util.getDataFromUnixTime(weatherPerHour.dt)
 
     }
 

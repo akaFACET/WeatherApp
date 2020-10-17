@@ -207,7 +207,7 @@ class CurrentWeatherFragment : Fragment() {
         })
         viewModel.currentWeather.observe(viewLifecycleOwner, Observer {weather ->
             if (weather != null){
-                title_tv.text = weather.name
+                //title_tv.text = weather.name
                 requireActivity().toolbar.title = weather.name // its work!
                     image_iv.setImageResource(
                     Selector.iconPathSelector(
@@ -229,20 +229,21 @@ class CurrentWeatherFragment : Fragment() {
 
 
     private fun setBottomData(weatherPerHour: WeatherPerHour){
-        imageBottom_iv.setImageResource(
+        image_iv.setImageResource(
             Selector.iconPathSelector(
                 weatherPerHour.weatherId,
                 weatherPerHour.weatherIcon)
         )
-        weatherDescBottom_tv.text = weatherPerHour.weatherDescription.capitalize()
-        tempBottom_tv.text = weatherPerHour.mainTemp.toString() + "°C"
-        precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
-        pressureBottom_tv.text = weatherPerHour.mainPressure.toString() + " мм"
-        humidityBottom_tv.text = weatherPerHour.mainHumidity.toString() + " %"
-        windBottom_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
-        cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
-        dateTimeBottom_tv.text = Util.getDataFromUnixTime(weatherPerHour.dt)
-        //dateTimeBottom_tv.text = weatherPerHour.dt_txt
+        feelsTemp_tv.text = weatherPerHour.mainFeels_like.toString()+ "°C"
+        weatherDesc_tv.text = weatherPerHour.weatherDescription.capitalize()
+        temp_tv.text = weatherPerHour.mainTemp.toString()
+        //precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
+        pressure_tv.text = weatherPerHour.mainPressure.toString() + " мм"
+        humidity_tv.text = weatherPerHour.mainHumidity.toString() + " %"
+        wind_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
+        //cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
+        dateTime_tv.text = Util.getTimeFromUnixTime(weatherPerHour.dt)
+        //dateTime_tv.text = weatherPerHour.dt_txt
 
     }
 

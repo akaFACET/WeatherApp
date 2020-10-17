@@ -7,5 +7,5 @@
         app:showAsAction="ifRoom"
         style="@android:style/Widget.ActionButton"
         app:actionLayout="@layout/refresh_iv"
-        />
+        android:title="TODO" />
 </menu>

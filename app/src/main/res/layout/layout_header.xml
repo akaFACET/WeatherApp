@@ -1,257 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_collapseMode="parallax"
-        app:layout_scrollFlags="scroll|enterAlways|snap">
+<com.example.weatherapp.CollapsibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:minHeight="116dp"
+    app:layoutDescription="@xml/scene"
+    app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent=".5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.60" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <ImageView
+        android:id="@+id/image_iv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_602d" />
 
     <TextView
         android:id="@+id/temp_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-20"
-        android:textSize="100sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/tempDesc_tv"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-    <ImageView
-            android:id="@+id/image_iv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_602d"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="end"
+        android:text="-10" />
 
     <TextView
         android:id="@+id/tempDesc_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="°C"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/temp_tv" />
+        android:text="°C" />
 
     <TextView
-            android:id="@+id/weatherDesc_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="Небольшой дождь"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/dateTime_tv"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3">
-
-            <ImageView
-                android:id="@+id/feelsTemp_iv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_wi_thermometer"
-                app:layout_constraintBottom_toTopOf="@+id/guideline7"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline5" />
-
-            <ImageView
-                android:id="@+id/pressure_iv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_wi_barometer"
-                app:layout_constraintBottom_toTopOf="@+id/guideline7"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="@+id/guideline5" />
-
-            <ImageView
-                android:id="@+id/humidity_iv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_wi_humidity"
-                app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/wind_iv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_wi_small_craft_advisory"
-                app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".5" />
-
-            <TextView
-                android:id="@+id/humidityDesc_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Влажность"
-                app:layout_constraintEnd_toEndOf="@+id/humidity_iv"
-                app:layout_constraintStart_toStartOf="@+id/humidity_iv"
-                app:layout_constraintTop_toBottomOf="@+id/humidity_iv" />
-
-            <TextView
-                android:id="@+id/windDesc_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ветер"
-                app:layout_constraintEnd_toEndOf="@+id/wind_iv"
-                app:layout_constraintStart_toStartOf="@+id/wind_iv"
-                app:layout_constraintTop_toBottomOf="@+id/wind_iv" />
-
-            <TextView
-                android:id="@+id/feelsTempDesc_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="По ощущениям"
-                app:layout_constraintEnd_toEndOf="@+id/feelsTemp_iv"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="@+id/feelsTemp_iv"
-                app:layout_constraintTop_toBottomOf="@+id/feelsTemp_iv" />
-
-            <TextView
-                android:id="@+id/pressureDesc_tv"
-                android:layout_width="59dp"
-                android:layout_height="24dp"
-                android:text="Давление"
-                app:layout_constraintEnd_toEndOf="@+id/pressure_iv"
-                app:layout_constraintStart_toStartOf="@+id/pressure_iv"
-                app:layout_constraintTop_toBottomOf="@+id/pressure_iv" />
-
-            <TextView
-                android:id="@+id/humidity_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100%"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
-                app:layout_constraintEnd_toEndOf="@+id/humidityDesc_tv"
-                app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv"
-                app:layout_constraintTop_toBottomOf="@+id/humidityDesc_tv"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/wind_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="24 м/с"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
-                app:layout_constraintEnd_toEndOf="@+id/windDesc_tv"
-                app:layout_constraintStart_toStartOf="@+id/windDesc_tv"
-                app:layout_constraintTop_toBottomOf="@+id/windDesc_tv"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/pressure_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="800 мм"
-                app:layout_constraintEnd_toEndOf="@+id/pressureDesc_tv"
-                app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
-                app:layout_constraintTop_toBottomOf="@+id/pressureDesc_tv" />
-
-            <TextView
-                android:id="@+id/feelsTemp_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-30°C"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/feelsTempDesc_tv"
-                app:layout_constraintStart_toStartOf="@+id/feelsTempDesc_tv"
-                app:layout_constraintTop_toBottomOf="@+id/feelsTempDesc_tv"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".5" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".25" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".75" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/dateTime_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="DateTime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+        android:id="@+id/weatherDesc_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start|top"
+        android:text="Небольшая облочность" />
 
     <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:text="title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+        android:id="@+id/dateTime_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DateTime" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/humidity_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_wi_humidity" />
+
+    <TextView
+        android:id="@+id/humidityDesc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Влажность" />
+
+    <TextView
+        android:id="@+id/humidity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="100%" />
+
+
+    <ImageView
+        android:id="@+id/wind_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_wi_small_craft_advisory" />
+
+    <TextView
+        android:id="@+id/windDesc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Ветер" />
+
+    <TextView
+        android:id="@+id/wind_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="24 м/с" />
+
+
+    <ImageView
+        android:id="@+id/feelsTemp_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_wi_thermometer" />
+
+    <TextView
+        android:id="@+id/feelsTempDesc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Ощущается" />
+
+    <TextView
+        android:id="@+id/feelsTemp_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="-30°C" />
+
+
+    <ImageView
+        android:id="@+id/pressure_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_wi_barometer" />
+
+    <TextView
+        android:id="@+id/pressureDesc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Давление" />
+
+    <TextView
+        android:id="@+id/pressure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="800 мм" />
+
+
+</com.example.weatherapp.CollapsibleToolbar>

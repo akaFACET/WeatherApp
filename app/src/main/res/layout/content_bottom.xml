@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_bottom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -13,205 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".75" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/content_bottom_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/colorAccent"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/charts_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline11"
-            tools:listitem="@layout/item_weather_per_day" />
-
-        <include layout="@layout/charts_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/guideline10"
-            app:layout_constraintBottom_toTopOf="@id/guideline11"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"/>
+            app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".30" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/dateTimeBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="DateTime"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weatherDescBottom_tv" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".50" />
-
-
-            <ImageView
-                android:id="@+id/imageBottom_iv"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline20"
-                app:layout_constraintTop_toTopOf="parent"
-                
-                app:srcCompat="@drawable/ic_na" />
-
-            <TextView
-                android:id="@+id/tempDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="температура: "
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/weatherDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/dateTimeBottom_tv" />
-
-            <TextView
-                android:id="@+id/precipitationDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10sp"
-                android:text="осадки: "
-                app:layout_constraintStart_toStartOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/tempDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/pressureDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10sp"
-                android:text="давление: "
-                app:layout_constraintStart_toStartOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/precipitationDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/humidityDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10sp"
-                android:text="влажность: "
-                app:layout_constraintStart_toStartOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/pressureDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/windDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10sp"
-                android:text="ветер: "
-                app:layout_constraintStart_toStartOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/humidityDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/weatherDescBottom_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Облачно с прояснениями"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline20"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/cloudsDescBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10sp"
-                android:text="облачность: "
-                app:layout_constraintStart_toStartOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toBottomOf="@+id/windDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/tempBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="-20°C"
-                app:layout_constraintStart_toEndOf="@+id/tempDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/tempDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/precipitationBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="5 мм"
-                app:layout_constraintStart_toEndOf="@+id/precipitationDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/precipitationDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/pressureBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="900 мм"
-                app:layout_constraintStart_toEndOf="@+id/pressureDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/pressureDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/humidityBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="90%"
-                app:layout_constraintStart_toEndOf="@+id/humidityDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/humidityDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/windBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="24 км/ч"
-                app:layout_constraintStart_toEndOf="@+id/windDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/windDescBottom_tv" />
-
-            <TextView
-                android:id="@+id/cloudsBottom_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="90%"
-                app:layout_constraintStart_toEndOf="@+id/cloudsDescBottom_tv"
-                app:layout_constraintTop_toTopOf="@+id/cloudsDescBottom_tv" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintGuide_percent=".25" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

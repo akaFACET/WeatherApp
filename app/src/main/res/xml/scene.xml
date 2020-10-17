@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="1000"
+        motion:motionInterpolator="linear">
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorSide="bottom" />
+
+        <KeyFrameSet>
+
+            <KeyAttribute
+                app:framePosition="10"
+                android:alpha="0"
+                app:motionTarget="@+id/weatherDesc_tv"/>
+
+            <KeyAttribute
+                app:framePosition="30"
+                android:alpha="0"
+                app:motionTarget="@+id/humidity_iv"/>
+
+            <KeyAttribute
+                app:framePosition="30"
+                android:alpha="0"
+                app:motionTarget="@+id/wind_iv"/>
+
+            <KeyAttribute
+                app:framePosition="30"
+                android:alpha="0"
+                app:motionTarget="@+id/feelsTemp_iv"/>
+
+            <KeyAttribute
+                app:framePosition="30"
+                android:alpha="0"
+                app:motionTarget="@+id/pressure_iv"/>
+
+
+            <KeyAttribute
+                app:framePosition="98"
+                android:alpha="1"
+                app:motionTarget="@+id/weatherDesc_tv"/>
+        </KeyFrameSet>
+
+    </Transition>
+
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <Constraint
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <Constraint
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <Constraint
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80" />
+
+        <Constraint
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/temp_tv"
+            android:layout_width="140dp"
+            android:layout_height="140dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/tempDesc_tv"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="100" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/tempDesc_tv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="6dp">
+            <Layout
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/temp_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="26" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/weatherDesc_tv"
+            android:layout_width="168dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/dateTime_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="18" />
+        </Constraint>
+
+
+        <Constraint
+            android:id="@+id/dateTime_tv"
+            android:layout_width="168dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/guideline" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="18" />
+        </Constraint>
+
+
+
+        <Constraint
+            android:id="@+id/humidity_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/humidityDesc_tv"
+                app:layout_constraintEnd_toStartOf="@id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline3" />
+
+            <PropertySet
+                android:alpha="1"
+                android:visibility="visible"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/humidityDesc_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/humidity_tv"
+                app:layout_constraintEnd_toEndOf="@+id/humidity_iv"
+                app:layout_constraintStart_toStartOf="@+id/humidity_iv"
+                app:layout_constraintTop_toBottomOf="@id/humidity_iv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/humidity_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@id/guideline4"
+                app:layout_constraintEnd_toEndOf="@+id/humidityDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/humidityDesc_tv"
+                app:layout_constraintVertical_bias="0.0" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/wind_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/windDesc_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/guideline3" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/windDesc_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/wind_tv"
+                app:layout_constraintEnd_toEndOf="@+id/wind_iv"
+                app:layout_constraintStart_toStartOf="@+id/wind_iv"
+                app:layout_constraintTop_toBottomOf="@id/wind_iv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/wind_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@id/guideline4"
+                app:layout_constraintEnd_toEndOf="@+id/windDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/windDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/windDesc_tv"
+                app:layout_constraintVertical_bias="0.0" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+
+        <Constraint
+            android:id="@+id/feelsTemp_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/feelsTempDesc_tv"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline4" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/feelsTempDesc_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/feelsTemp_tv"
+                app:layout_constraintEnd_toEndOf="@+id/feelsTemp_iv"
+                app:layout_constraintStart_toStartOf="@+id/feelsTemp_iv"
+                app:layout_constraintTop_toBottomOf="@id/feelsTemp_iv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/feelsTemp_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/feelsTempDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/feelsTempDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/feelsTempDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+
+        <Constraint
+            android:id="@+id/pressure_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/pressureDesc_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/guideline4" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/pressureDesc_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/pressure_tv"
+                app:layout_constraintEnd_toEndOf="@+id/pressure_iv"
+                app:layout_constraintStart_toStartOf="@+id/pressure_iv"
+                app:layout_constraintTop_toBottomOf="@id/pressure_iv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/pressure_tv"
+            android:layout_width="120dp"
+            android:layout_height="16dp">
+            <Layout
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/pressureDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/pressureDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="14" />
+        </Constraint>
+
+
+    </ConstraintSet>
+
+
+
+
+
+
+
+
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5"/>
+
+        <Constraint
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="116dp"/>
+
+
+        <Constraint
+            android:id="@+id/weatherDesc_tv"
+            android:layout_width="212dp"
+            android:layout_height="20dp">
+            <Layout
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/dateTime_tv"
+            android:layout_width="120dp"
+            android:layout_height="20dp">
+            <Layout
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/temp_tv"
+            android:layout_width="86dp"
+            android:layout_height="86dp">
+            <Layout
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toBottomOf="@id/weatherDesc_tv"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="60" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/tempDesc_tv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp">
+            <Layout
+                app:layout_constraintStart_toEndOf="@+id/temp_tv"
+                app:layout_constraintTop_toTopOf="@+id/temp_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="18" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/image_iv"
+            android:layout_height="86dp"
+            android:layout_width="86dp">
+            <Layout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/weatherDesc_tv"
+                app:layout_constraintStart_toEndOf="@id/tempDesc_tv"
+                app:layout_constraintEnd_toStartOf="@id/guideline2"/>
+        </Constraint>
+
+
+        <Constraint
+            android:id="@+id/humidity_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/humidityDesc_tv"
+                app:layout_constraintEnd_toStartOf="@id/humidityDesc_tv"
+                app:layout_constraintStart_toStartOf="@id/humidityDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/humidityDesc_tv" />
+
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/humidityDesc_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="4dp">
+            <Layout
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintEnd_toStartOf="@id/windDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/dateTime_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/humidity_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="@+id/humidityDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/humidityDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+
+        <Constraint
+            android:id="@+id/wind_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/windDesc_tv"
+                app:layout_constraintEnd_toEndOf="@id/windDesc_tv"
+                app:layout_constraintStart_toEndOf="@id/windDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/windDesc_tv" />
+
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/windDesc_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="4dp">
+            <Layout
+                app:layout_constraintStart_toEndOf="@id/humidityDesc_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateTime_tv"/>
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/wind_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="@+id/windDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/windDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/windDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/feelsTemp_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/feelsTempDesc_tv"
+                app:layout_constraintEnd_toEndOf="@id/feelsTempDesc_tv"
+                app:layout_constraintStart_toStartOf="@id/feelsTempDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/feelsTempDesc_tv" />
+
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/feelsTempDesc_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintEnd_toStartOf="@id/pressureDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/humidity_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/feelsTemp_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="@+id/feelsTempDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/feelsTempDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/feelsTempDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/pressure_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <Layout
+                app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
+                app:layout_constraintEnd_toEndOf="@+id/pressureDesc_tv"
+                app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
+                app:layout_constraintTop_toBottomOf="@+id/pressureDesc_tv" />
+
+            <PropertySet
+                android:alpha="0"
+                android:visibility="gone"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/pressureDesc_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/wind_tv"
+                app:layout_constraintStart_toEndOf="@id/feelsTempDesc_tv"
+                app:layout_constraintEnd_toEndOf="parent" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/pressure_tv"
+            android:layout_width="70dp"
+            android:layout_height="14dp">
+            <Layout
+                app:layout_constraintEnd_toEndOf="@+id/pressureDesc_tv"
+                app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
+                app:layout_constraintTop_toBottomOf="@id/pressureDesc_tv" />
+            <CustomAttribute
+                app:attributeName="textSize"
+                app:customFloatValue="12" />
+        </Constraint>
+
+
+
+    </ConstraintSet>
+
+
+</MotionScene>
