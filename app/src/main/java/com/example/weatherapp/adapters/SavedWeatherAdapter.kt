@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.Selector
+import com.example.weatherapp.Utils.Util
 import com.example.weatherapp.network.WeatherData
 
 class SavedWeatherAdapter(
@@ -38,7 +39,7 @@ class SavedWeatherAdapter(
             image.setImageResource(Selector
                 .iconPathSelector(weatherData.subWeather[0].weatherId,weatherData.subWeather[0].weatherIcon))
             name.text = weatherData.name
-            currentDate.text = weatherData.updateDt
+            currentDate.text = Util.getDateFromUnixTime(weatherData.updateDt)
             description.text = weatherData.subWeather[0].weatherDescription
             temp.text = weatherData.subWeather[0].mainTemp.toString()
             country.text = weatherData.country

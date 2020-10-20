@@ -1,16 +1,14 @@
 package com.example.weatherapp
 
 import android.util.Log
-import com.example.weatherapp.Utils.Util
-import com.example.weatherapp.Utils.Util.getMDFromUnixTime
+import com.example.weatherapp.Utils.Util.getDMFromUnixTime
 import com.example.weatherapp.adapters.WeatherPerDay
 import com.example.weatherapp.adapters.WeatherPerHour
 import com.example.weatherapp.db.CitiesEntity
 import com.example.weatherapp.db.SubWeatherEntity
 import com.example.weatherapp.network.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.time.microseconds
 
 class Mapper {
 
@@ -150,12 +148,14 @@ class Mapper {
                 )
             } ?: emptyArray<SubWeather>()
 
+            //subList[0].dt = getUnixDateTime()
+
             return WeatherData(
                 cityId = weatherResponse.city.id!!,
                 isLastKnownLocation = false,
                 name = weatherResponse.city.name!!,
                 country = weatherResponse.city.country!!,
-                updateDt = getDateTime(),
+                updateDt = getUnixDateTime(),
                 sunset = weatherResponse.city.sunset!!,
                 sunrise = weatherResponse.city.sunrise!!,
                 coordLon = weatherResponse.city.coord.lon!!,
@@ -186,6 +186,7 @@ class Mapper {
 
         fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
             var day = getDay(weather[0].dt)
+            Log.e("DATETIME", "${weather[0].dt}")
             var result:MutableList<WeatherPerDay> = arrayListOf()
             var weatherPerHour: MutableList<WeatherPerHour> = arrayListOf()
 
@@ -194,13 +195,16 @@ class Mapper {
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }else{
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
-                    result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
+                    result.add(WeatherPerDay(day,weatherPerHour))
                     day = getDay(item.dt)
                     weatherPerHour = arrayListOf()
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }
             }
-            result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
+            result.add(WeatherPerDay(day,weatherPerHour))
+
+            result[0].weatherPerHour[0].dt = getUnixDateTime()
+
             return result
         }
 
@@ -227,8 +231,8 @@ class Mapper {
             )
         }
 
-        private fun getDay(data:Int):String{
-            return getMDFromUnixTime(data)
+        private fun getDay(data:Long):String{
+            return getDMFromUnixTime(data)
         }
 
         private fun mapWeatherListToSubWeather(subWeatherList: SubWeatherList, cityId: Int): SubWeather {
@@ -256,17 +260,7 @@ class Mapper {
                 )
         }
 
-
-
-
-        private fun getDateTime(): String {
-            val currentDate = Date()
-            val dateFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            val dateText: String = dateFormat.format(currentDate)
-            val timeFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val timeText: String = timeFormat.format(currentDate)
-            return "$dateText $timeText"
-        }
+        private fun getUnixDateTime() = Date().time.div(1000)
 
         private fun hPaToMmHg(hPa: Int?) = hPa?.div(1.333224)?.toInt() ?: 0
 

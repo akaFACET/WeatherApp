@@ -68,9 +68,9 @@
             app:destination="@id/weatherDetailsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"
-            app:launchSingleTop="false"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
+            app:launchSingleTop="false"
             app:popUpTo="@id/weatherDetailsFragment"
             app:popUpToInclusive="true" />
     </fragment>

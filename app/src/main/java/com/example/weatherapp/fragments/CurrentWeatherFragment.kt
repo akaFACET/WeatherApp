@@ -214,8 +214,7 @@ class CurrentWeatherFragment : Fragment() {
                         weather.subWeather[0].weatherId,
                         weather.subWeather[0].weatherIcon)
                 )
-                dateTime_tv.text = weather.updateDt
-                weatherDesc_tv.text = weather.subWeather[0].weatherDescription
+                weatherDesc_tv.text = weather.subWeather[0].weatherDescription.capitalize()
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
                 humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
                 wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
@@ -242,8 +241,7 @@ class CurrentWeatherFragment : Fragment() {
         humidity_tv.text = weatherPerHour.mainHumidity.toString() + " %"
         wind_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
         //cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
-        dateTime_tv.text = Util.getTimeFromUnixTime(weatherPerHour.dt)
-        //dateTime_tv.text = weatherPerHour.dt_txt
+        dateTime_tv.text = Util.getDateFromUnixTime(weatherPerHour.dt)
 
     }
 

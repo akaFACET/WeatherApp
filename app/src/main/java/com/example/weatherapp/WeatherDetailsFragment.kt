@@ -1,19 +1,12 @@
 package com.example.weatherapp
 
-import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.fragment.app.Fragment
-import androidx.core.content.PermissionChecker
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -26,7 +19,6 @@ import kotlinx.android.synthetic.main.charts_layout.*
 import kotlinx.android.synthetic.main.content_bottom.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.layout_header.*
-import kotlinx.android.synthetic.main.weather_details_fragment.*
 
 class WeatherDetailsFragment : Fragment() {
 
@@ -41,7 +33,6 @@ class WeatherDetailsFragment : Fragment() {
     private fun getLastLocation() {
         viewModel.getWeatherFromInternet()
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -141,7 +132,7 @@ class WeatherDetailsFragment : Fragment() {
                         weather.subWeather[0].weatherId,
                         weather.subWeather[0].weatherIcon)
                 )
-                dateTime_tv.text = weather.updateDt
+                dateTime_tv.text = Util.getDateFromUnixTime(weather.updateDt)
                 weatherDesc_tv.text = weather.subWeather[0].weatherDescription
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
                 humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
@@ -167,7 +158,7 @@ class WeatherDetailsFragment : Fragment() {
         humidity_tv.text = weatherPerHour.mainHumidity.toString() + " %"
         wind_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
         //cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
-        dateTime_tv.text = Util.getDataFromUnixTime(weatherPerHour.dt)
+        dateTime_tv.text = Util.getDateFromUnixTime(weatherPerHour.dt)
 
     }
 

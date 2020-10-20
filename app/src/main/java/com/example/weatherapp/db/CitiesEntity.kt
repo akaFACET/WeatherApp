@@ -9,7 +9,7 @@ data class CitiesEntity(
     val isLastKnownLocation: Boolean,
     val name: String,
     val country:String,
-    val updateDt:String,
+    val updateDt:Long,
     val sunrise : Int,
     val sunset : Int,
     val coordLon: Double,

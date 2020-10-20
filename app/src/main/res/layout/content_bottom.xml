@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:fillViewport="true"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/secondaryLightColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/content_bottom_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            android:background="@color/secondaryLightColor"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/include"

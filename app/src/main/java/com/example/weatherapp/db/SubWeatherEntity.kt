@@ -22,7 +22,7 @@ data class SubWeatherEntity(
     val weatherMain: String,
     val weatherDescription: String,
     val weatherIcon: String,
-    val dt:Int,
+    val dt:Long,
     val dt_txt: String,
     val mainTemp: Int,
     val mainFeels_like: Double,

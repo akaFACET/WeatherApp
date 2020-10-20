@@ -12,7 +12,7 @@ data class WeatherPerHour(
     val weatherMain: String,
     val weatherDescription: String,
     val weatherIcon: String,
-    val dt: Int,
+    var dt: Long,
     val dt_txt: String,
     val mainTemp: Int,
     val mainFeels_like: Double,

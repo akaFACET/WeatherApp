@@ -28,18 +28,33 @@ class DaysScrollAdapter(
 
         fun bind(weatherPerDay: WeatherPerDay, listener: OnDaysScrollItemClickListener) {
             if (selectedPosition == layoutPosition) {
-                itemView.setBackgroundResource(R.color.colorPrimary)
+                //itemView.setBackgroundResource(R.color.secondaryColor)
+                //itemView.setBackgroundResource(R.drawable.custom_ripple)
+                itemView.isSelected = true
+
+
             } else {
-                itemView.setBackgroundColor(Color.TRANSPARENT)
+                itemView.isSelected = false
+                //itemView.setBackgroundColor(Color.TRANSPARENT)
             }
 
+//            itemView.setOnClickListener {
+//                if (selectedPosition == layoutPosition){
+//                    selectedPosition = -1
+//                    notifyDataSetChanged()
+//                    //notifyItemChanged(selectedPosition)
+//                }
+//                selectedPosition = layoutPosition
+//                //notifyDataSetChanged()
+//                notifyItemChanged(selectedPosition)
+//                listener.onItemClick(weatherPerDay.weatherPerHour)
+//            }
             itemView.setOnClickListener {
-                if (selectedPosition == layoutPosition){
-                    selectedPosition = -1
-                    notifyDataSetChanged()
-                }
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition)
                 selectedPosition = layoutPosition
-                notifyDataSetChanged()
+                notifyItemChanged(selectedPosition)
+
                 listener.onItemClick(weatherPerDay.weatherPerHour)
             }
 

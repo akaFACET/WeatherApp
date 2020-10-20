@@ -53,7 +53,7 @@ abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCa
             return
         }
         // Draw the red delete background
-        background.color = R.color.colorAccent
+        background.color = R.color.secondaryDarkColor
         background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
         background.draw(c)
 

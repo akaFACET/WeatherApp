@@ -20,7 +20,7 @@ data class WeatherResponse(
 @JsonClass(generateAdapter = true)
 data class SubWeatherList (
     @Json(name = "dt")
-    val dt : Int?,
+    val dt : Long?,
     @Json(name = "main")
     val main : Main,
     @Json(name = "weather")

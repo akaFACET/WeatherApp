@@ -62,7 +62,9 @@ class SavedWeatherFragment : Fragment() {
                 }
             }
         )
+
         saved_rv.adapter = adapterRv
+
 
 
         WeatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {

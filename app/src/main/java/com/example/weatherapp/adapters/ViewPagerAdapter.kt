@@ -35,7 +35,7 @@ class ViewPagerAdapter(
     internal val BAR_CHART = 1
     internal val LINE_CHART = 2
 
-    val textColor = ContextCompat.getColor(context,R.color.colorText)
+    val textColor = ContextCompat.getColor(context,R.color.secondaryTextColor)
 
     private inner class ViewHolder1 internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
