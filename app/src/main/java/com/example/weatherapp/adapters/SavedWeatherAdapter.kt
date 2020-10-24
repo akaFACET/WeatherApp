@@ -29,6 +29,7 @@ class SavedWeatherAdapter(
         private val humidity:TextView = itemView.findViewById(R.id.humidity_tv)
         private val pressure: TextView = itemView.findViewById(R.id.pressure_tv)
         private val clouds:TextView = itemView.findViewById(R.id.clouds_tv)
+        private val tempUnits: TextView = itemView.findViewById(R.id.tempDesc_tv)
 
         fun bind(weatherData: WeatherData, listenerSaved: OnSavedItemClickListener){
 
@@ -47,7 +48,7 @@ class SavedWeatherAdapter(
             humidity.text = weatherData.subWeather[0].mainHumidity.toString() +" %"
             pressure.text = weatherData.subWeather[0].mainPressure.toString() + " мм"
             clouds.text = weatherData.subWeather[0].cloudsAll.toString() + " %"
-
+            tempUnits.text = Util.getTempUnits(weatherData.subWeather[0].units)
         }
 
     }

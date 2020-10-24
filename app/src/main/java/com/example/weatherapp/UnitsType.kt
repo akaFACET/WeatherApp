@@ -17,7 +17,7 @@ enum class UnitsType(
         "Фаренгейт"
     ),
     ABSOLUTE_UNITS(
-        3,
+        2,
         "",
         "Кельвины"
     );

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.Selector
+import com.example.weatherapp.Utils.Util
 
 class DaysScrollAdapter(
     var values: List<WeatherPerDay>,
@@ -58,7 +59,7 @@ class DaysScrollAdapter(
                 listener.onItemClick(weatherPerDay.weatherPerHour)
             }
 
-
+            val units = Util.getTempUnits(weatherPerDay.weatherPerHour[0].units)
 
             val midItem = weatherPerDay.weatherPerHour.size / 2
 
@@ -80,7 +81,7 @@ class DaysScrollAdapter(
                     )
             )
 
-            temp.text = "${tempMin}°C | ${tempMax}°C"
+            temp.text = "${tempMin}${units}| ${tempMax}${units}"
 
         }
 

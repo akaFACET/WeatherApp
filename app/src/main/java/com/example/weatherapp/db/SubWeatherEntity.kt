@@ -34,6 +34,7 @@ data class SubWeatherEntity(
     val windDeg: Int,
     val cloudsAll: Int,
     val snow: Double,
-    val rain: Double
+    val rain: Double,
+    val units: String
 
 )

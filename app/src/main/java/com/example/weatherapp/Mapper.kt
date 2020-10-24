@@ -61,7 +61,8 @@ class Mapper {
                         windDeg = it.windDeg,
                         cloudsAll = it.cloudsAll,
                         rain = it.rain,
-                        snow = it.snow
+                        snow = it.snow,
+                        units = it.units
 
 
                     )
@@ -100,7 +101,8 @@ class Mapper {
                 windDeg = subWeather.windDeg,
                 cloudsAll = subWeather.cloudsAll,
                 rain = subWeather.rain,
-                snow = subWeather.snow
+                snow = subWeather.snow,
+                units = subWeather.units
 
             )
         }
@@ -135,14 +137,14 @@ class Mapper {
 
         }
 
-        fun mapWeatherResponseToWeatherData(weatherResponse: WeatherResponse): WeatherData {
+        fun mapWeatherResponseToWeatherData(weatherResponse: WeatherResponse, units: String): WeatherData {
 
             val subList: MutableList<SubWeather> = arrayListOf()
 
             weatherResponse.list?.forEach {
                 subList.add(
                     mapWeatherListToSubWeather(
-                        it, weatherResponse.city.id!!
+                        it, weatherResponse.city.id!!, units
                     )
                 )
             } ?: emptyArray<SubWeather>()
@@ -163,25 +165,6 @@ class Mapper {
             )
 
         }
-//        fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
-//            var day = getDay(weather[0].dt_txt)
-//            var result:MutableList<WeatherPerDay> = arrayListOf()
-//            var weatherPerHour: MutableList<WeatherPerHour> = arrayListOf()
-//
-//            for (item in weather){
-//                if (getDay(item.dt_txt) == day){
-//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
-//                }else{
-//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
-//                    result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
-//                    day = getDay(item.dt_txt)
-//                    weatherPerHour = arrayListOf()
-//                    weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
-//                }
-//            }
-//            result.add(WeatherPerDay(day.replace('-','.'),weatherPerHour))
-//            return result
-//        }
 
         fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
             var day = getDay(weather[0].dt)
@@ -226,7 +209,8 @@ class Mapper {
                 cloudsAll = subWeather.cloudsAll,
                 windDeg = subWeather.windDeg,
                 windSpeed = subWeather.windSpeed,
-                precipitation = if (subWeather.rain != 0.0) subWeather.rain else subWeather.snow
+                precipitation = if (subWeather.rain != 0.0) subWeather.rain else subWeather.snow,
+                units = subWeather.units
             )
         }
 
@@ -234,7 +218,7 @@ class Mapper {
             return getDMFromUnixTime(data)
         }
 
-        private fun mapWeatherListToSubWeather(subWeatherList: SubWeatherList, cityId: Int): SubWeather {
+        private fun mapWeatherListToSubWeather(subWeatherList: SubWeatherList, cityId: Int, units: String): SubWeather {
             return SubWeather(
                 id = 0,
                 cityId = cityId,
@@ -255,7 +239,8 @@ class Mapper {
                 windDeg = subWeatherList.wind.deg ?: 0,
                 cloudsAll = subWeatherList.clouds.all ?: 0,
                 rain = subWeatherList.rain?.rainVolume ?: 0.0,
-                snow = subWeatherList.snow?.snowVolume ?: 0.0
+                snow = subWeatherList.snow?.snowVolume ?: 0.0,
+                units = units
             )
         }
 

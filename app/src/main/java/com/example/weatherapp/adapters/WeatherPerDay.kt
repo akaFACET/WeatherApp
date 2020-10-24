@@ -23,5 +23,6 @@ data class WeatherPerHour(
     val windSpeed: Int,
     val windDeg: Int,
     val cloudsAll: Int,
-    val precipitation: Double
+    val precipitation: Double,
+    val units: String
 )

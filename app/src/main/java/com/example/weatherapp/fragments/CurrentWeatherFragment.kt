@@ -218,8 +218,10 @@ class CurrentWeatherFragment : Fragment() {
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
                 humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
                 wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
-                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString()
+                //feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString()
                 pressure_tv.text = weather.subWeather[0].mainPressure.toString() + " мм"
+
+                tempDesc_tv.text = Util.getTempUnits(weather.subWeather[0].units)
             }
         })
 
@@ -233,7 +235,7 @@ class CurrentWeatherFragment : Fragment() {
                 weatherPerHour.weatherId,
                 weatherPerHour.weatherIcon)
         )
-        feelsTemp_tv.text = weatherPerHour.mainFeels_like.toString()+ "°C"
+        feelsTemp_tv.text = weatherPerHour.mainFeels_like.toString()+ Util.getTempUnits(weatherPerHour.units)
         weatherDesc_tv.text = weatherPerHour.weatherDescription.capitalize()
         temp_tv.text = weatherPerHour.mainTemp.toString()
         //precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"

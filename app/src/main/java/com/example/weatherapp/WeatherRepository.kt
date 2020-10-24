@@ -64,9 +64,8 @@ object WeatherRepository {
     }
 
     suspend fun getWeatherByCity(query: String):List<FoundCities>{
-        val result = weatherApiService.getWeatherByCity(appid, units, language,query)
 
-        //updateParams()
+        val result = weatherApiService.getWeatherByCity(appid, units, language,query)
 
         result.await()
         return Mapper.mapFoundCitiesResponseToFoundCities(
@@ -80,27 +79,27 @@ object WeatherRepository {
 
     suspend fun getWeatherByCoord(lat:Double, lon:Double):WeatherData{
 
-        //updateParams()
+        updateParams()
 
         val result = weatherApiService.getWeatherByCoord(appid, units, language,lat = lat, lon = lon)
         result.await()
         return Mapper.mapWeatherResponseToWeatherData(
-            result.getCompleted()
+            result.getCompleted(), units
         )
     }
 
     suspend fun getWeatherByCityId(id: Int):WeatherData{
 
-        //updateParams()
+        updateParams()
 
         val result = weatherApiService.getWeatherByCityId(appid, units, language,id)
         result.await()
         return Mapper.mapWeatherResponseToWeatherData(
-            result.getCompleted())
+            result.getCompleted(), units)
     }
 
-//    private fun updateParams(){
-//        units = preferencesManager.getSavedUnitsValue().toString()
-//    }
+    private fun updateParams(){
+        units = preferencesManager.getSavedUnitsValue().toString()
+    }
 
 }

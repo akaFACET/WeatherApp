@@ -20,4 +20,12 @@ object Util {
         val date = Date(unixTime.toLong() * 1000)
         return sdf.format(date)
     }
+    fun getTempUnits(units: String): String {
+        return when(units){
+            "metric" -> "°C"
+            "imperial" -> "°F"
+            "" -> "K"
+            else -> ""
+        }
+    }
 }

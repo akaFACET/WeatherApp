@@ -137,8 +137,10 @@ class WeatherDetailsFragment : Fragment() {
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
                 humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
                 wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
-                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString() + "°C"
+                feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString() + Util.getTempUnits(weather.subWeather[0].units)
                 pressure_tv.text = weather.subWeather[0].mainPressure.toString() + " мм"
+
+                tempDesc_tv.text = Util.getTempUnits(weather.subWeather[0].units)
             }
         })
 
