@@ -27,7 +27,7 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
     private val location = Location(application)
     var currentWeather = MutableLiveData<WeatherData?>()
     var listWeatherPerDay = MutableLiveData<List<WeatherPerDay>?>()
-    var weatherPerDay = MutableLiveData<WeatherPerDay?>()
+    //var weatherPerDay = MutableLiveData<WeatherPerDay?>()
     var isLoading = MutableLiveData<Boolean>()
     var exception = MutableLiveData<Exceptions>()
     //var currentLocation = MediatorLiveData<LocationData>()
@@ -68,7 +68,7 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
                     val result = WeatherRepository.getLastKnownWeather()
                     currentWeather.postValue(result)
                     listWeatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather))
-                    weatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather)[0])
+                    //weatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather)[0])
                 }
             } catch (ex: Exception){
                 Log.e("getLastKnownLocation", ex.toString())
@@ -89,7 +89,7 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
                     WeatherRepository.saveLastKnownLocation(response)
                     currentWeather.postValue(response)
                     listWeatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather))
-                    weatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather)[0])
+                    //weatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather)[0])
                 }
                 isLoading.value = false
             }catch (ex: UnknownHostException){

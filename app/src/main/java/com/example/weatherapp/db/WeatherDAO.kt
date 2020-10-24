@@ -7,7 +7,6 @@ import com.example.weatherapp.Mapper
 import com.example.weatherapp.network.SubWeather
 import com.example.weatherapp.network.WeatherData
 import com.example.weatherapp.network.WeatherDataEntity
-import kotlinx.coroutines.Deferred
 
 @Dao
 interface WeatherDAO {

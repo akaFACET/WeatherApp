@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     android:minHeight="116dp"
     app:layoutDescription="@xml/scene"
+    android:background="@color/primaryColor"
     app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
     <androidx.constraintlayout.widget.Guideline

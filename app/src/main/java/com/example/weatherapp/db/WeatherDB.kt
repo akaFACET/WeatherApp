@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.weatherapp.network.WeatherData
 
 @Database(entities = arrayOf(CitiesEntity::class, SubWeatherEntity::class),version = 2)
 

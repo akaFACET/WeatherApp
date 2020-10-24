@@ -12,7 +12,6 @@ import kotlin.time.microseconds
 
 class Mapper {
 
-
     companion object {
 
         fun mapWeatherDataEntityToWeatherData(weatherDataEntity: List<WeatherDataEntity>):List<WeatherData>{
@@ -257,7 +256,7 @@ class Mapper {
                 cloudsAll = subWeatherList.clouds.all ?: 0,
                 rain = subWeatherList.rain?.rainVolume ?: 0.0,
                 snow = subWeatherList.snow?.snowVolume ?: 0.0
-                )
+            )
         }
 
         private fun getUnixDateTime() = Date().time.div(1000)

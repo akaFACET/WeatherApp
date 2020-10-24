@@ -14,8 +14,13 @@ object WeatherRepository {
 
     private val appid="b7f532dcad2190c9ee565b091e2d8290"
     private val language = "ru"
-    private val units = "metric"
+    private var units = "metric"
+    private lateinit var preferencesManager: PreferencesManager
 
+    init {
+        preferencesManager = PreferencesManager(App.instance)
+        //units = preferencesManager.getSavedUnitsValue().toString()
+    }
 
 
     val db = WeatherDB.getInstance(App.instance).getSavedWeatherDAO()
@@ -60,6 +65,9 @@ object WeatherRepository {
 
     suspend fun getWeatherByCity(query: String):List<FoundCities>{
         val result = weatherApiService.getWeatherByCity(appid, units, language,query)
+
+        //updateParams()
+
         result.await()
         return Mapper.mapFoundCitiesResponseToFoundCities(
             result.getCompleted()
@@ -71,6 +79,9 @@ object WeatherRepository {
     }
 
     suspend fun getWeatherByCoord(lat:Double, lon:Double):WeatherData{
+
+        //updateParams()
+
         val result = weatherApiService.getWeatherByCoord(appid, units, language,lat = lat, lon = lon)
         result.await()
         return Mapper.mapWeatherResponseToWeatherData(
@@ -79,10 +90,17 @@ object WeatherRepository {
     }
 
     suspend fun getWeatherByCityId(id: Int):WeatherData{
+
+        //updateParams()
+
         val result = weatherApiService.getWeatherByCityId(appid, units, language,id)
         result.await()
         return Mapper.mapWeatherResponseToWeatherData(
             result.getCompleted())
     }
+
+//    private fun updateParams(){
+//        units = preferencesManager.getSavedUnitsValue().toString()
+//    }
 
 }
