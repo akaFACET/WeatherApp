@@ -1,29 +1,31 @@
 package com.example.weatherapp
 
+import androidx.annotation.StringRes
+
 
 enum class UnitsType(
     val customOrdinal: Int,
     val value: String,
-    val title: String
+    @StringRes val title: Int
 ) {
     METRIC_UNITS(
         0,
         "metric",
-        "Цельсий"
+        R.string.celsius
     ),
     IMPERIAL_UNITS(
         1,
         "imperial",
-        "Фаренгейт"
+        R.string.fahrenheit
     ),
     ABSOLUTE_UNITS(
         2,
         "",
-        "Кельвины"
+        R.string.kelvin
     );
 
     companion object{
-        fun fromValue( value: String) = UnitsType.values().firstOrNull {
+        fun fromValue(value: String) = UnitsType.values().firstOrNull {
             it.value == value
         } ?: getDefaultUnits()
 

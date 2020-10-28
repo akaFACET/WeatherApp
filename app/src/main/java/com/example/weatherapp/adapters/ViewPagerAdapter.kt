@@ -276,9 +276,11 @@ class ViewPagerAdapter(
 
                     lineChart.apply {
                         lineChart.data = data
+                        //xAxis.labelCount = values.size
                         xAxis.labelCount = values.size - 1
                         xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getFormattedValue(value: Float): String {
+                                Log.e("AdapterErr", "${value}")
                                 if (value.toInt() < time.size) {
                                     return time.get(value.toInt())
                                 } else

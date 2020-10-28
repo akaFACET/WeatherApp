@@ -1,21 +1,16 @@
 package com.example.weatherapp
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.db.WeatherDB
 import com.example.weatherapp.network.FoundCities
 import com.example.weatherapp.network.NetworkModule
 import com.example.weatherapp.network.WeatherData
-import kotlinx.coroutines.*
-import java.lang.Exception
 
 object WeatherRepository {
 
     private val appid="b7f532dcad2190c9ee565b091e2d8290"
-    private val language = "ru"
+    private var language = "en"
     private var units = "metric"
-    private lateinit var preferencesManager: PreferencesManager
+    private var preferencesManager: PreferencesManager
 
     init {
         preferencesManager = PreferencesManager(App.instance)
@@ -100,6 +95,7 @@ object WeatherRepository {
 
     private fun updateParams(){
         units = preferencesManager.getSavedUnitsValue().toString()
+        language = preferencesManager.getSavedLanguage()
     }
 
 }

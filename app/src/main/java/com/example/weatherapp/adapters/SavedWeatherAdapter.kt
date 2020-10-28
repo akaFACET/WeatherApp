@@ -41,13 +41,13 @@ class SavedWeatherAdapter(
                 .iconPathSelector(weatherData.subWeather[0].weatherId,weatherData.subWeather[0].weatherIcon))
             name.text = weatherData.name
             currentDate.text = Util.getDateFromUnixTime(weatherData.updateDt)
-            description.text = weatherData.subWeather[0].weatherDescription
+            description.text = weatherData.subWeather[0].weatherDescription.capitalize()
             temp.text = weatherData.subWeather[0].mainTemp.toString()
             country.text = weatherData.country
-            windSpeed.text = weatherData.subWeather[0].windSpeed.toString() + " м/с"
-            humidity.text = weatherData.subWeather[0].mainHumidity.toString() +" %"
-            pressure.text = weatherData.subWeather[0].mainPressure.toString() + " мм"
-            clouds.text = weatherData.subWeather[0].cloudsAll.toString() + " %"
+            windSpeed.text = " " + weatherData.subWeather[0].windSpeed.toString() + " м/с"
+            humidity.text = " " + weatherData.subWeather[0].mainHumidity.toString() + " %"
+            pressure.text = " " + weatherData.subWeather[0].mainPressure.toString() + " мм"
+            clouds.text = " " + weatherData.subWeather[0].cloudsAll.toString() + " %"
             tempUnits.text = Util.getTempUnits(weatherData.subWeather[0].units)
         }
 

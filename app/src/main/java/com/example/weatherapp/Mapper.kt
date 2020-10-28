@@ -166,13 +166,12 @@ class Mapper {
 
         }
 
-        fun getWeatherPerDays (weather: List<SubWeather>): List<WeatherPerDay>{
-            var day = getDay(weather[0].dt)
-            Log.e("DATETIME", "${weather[0].dt}")
+        fun getWeatherPerDays (weather: WeatherData): List<WeatherPerDay>{
+            var day = getDay(weather.subWeather[0].dt)
             var result:MutableList<WeatherPerDay> = arrayListOf()
             var weatherPerHour: MutableList<WeatherPerHour> = arrayListOf()
 
-            for (item in weather){
+            for (item in weather.subWeather){
                 if (getDay(item.dt) == day){
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }else{
@@ -185,7 +184,12 @@ class Mapper {
             }
             result.add(WeatherPerDay(day,weatherPerHour))
 
-            result[0].weatherPerHour[0].dt = getUnixDateTime()
+
+            if (result.last().weatherPerHour.size == 1){
+                result.removeAt(result.size-1)
+            }
+
+            result[0].weatherPerHour[0].dt = weather.updateDt
 
             return result
         }

@@ -9,19 +9,19 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import com.example.weatherapp.NightModeType
-import com.example.weatherapp.PreferencesManager
-import com.example.weatherapp.R
-import com.example.weatherapp.UnitsType
+import com.example.weatherapp.*
 import com.example.weatherapp.viewModels.SettingsViewModel
 import kotlinx.android.synthetic.main.settings_fragment.*
+
 
 class SettingsFragment : Fragment() {
 
     private lateinit var viewModel: SettingsViewModel
     private lateinit var preferencesManager: PreferencesManager
+
     private var nigthModeChooseItem = 0
     private var unitsTypeChooseItem = 0
+    private var languageChooseItem = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,32 +37,79 @@ class SettingsFragment : Fragment() {
 
         val savedNightMode = preferencesManager.getSavedNightModeValue()
         nigthModeChooseItem = NightModeType.fromValue(savedNightMode).ordinal
-        nigthModSelector_tv.text = NightModeType.fromValue(savedNightMode).title
+        nigthModSelector_tv.text = getString(NightModeType.fromValue(savedNightMode).title)
 
         val savedUnitsType = preferencesManager.getSavedUnitsValue()
         unitsTypeChooseItem = UnitsType.fromValue(savedUnitsType!!).ordinal
-        unitsTypeSelector_tv.text = UnitsType.fromValue(savedUnitsType).title
+        unitsTypeSelector_tv.text = getString(UnitsType.fromValue(savedUnitsType).title)
 
-        nigthModSelector_tv.setOnClickListener{
+        val savedLanguage = preferencesManager.getSavedLanguage()
+        languageChooseItem = Language.fromValue(savedLanguage).ordinal
+        languageSelector_tv.text = getString(Language.fromValue(savedLanguage).title)
+
+
+        nigthModSelector_ll.setOnClickListener{
             showNightModeAlertDialog()
         }
 
-        unitsTypeSelector_tv.setOnClickListener {
+        unitsTypeSelector_ll.setOnClickListener {
             showUnitsTypeAlertDialog()
         }
 
+        languageSelector_ll.setOnClickListener {
+            showLanguageSelectorAlertDialog()
+        }
+
+    }
+
+
+
+    private fun showLanguageSelectorAlertDialog(){
+        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+
+        val items = arrayOf(
+            getString(Language.ENGLISH.title),
+            getString(Language.RUSSIAN.title),
+            getString(Language.BELARUSIAN.title),
+            getString(Language.UKRAINIAN.title)
+        )
+
+        alertDialog.setTitle(getString(R.string.language))
+
+        alertDialog.setSingleChoiceItems(
+            items,
+            languageChooseItem,
+            object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+
+                    val language = Language.fromCustomOrdinal(which)
+
+                    languageChooseItem = language.ordinal
+
+                    languageSelector_tv.text = getString(language.title)
+
+                    preferencesManager.saveLanguageValue(language.value)
+                    preferencesManager.saveCountry(language.country)
+                    //update configuration
+                    activity?.recreate()
+                    dialog!!.cancel()
+                }
+            })
+        val alert: AlertDialog = alertDialog.create()
+        alert.setCanceledOnTouchOutside(true)
+        alert.show()
     }
 
     private fun showNightModeAlertDialog() {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
 
-        alertDialog.setTitle("Ночной режим")
+        alertDialog.setTitle(getString(R.string.nightMode))
 
         val items = arrayOf(
-            NightModeType.MODE_NIGHT_NO.title,
-            NightModeType.MODE_NIGHT_YES.title,
-            NightModeType.getDefaultMode().title
-            )
+            getString(NightModeType.MODE_NIGHT_NO.title),
+            getString(NightModeType.MODE_NIGHT_YES.title),
+            getString(NightModeType.getDefaultMode().title)
+        )
 
         alertDialog.setSingleChoiceItems(
             items,
@@ -74,7 +121,7 @@ class SettingsFragment : Fragment() {
 
                     nigthModeChooseItem = nightMode.ordinal
 
-                    nigthModSelector_tv.text = nightMode.title
+                    nigthModSelector_tv.text = getString(nightMode.title)
 
                     preferencesManager.saveNightModeValue(nightMode.value)
 
@@ -88,15 +135,17 @@ class SettingsFragment : Fragment() {
         alert.show()
     }
 
+
+
     private fun showUnitsTypeAlertDialog() {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
 
-        alertDialog.setTitle("Единицы измерения")
+        alertDialog.setTitle(getString(R.string.units))
 
         val items = arrayOf(
-            UnitsType.METRIC_UNITS.title,
-            UnitsType.IMPERIAL_UNITS.title,
-            UnitsType.ABSOLUTE_UNITS.title
+            getString(UnitsType.METRIC_UNITS.title),
+            getString(UnitsType.IMPERIAL_UNITS.title),
+            getString(UnitsType.ABSOLUTE_UNITS.title)
         )
 
         alertDialog.setSingleChoiceItems(
@@ -109,7 +158,7 @@ class SettingsFragment : Fragment() {
 
                     unitsTypeChooseItem = unitsType.ordinal
 
-                    unitsTypeSelector_tv.text = unitsType.title
+                    unitsTypeSelector_tv.text = getString(unitsType.title)
 
                     preferencesManager.saveUnitsValue(unitsType.value)
 

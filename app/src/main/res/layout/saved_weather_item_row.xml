@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="name"
+            android:text=""
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/country_tv"
             app:layout_constraintHorizontal_bias="0.0"
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="date"
+            android:text=""
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="description"
+            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
             app:layout_constraintTop_toBottomOf="@+id/date_tv" />
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="-23"
+            android:text=""
             android:textSize="70sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="BY"
+            android:text=""
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="°C"
+            android:text=""
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/temp_tv"
             app:layout_constraintTop_toTopOf="@+id/temp_tv" />
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="NA m/s"
-            android:textSize="8sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/windSpeedDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/windSpeedDesc_tv"
@@ -104,8 +104,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Ветер: "
-            android:textSize="8sp"
+            android:text="@string/wind"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
 
@@ -114,8 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Влажность: "
-            android:textSize="8sp"
+            android:text="@string/humidity"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/windSpeedDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/temp_tv" />
 
@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100 %"
-            android:textSize="8sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/windSpeed_tv"
             app:layout_constraintStart_toEndOf="@+id/humidityDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/humidityDesc_tv" />
@@ -133,8 +133,8 @@
             android:id="@+id/pressureDesc_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Давление: "
-            android:textSize="8sp"
+            android:text="@string/pressure"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
             app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
 
@@ -143,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1000 мм р.с"
-            android:textSize="8sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/pressureDesc_tv" />
@@ -152,8 +152,8 @@
             android:id="@+id/cloudsDescBottom_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Облачность: "
-            android:textSize="8sp"
+            android:text="@string/cloudiness"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
             app:layout_constraintTop_toBottomOf="@+id/tempDesc_tv"
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100 %"
-            android:textSize="8sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/cloudsDescBottom_tv"
             app:layout_constraintTop_toTopOf="@+id/cloudsDescBottom_tv" />

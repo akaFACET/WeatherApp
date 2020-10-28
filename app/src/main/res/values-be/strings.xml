@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Надвор\'е</string>
+    <string name="wind">Вецер</string>
+    <string name="feels">Адчуваецца</string>
+    <string name="pressure">Ціск</string>
+    <string name="humidity">Вільготнасць</string>
+    <string name="temperature">Тэмпература</string>
+    <string name="precipitation">Ападкі</string>
+    <string name="cloudiness">Воблачнасць</string>
+    <string name="saved">Захаваная</string>
+    <string name="search">Пошук</string>
+    <string name="settings">Налады</string>
+    <string name="menu">Меню</string>
+    <string name="language">Мова</string>
+    <string name="english">Англійская</string>
+    <string name="russian">Руская</string>
+    <string name="ukrainian">Ўкраінскі</string>
+    <string name="belarusian">Беларускі</string>
+    <string name="nightMode">Начны рэжым</string>
+    <string name="units">Адзінкі вымярэння</string>
+    <string name="on">Уключаны</string>
+    <string name="off">Выключаны</string>
+    <string name="automatic">Аўтаматычна</string>
+    <string name="celsius">Цэльсій</string>
+    <string name="fahrenheit">Фарэнгейт</string>
+    <string name="kelvin">Кельвін</string>
+    <string name="noInternetConnection">Адсутнічае інтэрнэт злучэнне</string>
+    <string name="noGPS">Адсутнічае доступ да GPS</string>
+    <string name="noCity">Не атрымалася знайсці такі населены пункт</string>
+    <string name="error">Што нешта пайшло не так :( Паспрабуйце пазней</string>
+    <string name="percentage">%</string>
+    <string name="millimeters">мм</string>
+    <string name="metersPerSeconds">м/с</string>
+</resources>

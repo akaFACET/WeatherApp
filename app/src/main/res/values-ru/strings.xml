@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="wind">Ветер</string>
+    <string name="feels">Ощущается</string>
+    <string name="pressure">Давление</string>
+    <string name="humidity">Влажность</string>
+    <string name="temperature">Температура</string>
+    <string name="precipitation">Осадки</string>
+    <string name="cloudiness">Облачность</string>
+    <string name="saved">Сохраненное</string>
+    <string name="search">Поиск</string>
+    <string name="settings">Настройки</string>
+    <string name="menu">Меню</string>
+    <string name="language">Язык</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="ukrainian">Украинский</string>
+    <string name="belarusian">Беларуский</string>
+    <string name="nightMode">Ночной режим</string>
+    <string name="units">Единицы измерения</string>
+    <string name="on">Включен</string>
+    <string name="off">Выключен</string>
+    <string name="automatic">Автоматически</string>
+    <string name="celsius">Цельсий</string>
+    <string name="fahrenheit">Фаренгейт</string>
+    <string name="kelvin">Кельвин</string>
+    <string name="noInternetConnection">Отсутствует интернет соединение</string>
+    <string name="noGPS">Отсутствует доступ к GPS</string>
+    <string name="noCity">Не удалось найти такой населенный пункт</string>
+    <string name="error">Что то пошло не так :( Попробуйте позже</string>
+    <string name="percentage">%</string>
+    <string name="millimeters">мм</string>
+    <string name="metersPerSeconds">м/с</string>
+</resources>

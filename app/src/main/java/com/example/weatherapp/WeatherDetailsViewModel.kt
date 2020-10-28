@@ -30,8 +30,8 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
                 withContext(Dispatchers.IO){
                     val result = WeatherRepository.getWeatherDataByCityIdFromDb(cityId)
                     currentWeather.postValue(result)
-                    listWeatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather))
-                    weatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather)[0])
+                    listWeatherPerDay.postValue(Mapper.getWeatherPerDays(result))
+                    weatherPerDay.postValue(Mapper.getWeatherPerDays(result)[0])
                 }
                 isLoading.value = false
             }catch (ex: Exception){
@@ -50,8 +50,8 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
                     val response = WeatherRepository.getWeatherByCityId(cityId)
                     WeatherRepository.saveData(response)
                     currentWeather.postValue(response)
-                    listWeatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather))
-                    weatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather)[0])
+                    listWeatherPerDay.postValue(Mapper.getWeatherPerDays(response))
+                    weatherPerDay.postValue(Mapper.getWeatherPerDays(response)[0])
 
                 }
                 isLoading.value = false

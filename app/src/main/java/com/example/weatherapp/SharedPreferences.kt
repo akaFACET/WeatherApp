@@ -2,6 +2,7 @@ package com.example.weatherapp
 
 import android.content.Context
 import android.content.SharedPreferences
+import java.util.*
 
 class PreferencesManager(context: Context) {
 
@@ -9,7 +10,8 @@ class PreferencesManager(context: Context) {
         private const val PREF_NAME = "weatherAppSettings"
         private const val KEY_NIGHT_MODE = "NIGTHT_MODE"
         private const val KEY_UNITS = "UNITS"
-
+        private const val KEY_LANG = "LANG"
+        private const val KEY_COUNTRY = "COUNTRY"
     }
 
     private var mPref: SharedPreferences
@@ -19,7 +21,7 @@ class PreferencesManager(context: Context) {
     }
 
     fun getSavedNightModeValue(): Int{
-        return mPref.getInt(KEY_NIGHT_MODE, 0)
+        return mPref.getInt(KEY_NIGHT_MODE, NightModeType.getDefaultMode().value)
     }
 
     fun saveNightModeValue(nightMode: Int){
@@ -27,31 +29,25 @@ class PreferencesManager(context: Context) {
     }
 
     fun getSavedUnitsValue(): String?{
-        return mPref.getString(KEY_UNITS, "metric") ?: "metric"
+        return mPref.getString(KEY_UNITS, UnitsType.getDefaultUnits().value)
     }
 
     fun saveUnitsValue(units: String){
         mPref.edit().putString(KEY_UNITS,units).apply()
     }
 
-
-    var value: Long
-        get() = mPref.getLong(KEY_NIGHT_MODE, 0)
-        set(value) {
-            mPref.edit()
-                .putLong(KEY_NIGHT_MODE, value)
-                .apply()
-        }
-
-    fun remove(key: String?) {
-        mPref.edit()
-            .remove(key)
-            .apply()
+    fun getSavedLanguage(): String{
+        return mPref.getString(KEY_LANG, Language.getDefaultLanguage().value)!!
     }
 
-    fun clear(): Boolean {
-        return mPref.edit()
-            .clear()
-            .commit()
+    fun saveLanguageValue(lang: String){
+        mPref.edit().putString(KEY_LANG, lang).apply()
+    }
+
+    fun getSavedCountry(): String{
+        return mPref.getString(KEY_COUNTRY, Language.getDefaultLanguage().country)!!
+    }
+    fun saveCountry(country: String){
+        mPref.edit().putString(KEY_COUNTRY,country).apply()
     }
 }

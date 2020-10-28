@@ -13,28 +13,34 @@
 
     <LinearLayout
 
+        android:id="@+id/nigthModSelector_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:weightSum="100"
         android:clickable="true"
         android:background="@drawable/custom_ripple">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Ночной режим"
+            android:text="@string/nightMode"
             android:gravity="center|start"
-            android:layout_weight="40"/>
+            android:layout_weight="40" />
 
         <TextView
             android:id="@+id/nigthModSelector_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="60"
-            android:text="Автоматически"
-            android:gravity="center|end" />
+            android:gravity="center|end"
+            android:text=""/>
+
+
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/unitsTypeSelector_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -46,19 +52,19 @@
             android:layout_height="match_parent"
             android:gravity="center|start"
             android:layout_weight="40"
-            android:text="Единицы измерения"/>
+            android:text="@string/units"/>
         <TextView
             android:id="@+id/unitsTypeSelector_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center|end"
             android:layout_weight="60"
-            android:text="Цельсий"/>
+            android:text=""/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/languageSelector_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_weight="10"
         android:weightSum="100"
         android:clickable="true"
@@ -68,13 +74,14 @@
             android:layout_height="match_parent"
             android:gravity="center|start"
             android:layout_weight="40"
-            android:text="Язык"/>
+            android:text="@string/language"/>
         <TextView
+            android:id="@+id/languageSelector_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center|end"
             android:layout_weight="60"
-            android:text="Русский"/>
+            android:text=""/>
     </LinearLayout>
 
 

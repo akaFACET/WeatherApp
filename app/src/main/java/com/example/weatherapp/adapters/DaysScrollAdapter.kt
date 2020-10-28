@@ -81,7 +81,7 @@ class DaysScrollAdapter(
                     )
             )
 
-            temp.text = "${tempMin}${units}| ${tempMax}${units}"
+            temp.text = "${tempMin}${units} | ${tempMax}${units}"
 
         }
 

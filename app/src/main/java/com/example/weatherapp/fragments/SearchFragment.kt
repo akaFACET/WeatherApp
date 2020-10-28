@@ -59,7 +59,7 @@ class SearchFragment : Fragment() {
                 Exceptions.noInternet -> {
                     Snackbar.make(
                         search_fragment,
-                        "No Internet Connection",
+                        getString(R.string.noInternetConnection),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
@@ -67,7 +67,7 @@ class SearchFragment : Fragment() {
                 Exceptions.noCity -> {
                     Snackbar.make(
                         search_fragment,
-                        "no City",
+                        getString(R.string.noCity),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
@@ -75,7 +75,7 @@ class SearchFragment : Fragment() {
                 Exceptions.others -> {
                     Snackbar.make(
                         search_fragment,
-                        "Error",
+                        R.string.error,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }

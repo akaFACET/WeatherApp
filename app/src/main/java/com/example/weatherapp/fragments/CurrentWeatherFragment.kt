@@ -148,16 +148,16 @@ class CurrentWeatherFragment : Fragment() {
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 when (position) {
                     0 -> {
-                        tab.text = "Температура"
+                        tab.text = getString(R.string.temperature)
                     }
                     1 -> {
-                        tab.text = "Осадки"
+                        tab.text = getString(R.string.precipitation)
                     }
                     2 -> {
-                        tab.text = "Ветер"
+                        tab.text = getString(R.string.wind)
                     }
                     3 -> {
-                        tab.text = "Облачность"
+                        tab.text = getString(R.string.cloudiness)
                     }
                 }
             }).attach()
@@ -178,28 +178,28 @@ class CurrentWeatherFragment : Fragment() {
             when(exception){
                 Exceptions.noInternet -> {
                     Snackbar.make(current_weather_fragment,
-                        "No Internet Connection",
+                        getString(R.string.noInternetConnection),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
 
                 Exceptions.others -> {
                     Snackbar.make(current_weather_fragment,
-                        "Error",
+                        getString(R.string.error),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
 
                 Exceptions.noGPS -> {
                     Snackbar.make(current_weather_fragment,
-                        "No GPS",
+                        getString(R.string.noGPS),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
 
                 Exceptions.noCity -> {
                     Snackbar.make(current_weather_fragment,
-                        "No City",
+                        R.string.noCity,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
@@ -216,11 +216,9 @@ class CurrentWeatherFragment : Fragment() {
                 )
                 weatherDesc_tv.text = weather.subWeather[0].weatherDescription.capitalize()
                 temp_tv.text = weather.subWeather[0].mainTemp.toString()
-                humidity_tv.text = weather.subWeather[0].mainHumidity.toString() +" %"
-                wind_tv.text = weather.subWeather[0].windSpeed.toString() + " м/с"
-                //feelsTemp_tv.text = weather.subWeather[0].mainFeels_like.toString()
-                pressure_tv.text = weather.subWeather[0].mainPressure.toString() + " мм"
-
+                humidity_tv.text = weather.subWeather[0].mainHumidity.toString()+ " " + getString(R.string.percentage)
+                wind_tv.text = weather.subWeather[0].windSpeed.toString()+ " " + getString(R.string.metersPerSeconds)
+                pressure_tv.text = weather.subWeather[0].mainPressure.toString()+ " " + getString(R.string.millimeters)
                 tempDesc_tv.text = Util.getTempUnits(weather.subWeather[0].units)
             }
         })
@@ -239,10 +237,9 @@ class CurrentWeatherFragment : Fragment() {
         weatherDesc_tv.text = weatherPerHour.weatherDescription.capitalize()
         temp_tv.text = weatherPerHour.mainTemp.toString()
         //precipitationBottom_tv.text = weatherPerHour.precipitation.toString() + " мм"
-        pressure_tv.text = weatherPerHour.mainPressure.toString() + " мм"
-        humidity_tv.text = weatherPerHour.mainHumidity.toString() + " %"
-        wind_tv.text = weatherPerHour.windSpeed.toString() + " м/с"
-        //cloudsBottom_tv.text = weatherPerHour.cloudsAll.toString() + " %"
+        pressure_tv.text = weatherPerHour.mainPressure.toString()+ " " + getString(R.string.millimeters)
+        humidity_tv.text = weatherPerHour.mainHumidity.toString()+ " " + getString(R.string.percentage)
+        wind_tv.text = weatherPerHour.windSpeed.toString()+ " " + getString(R.string.metersPerSeconds)
         dateTime_tv.text = Util.getDateFromUnixTime(weatherPerHour.dt)
 
     }
