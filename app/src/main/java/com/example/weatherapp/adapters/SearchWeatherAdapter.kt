@@ -13,13 +13,13 @@ class SearchWeatherAdapter(
     var values: List<FoundCities>,
     val context: Context,
     val listenerSearch: OnSearchItemClickListener
-): RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        private val name: TextView = itemView.findViewById(R.id.name_tv)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val name: TextView = itemView.findViewById(R.id.place_tv)
         private val country: TextView = itemView.findViewById(R.id.country_tv)
 
-        fun bind(foundCities: FoundCities, listenerSearch: OnSearchItemClickListener){
+        fun bind(foundCities: FoundCities, listenerSearch: OnSearchItemClickListener) {
             itemView.setOnClickListener {
                 listenerSearch.onItemClick(foundCities)
             }
@@ -32,7 +32,7 @@ class SearchWeatherAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.search_weather_item_row,parent,false)
+            .inflate(R.layout.search_weather_item_row, parent, false)
         return ViewHolder(itemView)
     }
 

@@ -2,7 +2,6 @@ package com.example.weatherapp
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.google.android.material.appbar.AppBarLayout
 
@@ -12,7 +11,6 @@ class CollapsibleToolbar @JvmOverloads constructor(
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
         progress = -verticalOffset / appBarLayout?.totalScrollRange?.toFloat()!!
-        Log.e("test", "progress = $progress")
     }
 
     override fun onAttachedToWindow() {

@@ -24,13 +24,13 @@ enum class UnitsType(
         R.string.kelvin
     );
 
-    companion object{
+    companion object {
         fun fromValue(value: String) = UnitsType.values().firstOrNull {
             it.value == value
         } ?: getDefaultUnits()
 
         fun fromCustomOrdinal(ordinal: Int): UnitsType {
-            return when(ordinal){
+            return when (ordinal) {
                 0 -> METRIC_UNITS
                 1 -> IMPERIAL_UNITS
                 2 -> ABSOLUTE_UNITS

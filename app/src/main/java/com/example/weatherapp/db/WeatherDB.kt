@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(CitiesEntity::class, SubWeatherEntity::class),version = 2)
+@Database(entities = arrayOf(CitiesEntity::class, SubWeatherEntity::class), version = 2)
 
-abstract class WeatherDB : RoomDatabase(){
+abstract class WeatherDB : RoomDatabase() {
     companion object {
         private const val DB_NAME: String = "WeatherDB.db"
 
@@ -29,5 +29,6 @@ abstract class WeatherDB : RoomDatabase(){
             ).fallbackToDestructiveMigration().build()
         }
     }
-    abstract fun getSavedWeatherDAO():WeatherDAO
+
+    abstract fun getSavedWeatherDAO(): WeatherDAO
 }

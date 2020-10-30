@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,6 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="@drawable/custom_ripple">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".75" />
 
         <ImageView
             android:id="@+id/image_iv"
@@ -22,11 +29,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/name_tv"
+            android:id="@+id/place_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text=""
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/country_tv"
             app:layout_constraintHorizontal_bias="0.0"
@@ -37,20 +44,20 @@
             android:id="@+id/date_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text=""
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
-            app:layout_constraintTop_toBottomOf="@+id/name_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/place_tv" />
 
         <TextView
             android:id="@+id/description_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
             app:layout_constraintTop_toBottomOf="@+id/date_tv" />
@@ -60,33 +67,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text=""
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/temp_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
-            android:text=""
-            android:textSize="66sp"
+            android:gravity="end|center_vertical"
+            android:textSize="60sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
             app:layout_constraintTop_toBottomOf="@+id/description_tv"
             app:layout_constraintVertical_bias="0.0" />
-
-
 
         <TextView
             android:id="@+id/tempDesc_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text=""
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/temp_tv"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/temp_tv" />
 
         <TextView
@@ -94,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cloudiness"
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
             app:layout_constraintTop_toBottomOf="@+id/tempDesc_tv"
@@ -104,8 +109,7 @@
             android:id="@+id/clouds_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/cloudsDescBottom_tv"
             app:layout_constraintTop_toTopOf="@+id/cloudsDescBottom_tv" />
@@ -115,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pressure"
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
             app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
 
@@ -123,8 +127,7 @@
             android:id="@+id/pressure_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/pressureDesc_tv" />
@@ -135,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/humidity"
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/windSpeedDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/temp_tv" />
 
@@ -143,8 +146,7 @@
             android:id="@+id/humidity_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/windSpeed_tv"
             app:layout_constraintStart_toEndOf="@+id/humidityDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/humidityDesc_tv" />
@@ -155,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="@string/wind"
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
 
@@ -164,21 +166,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text=""
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/windSpeedDesc_tv"
             app:layout_constraintTop_toTopOf="@+id/windSpeedDesc_tv"
             app:layout_constraintVertical_bias="1.0" />
-
-
-
-
-
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

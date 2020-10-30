@@ -8,11 +8,11 @@
     tools:context=".fragments.SearchFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/search_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:id="@+id/search_sv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:queryHint="Search"/>
+                app:queryHint="Search" />
 
         </androidx.cardview.widget.CardView>
 

@@ -1,9 +1,8 @@
 package com.example.weatherapp
 
 import androidx.annotation.StringRes
-import java.util.*
 
-enum class Language (
+enum class Language(
     val customOrdinal: Int,
     val value: String,
     val country: String,
@@ -34,13 +33,13 @@ enum class Language (
         R.string.ukrainian
     );
 
-    companion object{
+    companion object {
         fun fromValue(value: String) = Language.values().firstOrNull {
             it.value == value
         } ?: getDefaultLanguage()
 
         fun fromCustomOrdinal(ordinal: Int): Language {
-            return when(ordinal){
+            return when (ordinal) {
                 0 -> ENGLISH
                 1 -> RUSSIAN
                 2 -> BELARUSIAN

@@ -2,7 +2,6 @@ package com.example.weatherapp.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.weatherapp.*
-import com.example.weatherapp.viewModels.SettingsViewModel
 import kotlinx.android.synthetic.main.settings_fragment.*
 
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var viewModel: SettingsViewModel
     private lateinit var preferencesManager: PreferencesManager
 
     private var nigthModeChooseItem = 0
@@ -27,7 +24,6 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("err", "CreateSettingsFragment")
         return inflater.inflate(R.layout.settings_fragment, container, false)
     }
 
@@ -48,7 +44,7 @@ class SettingsFragment : Fragment() {
         languageSelector_tv.text = getString(Language.fromValue(savedLanguage).title)
 
 
-        nigthModSelector_ll.setOnClickListener{
+        nigthModSelector_ll.setOnClickListener {
             showNightModeAlertDialog()
         }
 
@@ -63,8 +59,7 @@ class SettingsFragment : Fragment() {
     }
 
 
-
-    private fun showLanguageSelectorAlertDialog(){
+    private fun showLanguageSelectorAlertDialog() {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
 
         val items = arrayOf(
@@ -90,7 +85,7 @@ class SettingsFragment : Fragment() {
 
                     preferencesManager.saveLanguageValue(language.value)
                     preferencesManager.saveCountry(language.country)
-                    //update configuration
+
                     activity?.recreate()
                     dialog!!.cancel()
                 }
@@ -105,14 +100,18 @@ class SettingsFragment : Fragment() {
 
         alertDialog.setTitle(getString(R.string.nightMode))
 
-        val items = arrayOf(
+        val items = mutableListOf(
             getString(NightModeType.MODE_NIGHT_NO.title),
-            getString(NightModeType.MODE_NIGHT_YES.title),
-            getString(NightModeType.getDefaultMode().title)
+            getString(NightModeType.MODE_NIGHT_YES.title)
         )
 
+        if (NightModeType.getDefaultMode() == NightModeType.MODE_NIGHT_FOLLOW_SYSTEM) {
+            items.add(getString(NightModeType.getDefaultMode().title))
+        }
+
+
         alertDialog.setSingleChoiceItems(
-            items,
+            items.toTypedArray(),
             nigthModeChooseItem,
             object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
@@ -134,7 +133,6 @@ class SettingsFragment : Fragment() {
         alert.setCanceledOnTouchOutside(true)
         alert.show()
     }
-
 
 
     private fun showUnitsTypeAlertDialog() {
@@ -168,12 +166,6 @@ class SettingsFragment : Fragment() {
         val alert: AlertDialog = alertDialog.create()
         alert.setCanceledOnTouchOutside(true)
         alert.show()
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.e("err", "DetachSettingsFragment")
     }
 
 }

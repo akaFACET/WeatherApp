@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragments.SettingsFragment"
-    android:weightSum="100"
     android:divider="?android:listDivider"
+    android:dividerPadding="4dp"
+    android:orientation="vertical"
     android:showDividers="middle"
-    android:paddingHorizontal="14dp">
+    android:weightSum="100"
+    tools:context=".fragments.SettingsFragment">
 
     <LinearLayout
-
         android:id="@+id/nigthModSelector_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:weightSum="100"
-        android:clickable="true"
-        android:background="@drawable/custom_ripple">
+        android:background="@drawable/custom_ripple"
+        android:paddingHorizontal="10dp"
+        android:weightSum="100">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/nightMode"
+            android:layout_weight="40"
             android:gravity="center|start"
-            android:layout_weight="40" />
+            android:text="@string/nightMode" />
 
         <TextView
             android:id="@+id/nigthModSelector_tv"
@@ -34,9 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="60"
             android:gravity="center|end"
-            android:text=""/>
-
-
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,44 +40,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:weightSum="100"
-        android:clickable="true"
-        android:background="@drawable/custom_ripple">
+        android:background="@drawable/custom_ripple"
+        android:paddingHorizontal="10dp"
+        android:weightSum="100">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center|start"
             android:layout_weight="40"
-            android:text="@string/units"/>
+            android:gravity="center|start"
+            android:text="@string/units" />
+
         <TextView
             android:id="@+id/unitsTypeSelector_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center|end"
             android:layout_weight="60"
-            android:text=""/>
+            android:gravity="center|end"
+            android:text="" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/languageSelector_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:weightSum="100"
-        android:clickable="true"
-        android:background="@drawable/custom_ripple">
+        android:background="@drawable/custom_ripple"
+        android:paddingHorizontal="10dp"
+        android:weightSum="100">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center|start"
             android:layout_weight="40"
-            android:text="@string/language"/>
+            android:gravity="center|start"
+            android:text="@string/language" />
+
         <TextView
             android:id="@+id/languageSelector_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center|end"
             android:layout_weight="60"
-            android:text=""/>
+            android:gravity="center|end"
+            android:text="" />
     </LinearLayout>
 
 

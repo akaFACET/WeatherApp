@@ -1,8 +1,6 @@
 package com.example.weatherapp.adapters
 
 import android.content.Context
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,27 +27,11 @@ class DaysScrollAdapter(
 
         fun bind(weatherPerDay: WeatherPerDay, listener: OnDaysScrollItemClickListener) {
             if (selectedPosition == layoutPosition) {
-                //itemView.setBackgroundResource(R.color.secondaryColor)
-                //itemView.setBackgroundResource(R.drawable.custom_ripple)
                 itemView.isSelected = true
-
-
             } else {
                 itemView.isSelected = false
-                //itemView.setBackgroundColor(Color.TRANSPARENT)
             }
 
-//            itemView.setOnClickListener {
-//                if (selectedPosition == layoutPosition){
-//                    selectedPosition = -1
-//                    notifyDataSetChanged()
-//                    //notifyItemChanged(selectedPosition)
-//                }
-//                selectedPosition = layoutPosition
-//                //notifyDataSetChanged()
-//                notifyItemChanged(selectedPosition)
-//                listener.onItemClick(weatherPerDay.weatherPerHour)
-//            }
             itemView.setOnClickListener {
                 if (selectedPosition >= 0)
                     notifyItemChanged(selectedPosition)
@@ -84,7 +66,6 @@ class DaysScrollAdapter(
             temp.text = "${tempMin}${units} | ${tempMax}${units}"
 
         }
-
 
     }
 

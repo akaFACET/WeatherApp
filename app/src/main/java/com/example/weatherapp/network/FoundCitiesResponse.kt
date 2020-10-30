@@ -3,40 +3,39 @@ package com.example.weatherapp.network
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-
 @JsonClass(generateAdapter = true)
 data class FoundCitiesResponse(
 
     @Json(name = "message")
-    val message : String?,
+    val message: String?,
     @Json(name = "cod")
-    val cod : Int?,
+    val cod: Int?,
     @Json(name = "count")
-    val count : Int?,
+    val count: Int?,
     @Json(name = "list")
-    val CitiesList : List<CitiesList>?
+    val CitiesList: List<CitiesList>?
 )
 
 @JsonClass(generateAdapter = true)
-data class CitiesList (
+data class CitiesList(
 
     @Json(name = "id")
-    val id : Int?,
+    val id: Int?,
     @Json(name = "name")
-    val name : String?,
+    val name: String?,
     @Json(name = "coord")
-    val coord : Coord,
+    val coord: Coord,
     @Json(name = "main")
-    val main : Main,
+    val main: Main,
     @Json(name = "dt")
-    val dt : Int,
+    val dt: Int,
     @Json(name = "sys")
-    val sys : SysC
+    val sys: SysC
 
 )
 
 @JsonClass(generateAdapter = true)
-data class SysC (
+data class SysC(
     @Json(name = "country")
-    val country : String
+    val country: String
 )

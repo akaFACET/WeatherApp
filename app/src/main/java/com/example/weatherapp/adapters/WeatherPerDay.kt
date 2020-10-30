@@ -1,7 +1,7 @@
 package com.example.weatherapp.adapters
 
 data class WeatherPerDay(
-    val day:String,
+    val day: String,
     val weatherPerHour: List<WeatherPerHour>
 )
 

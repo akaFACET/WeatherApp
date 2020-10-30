@@ -1,6 +1,5 @@
 package com.example.weatherapp.viewModels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,19 +13,12 @@ class SavedWeatherViewModel : ViewModel() {
 
     val data = MutableLiveData<List<WeatherData>>()
 
-    fun deleteData(weatherData: WeatherData){
+    fun deleteData(weatherData: WeatherData) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 WeatherRepository.deleteData(weatherData)
             }
         }
     }
 
-//    fun update(){
-//        WeatherRepository.update()
-//    }
-    override fun onCleared() {
-        super.onCleared()
-        Log.e("err","onCleared SavedViewModel")
-    }
 }

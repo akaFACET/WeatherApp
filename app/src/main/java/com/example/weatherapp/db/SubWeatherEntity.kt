@@ -16,13 +16,13 @@ import androidx.room.PrimaryKey
 data class SubWeatherEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val cityId:Int,
+    val cityId: Int,
     var isLastKnownLocation: Boolean,
     val weatherId: Int,
     val weatherMain: String,
     val weatherDescription: String,
     val weatherIcon: String,
-    val dt:Long,
+    val dt: Long,
     val dt_txt: String,
     val mainTemp: Int,
     val mainFeels_like: Double,
@@ -36,5 +36,4 @@ data class SubWeatherEntity(
     val snow: Double,
     val rain: Double,
     val units: String
-
 )

@@ -99,7 +99,7 @@
 
             <CustomAttribute
                 app:attributeName="textSize"
-                app:customFloatValue="96" />
+                app:customFloatValue="86" />
         </Constraint>
 
         <Constraint
@@ -319,11 +319,6 @@
 
 
     </ConstraintSet>
-
-
-
-
-
 
 
 

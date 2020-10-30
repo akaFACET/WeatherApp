@@ -20,13 +20,14 @@
     <string name="units">Units</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="automatic">Automatic</string>
+    <string name="automatic">How in the system</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="kelvin">Kelvin</string>
     <string name="noInternetConnection">No internet connection</string>
     <string name="noGPS">No GPS access</string>
     <string name="noCity">Could not find such a settlement</string>
+    <string name="noException">Ok</string>
     <string name="error">Something went wrong :( Please try later</string>
     <string name="percentage">%</string>
     <string name="millimeters">mm</string>

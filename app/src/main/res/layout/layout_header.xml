@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     android:fitsSystemWindows="true"
     android:minHeight="116dp"
-    app:layoutDescription="@xml/scene"
-    android:background="@color/primaryColor"
+    app:layoutDescription="@xml/current_weather_motion_scene"
     app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
     <androidx.constraintlayout.widget.Guideline
@@ -70,7 +70,6 @@
         android:layout_height="wrap_content"
         android:text="" />
 
-
     <ImageView
         android:id="@+id/humidity_iv"
         android:layout_width="0dp"
@@ -90,7 +89,6 @@
         android:layout_height="wrap_content"
         android:gravity="center|top"
         android:text="" />
-
 
     <ImageView
         android:id="@+id/wind_iv"
@@ -112,7 +110,6 @@
         android:gravity="center"
         android:text="" />
 
-
     <ImageView
         android:id="@+id/feelsTemp_iv"
         android:layout_width="0dp"
@@ -133,7 +130,6 @@
         android:gravity="center"
         android:text="" />
 
-
     <ImageView
         android:id="@+id/pressure_iv"
         android:layout_width="0dp"
@@ -153,6 +149,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="" />
-
 
 </com.example.weatherapp.CollapsibleToolbar>

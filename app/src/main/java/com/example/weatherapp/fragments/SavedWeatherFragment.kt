@@ -2,14 +2,10 @@ package com.example.weatherapp.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -18,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.*
 
 import com.example.weatherapp.adapters.OnSavedItemClickListener
-import com.example.weatherapp.adapters.OnSearchItemClickListener
 import com.example.weatherapp.adapters.SavedWeatherAdapter
-import com.example.weatherapp.network.FoundCities
 import com.example.weatherapp.network.WeatherData
 import com.example.weatherapp.viewModels.SavedWeatherViewModel
 import kotlinx.android.synthetic.main.saved_weather_fragment.*
@@ -30,7 +24,7 @@ class SavedWeatherFragment : Fragment() {
 
 
     private lateinit var viewModel: SavedWeatherViewModel
-    private lateinit var adapterRv: SavedWeatherAdapter
+    private lateinit var savedWeatherAdapter: SavedWeatherAdapter
     private lateinit var weather: List<WeatherData>
     private lateinit var navController: NavController
 
@@ -42,7 +36,7 @@ class SavedWeatherFragment : Fragment() {
 
         navController = NavHostFragment.findNavController(this)
 
-        fragmentLayout.floating_action_button.setOnClickListener{
+        fragmentLayout.floating_action_button.setOnClickListener {
             navController.navigate(R.id.searchFragment)
         }
         return fragmentLayout
@@ -51,7 +45,7 @@ class SavedWeatherFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SavedWeatherViewModel::class.java)
-        adapterRv = SavedWeatherAdapter(
+        savedWeatherAdapter = SavedWeatherAdapter(
             emptyList(),
             requireContext(),
             object : OnSavedItemClickListener {
@@ -63,27 +57,24 @@ class SavedWeatherFragment : Fragment() {
             }
         )
 
-        saved_rv.adapter = adapterRv
-
-
+        saved_rv.adapter = savedWeatherAdapter
 
         WeatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
             val weatherData = Mapper.mapWeatherDataEntityToWeatherData(it)
             weather = weatherData
-            adapterRv.values = weatherData
-            adapterRv.notifyDataSetChanged()
+            savedWeatherAdapter.values = weatherData
+            savedWeatherAdapter.notifyDataSetChanged()
         })
 
 
         val swipeHelper = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                viewModel.deleteData(weather.get(viewHolder.adapterPosition))
-                adapterRv.notifyItemRemoved(viewHolder.adapterPosition)
+                viewModel.deleteData(weather.get(viewHolder.absoluteAdapterPosition))
+                savedWeatherAdapter.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelper)
         itemTouchHelper.attachToRecyclerView(saved_rv)
-
     }
 
 }

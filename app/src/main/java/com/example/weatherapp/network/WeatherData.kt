@@ -1,6 +1,5 @@
 package com.example.weatherapp.network
 
-
 data class WeatherData(
     val cityId: Int,
     var isLastKnownLocation: Boolean,
@@ -36,5 +35,4 @@ data class SubWeather(
     val rain: Double,
     val snow: Double,
     val units: String
-
 )

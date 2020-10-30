@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
 
-    val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_na)
+    val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_24)
     val intrinsicWidth = deleteIcon!!.intrinsicWidth
     val intrinsicHeight = deleteIcon!!.intrinsicHeight
     val background = ColorDrawable()
@@ -27,7 +27,7 @@ abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCa
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        if (viewHolder?.adapterPosition == 10) return 0
+        if (viewHolder?.bindingAdapterPosition == 10) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
     @SuppressLint("ResourceAsColor")

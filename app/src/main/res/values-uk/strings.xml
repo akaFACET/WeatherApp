@@ -21,13 +21,14 @@
     <string name="units">Одиниці виміру</string>
     <string name="on">Включений</string>
     <string name="off">Вимкнений</string>
-    <string name="automatic">Автоматично</string>
+    <string name="automatic">Як в системі</string>
     <string name="celsius">Цельсій</string>
     <string name="fahrenheit">Фаренгейт</string>
     <string name="kelvin">Кельвін</string>
     <string name="noInternetConnection">Відсутня інтернет з\'єднання</string>
     <string name="noGPS">Відсутня доступ до GPS</string>
     <string name="noCity">Не вдалося знайти такий населений пункт</string>
+    <string name="noException">Ok</string>
     <string name="error">Що щось пішло не так :( Спробуйте пізніше</string>
     <string name="percentage">%</string>
     <string name="millimeters">мм</string>

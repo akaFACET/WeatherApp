@@ -15,15 +15,12 @@ interface WeatherDAO {
     @Insert(onConflict = REPLACE)
     fun saveCitiesEntity(citiesEntity: CitiesEntity)
 
-
     @Insert(onConflict = REPLACE)
     fun saveSubWeatherEntity(subWeatherEntity: SubWeatherEntity)
 
-
-    // maybe suspend
     @Transaction
     fun saveWeatherData(weatherData: WeatherData) {
-        if (!weatherData.isLastKnownLocation){
+        if (!weatherData.isLastKnownLocation) {
             saveCitiesEntity(Mapper.mapWeatherDataToCitiesEntity(weatherData))
             for (weather: SubWeather in weatherData.subWeather) {
                 saveSubWeatherEntity(Mapper.mapSubWeatherToSubWeatherEntity(weather))
@@ -33,7 +30,7 @@ interface WeatherDAO {
 
     @Transaction
     fun saveLastKnownLocation(weatherData: WeatherData) {
-        if (weatherData.isLastKnownLocation){
+        if (weatherData.isLastKnownLocation) {
             saveCitiesEntity(Mapper.mapWeatherDataToCitiesEntity(weatherData))
             for (weather: SubWeather in weatherData.subWeather) {
                 saveSubWeatherEntity(Mapper.mapSubWeatherToSubWeatherEntity(weather))

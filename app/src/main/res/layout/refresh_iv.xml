@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <ImageButton
-        android:id="@+id/test_Ib"
+        android:id="@+id/refresh_ib"
         xmlns:android="http://schemas.android.com/apk/res/android"
         style="@android:style/Widget.ActionButton"
         android:layout_width="match_parent"

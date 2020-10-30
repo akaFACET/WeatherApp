@@ -8,8 +8,6 @@ enum class NightModeType(
     val customOrdinal: Int,
     @AppCompatDelegate.NightMode val value: Int,
     @StringRes val title: Int
-    //@StringRes val title: Int
-
 ) {
     MODE_NIGHT_NO(
         0,
@@ -29,6 +27,7 @@ enum class NightModeType(
         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
         R.string.automatic
     ),
+
     MODE_NIGHT_AUTO_BATTERY(
         2,
         AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY,
@@ -56,8 +55,6 @@ enum class NightModeType(
             }
         }
     }
-
-
 }
 
 

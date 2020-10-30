@@ -18,8 +18,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
 class Location(private val application: Application) {
-
-
     lateinit var locationManager: LocationManager
     var currentLocation = MutableLiveData<LocationData>()
     private var mFusedLocationClient: FusedLocationProviderClient =
@@ -28,7 +26,6 @@ class Location(private val application: Application) {
 
 
     fun getLastLocation() {
-        Log.e("errorGMS", "GMS = ${GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application.applicationContext)}")
         if (GmsStatus == ConnectionResult.SUCCESS){
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
@@ -40,22 +37,13 @@ class Location(private val application: Application) {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             mFusedLocationClient.lastLocation.addOnCompleteListener { task ->
-                var location: Location? = task.result
+                val location: Location? = task.result
                 if (location == null) {
-                    Log.e("errorGPS", "requestNewLocationData()")
                     getLocationFromLocationManager()
                 } else {
-                    Log.e("errorGPS", "class Location  = $location.latitude")
                     currentLocation.value = LocationData(location.latitude, location.longitude)
                 }
             }
@@ -65,14 +53,12 @@ class Location(private val application: Application) {
     }
 
 
-
-
     private fun getLocationFromLocationManager() {
+
         locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
 
-            Log.e("errorGPS", "requestSingleUpdate")
             val providers = locationManager.getAllProviders()
 
             if (providers.contains(LocationManager.NETWORK_PROVIDER)){
@@ -89,34 +75,26 @@ class Location(private val application: Application) {
                 )
             }
 
-
-
         } catch (ex: SecurityException) {
-            Log.e("errorGPS", "SecurityException = $ex")
+
         }
 
     }
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            Log.e("errorGPS", "onLocationChanged has null")
             if (location != null) {
-                Log.e("errorGPS", "location = ${location.latitude},${location.longitude} ")
-               // locTest = LocationData(location.latitude, location.longitude)
                 currentLocation.value = LocationData(location.latitude, location.longitude)
             }
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-            Log.e("errorGPS", "onStatusChanged")
         }
 
         override fun onProviderEnabled(provider: String?) {
-            Log.e("errorGPS", "onProviderEnabled")
         }
 
         override fun onProviderDisabled(provider: String?) {
-            Log.e("errorGPS", "onProviderDisabled")
         }
 
     }

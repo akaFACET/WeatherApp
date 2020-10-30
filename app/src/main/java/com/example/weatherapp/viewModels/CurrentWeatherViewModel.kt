@@ -23,34 +23,16 @@ import java.net.UnknownHostException
 class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
     application
 ) {
-
     private val location = Location(application)
     var currentWeather = MutableLiveData<WeatherData?>()
     var listWeatherPerDay = MutableLiveData<List<WeatherPerDay>?>()
-    //var weatherPerDay = MutableLiveData<WeatherPerDay?>()
     var isLoading = MutableLiveData<Boolean>()
     var exception = MutableLiveData<Exceptions>()
-    //var currentLocation = MediatorLiveData<LocationData>()
-    //var currentLocation = location.currentLocation
-
-//    init {
-//        location.currentLocation.observeForever(Observer {
-//            Log.e("err", "observeForever $it")
-//        })
-////        currentLocation.addSource(location.currentLocation, Observer {
-////            currentLocation.value = it
-////            Log.e("err", "${it.latitude},${it.longitude}")
-////            Log.e("err", "getLastLocation()")
-////            getWeatherByLocation(it.latitude, it.longitude)
-////        })
-//    }
-
 
     init {
         getLastKnownLocation()
         location.currentLocation.observeForever(Observer {
-            Log.e("err", "observeForever ${it.latitude}, ${it.longitude}")
-            getWeatherByLocation(it.latitude,it.longitude)
+            getWeatherByLocation(it.latitude, it.longitude)
         })
     }
 
@@ -60,18 +42,16 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
         location.getLastLocation()
     }
 
-
-    private fun getLastKnownLocation(){
+    private fun getLastKnownLocation() {
         viewModelScope.launch {
             try {
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
                     val result = WeatherRepository.getLastKnownWeather()
                     currentWeather.postValue(result)
                     listWeatherPerDay.postValue(Mapper.getWeatherPerDays(result))
-                    //weatherPerDay.postValue(Mapper.getWeatherPerDays(result.subWeather)[0])
                 }
-            } catch (ex: Exception){
-                Log.e("getLastKnownLocation", ex.toString())
+            } catch (ex: Exception) {
+
             }
         }
     }
@@ -84,32 +64,21 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
                     val response = WeatherRepository.getWeatherByCoord(lat, lon)
                     response.isLastKnownLocation = true
                     response.subWeather.forEach {
-                        it.isLastKnownLocation=true
+                        it.isLastKnownLocation = true
                     }
                     WeatherRepository.saveLastKnownLocation(response)
                     currentWeather.postValue(response)
                     listWeatherPerDay.postValue(Mapper.getWeatherPerDays(response))
-                    //weatherPerDay.postValue(Mapper.getWeatherPerDays(response.subWeather)[0])
                 }
                 isLoading.value = false
-            }catch (ex: UnknownHostException){
-                Log.e("ex1", ex.toString())
-                Log.e("ex1", "noInternet")
+            } catch (ex: UnknownHostException) {
                 exception.value = Exceptions.noInternet
                 isLoading.value = false
-            }catch (ex: Throwable) {
-                Log.e("ex1", ex.toString())
-                Log.e("ex1", "others")
+            } catch (ex: Throwable) {
                 exception.value = Exceptions.others
                 isLoading.value = false
             }
-
         }
-    }
-
-    override fun onCleared() {
-        Log.e("RefreshError", "CurrentWeatherViewModel has destroy")
-        super.onCleared()
     }
 
 }

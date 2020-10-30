@@ -1,28 +1,18 @@
 package com.example.weatherapp.fragments
 
-import android.Manifest
-import android.content.Context.LOCATION_SERVICE
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.LocationManager
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.weatherapp.CurrentWeatherViewModelFactory
-import com.example.weatherapp.Exceptions
-import com.example.weatherapp.R
-import com.example.weatherapp.Selector
+import com.example.weatherapp.*
 import com.example.weatherapp.Utils.Util
 import com.example.weatherapp.adapters.*
-import com.example.weatherapp.viewModels.CurrentWeatherViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,71 +21,18 @@ import kotlinx.android.synthetic.main.content_bottom.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.layout_header.*
 
+class WeatherDetailsFragment : Fragment() {
 
-class CurrentWeatherFragment : Fragment() {
-
-    private lateinit var viewModel: CurrentWeatherViewModel
+    private lateinit var viewModel: WeatherDetailsViewModel
     private lateinit var daysScrollAdapter: DaysScrollAdapter
     private lateinit var chartViewPagerAdapter: ChartViewPagerAdapter
-    private val PERMISSION_ID = 42
+    private var citiId: Int = 0
     private lateinit var navController: NavController
     private lateinit var refreshItem: View
     private lateinit var animation: Animation
 
-    private fun checkPermissions(): Boolean {
-        if (PermissionChecker.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PermissionChecker.PERMISSION_GRANTED
-        ) {
-            return true
-        }
-        return false
-    }
-
-    private fun requestPermissions() {
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            PERMISSION_ID
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLastLocation()
-            } else {
-                viewModel.exception.value = Exceptions.noGPS
-            }
-        }
-    }
-
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
-            requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
-    }
-
     private fun getLastLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                viewModel.getLocation()
-            } else {
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
-            requestPermissions()
-        }
+        viewModel.getWeatherFromInternet()
     }
 
     override fun onCreateView(
@@ -110,23 +47,28 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        citiId = WeatherDetailsFragmentArgs.fromBundle(requireArguments()).cityId
         viewModel = ViewModelProviders.of(
             this,
-            CurrentWeatherViewModelFactory(requireActivity().application)
-        ).get(CurrentWeatherViewModel::class.java)
+            WeatherDetailsViewModelFactory(requireActivity().application, citiId)
+        ).get(
+            WeatherDetailsViewModel::class.java
+        )
+        viewModel.getWeatherFromDb()
 
-        chartViewPagerAdapter =
-            ChartViewPagerAdapter(requireContext(), emptyList(), object : OnChartItemClickListener {
-                override fun onChartItemClick(weatherPerHour: WeatherPerHour) {
-                    setData(weatherPerHour)
-                }
-            })
+        chartViewPagerAdapter = ChartViewPagerAdapter(requireContext(), emptyList(), object :
+            OnChartItemClickListener {
+            override fun onChartItemClick(weatherPerHour: WeatherPerHour) {
+                setData(weatherPerHour)
+            }
+        })
 
         charts_vp.apply {
             isUserInputEnabled = false
             offscreenPageLimit = 1
             adapter = chartViewPagerAdapter
         }
+
         daysScrollAdapter = DaysScrollAdapter(
             emptyList(),
             requireContext(),
@@ -135,11 +77,11 @@ class CurrentWeatherFragment : Fragment() {
                     chartViewPagerAdapter.data = weatherPerHour
                     chartViewPagerAdapter.notifyDataSetChanged()
                 }
+
             }
         )
-        content_bottom_rv.adapter = daysScrollAdapter
 
-        createTabLayoutMediator()
+        content_bottom_rv.adapter = daysScrollAdapter
 
         viewModel.listWeatherPerDay.observe(viewLifecycleOwner, Observer { listWeatherPerDay ->
             if (listWeatherPerDay != null) {
@@ -152,6 +94,7 @@ class CurrentWeatherFragment : Fragment() {
             }
         })
 
+        createTabLayoutMediator()
 
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
             when (exception) {
@@ -171,29 +114,15 @@ class CurrentWeatherFragment : Fragment() {
                     ).show()
                 }
 
-                Exceptions.noGPS -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-
-                Exceptions.noCity -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
             }
         })
-
         viewModel.currentWeather.observe(viewLifecycleOwner, Observer { weather ->
             if (weather != null) {
                 requireActivity().toolbar.title = weather.name
             }
         })
+
+
     }
 
     private fun setData(weatherPerHour: WeatherPerHour) {
@@ -203,8 +132,6 @@ class CurrentWeatherFragment : Fragment() {
                 weatherPerHour.weatherIcon
             )
         )
-        feelsTemp_tv.text =
-            weatherPerHour.mainFeels_like.toString() + Util.getTempUnits(weatherPerHour.units)
         weatherDesc_tv.text = weatherPerHour.weatherDescription.capitalize()
         temp_tv.text = weatherPerHour.mainTemp.toString()
         tempDesc_tv.text = Util.getTempUnits(weatherPerHour.units)
@@ -214,13 +141,13 @@ class CurrentWeatherFragment : Fragment() {
             weatherPerHour.mainHumidity.toString() + " " + getString(R.string.percentage)
         wind_tv.text =
             weatherPerHour.windSpeed.toString() + " " + getString(R.string.metersPerSeconds)
+        feelsTemp_tv.text =
+            weatherPerHour.mainFeels_like.toString() + Util.getTempUnits(weatherPerHour.units)
         dateTime_tv.text = Util.getDateFromUnixTime(weatherPerHour.dt)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.refresh_item, menu)
-
         animation = RotateAnimation(
             0.0f, 360.0f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -231,7 +158,6 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         refreshItem = menu.findItem(R.id.action_refresh).actionView
-
         refreshItem.setOnClickListener {
             getLastLocation()
         }
