@@ -90,7 +90,7 @@
 
         <Constraint
             android:id="@+id/temp_tv"
-            android:layout_width="140dp"
+            android:layout_width="166dp"
             android:layout_height="140dp">
             <Layout
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -99,7 +99,7 @@
 
             <CustomAttribute
                 app:attributeName="textSize"
-                app:customFloatValue="100" />
+                app:customFloatValue="96" />
         </Constraint>
 
         <Constraint
@@ -375,7 +375,7 @@
 
         <Constraint
             android:id="@+id/temp_tv"
-            android:layout_width="86dp"
+            android:layout_width="96dp"
             android:layout_height="86dp">
             <Layout
                 android:layout_marginStart="8dp"
@@ -383,8 +383,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
             <CustomAttribute
+
                 app:attributeName="textSize"
-                app:customFloatValue="60" />
+                app:customFloatValue="56" />
         </Constraint>
 
         <Constraint

@@ -56,18 +56,6 @@
             app:layout_constraintTop_toBottomOf="@+id/date_tv" />
 
         <TextView
-            android:id="@+id/temp_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text=""
-            android:textSize="70sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_iv"
-            app:layout_constraintTop_toBottomOf="@+id/description_tv"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
             android:id="@+id/country_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,6 +64,20 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/temp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text=""
+            android:textSize="66sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_iv"
+            app:layout_constraintTop_toBottomOf="@+id/description_tv"
+            app:layout_constraintVertical_bias="0.0" />
+
+
 
         <TextView
             android:id="@+id/tempDesc_tv"
@@ -88,72 +90,11 @@
             app:layout_constraintTop_toTopOf="@+id/temp_tv" />
 
         <TextView
-            android:id="@+id/windSpeed_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="NA m/s"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/windSpeedDesc_tv"
-            app:layout_constraintTop_toTopOf="@+id/windSpeedDesc_tv"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/windSpeedDesc_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="@string/wind"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
-
-        <TextView
-            android:id="@+id/humidityDesc_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/humidity"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/windSpeedDesc_tv"
-            app:layout_constraintStart_toEndOf="@+id/temp_tv" />
-
-        <TextView
-            android:id="@+id/humidity_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100 %"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/windSpeed_tv"
-            app:layout_constraintStart_toEndOf="@+id/humidityDesc_tv"
-            app:layout_constraintTop_toTopOf="@+id/humidityDesc_tv" />
-
-        <TextView
-            android:id="@+id/pressureDesc_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pressure"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
-            app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
-
-        <TextView
-            android:id="@+id/pressure_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1000 мм р.с"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
-            app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
-            app:layout_constraintTop_toTopOf="@+id/pressureDesc_tv" />
-
-        <TextView
             android:id="@+id/cloudsDescBottom_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cloudiness"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toStartOf="@+id/pressureDesc_tv"
             app:layout_constraintTop_toBottomOf="@+id/tempDesc_tv"
@@ -163,11 +104,80 @@
             android:id="@+id/clouds_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100 %"
-            android:textSize="12sp"
+            android:text=""
+            android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/pressureDesc_tv"
             app:layout_constraintStart_toEndOf="@+id/cloudsDescBottom_tv"
             app:layout_constraintTop_toTopOf="@+id/cloudsDescBottom_tv" />
+
+        <TextView
+            android:id="@+id/pressureDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pressure"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
+            app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
+
+        <TextView
+            android:id="@+id/pressure_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/humidityDesc_tv"
+            app:layout_constraintStart_toEndOf="@+id/pressureDesc_tv"
+            app:layout_constraintTop_toTopOf="@+id/pressureDesc_tv" />
+
+        <TextView
+            android:id="@+id/humidityDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/humidity"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/windSpeedDesc_tv"
+            app:layout_constraintStart_toEndOf="@+id/temp_tv" />
+
+        <TextView
+            android:id="@+id/humidity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/windSpeed_tv"
+            app:layout_constraintStart_toEndOf="@+id/humidityDesc_tv"
+            app:layout_constraintTop_toTopOf="@+id/humidityDesc_tv" />
+
+        <TextView
+            android:id="@+id/windSpeedDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/wind"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/humidityDesc_tv" />
+
+        <TextView
+            android:id="@+id/windSpeed_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text=""
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/windSpeedDesc_tv"
+            app:layout_constraintTop_toTopOf="@+id/windSpeedDesc_tv"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
