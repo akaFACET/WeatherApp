@@ -1,9 +1,12 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
+import com.example.weatherapp.App
+import com.example.weatherapp.Utils.Mapper
 import com.example.weatherapp.db.WeatherDB
 import com.example.weatherapp.network.FoundCities
 import com.example.weatherapp.network.NetworkModule
 import com.example.weatherapp.network.WeatherData
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 object WeatherRepository {
 
@@ -41,7 +44,7 @@ object WeatherRepository {
         val result = weatherApiService.getWeatherByCity(appid, units, language, query)
         result.await()
         return Mapper.mapFoundCitiesResponseToFoundCities(
-            result.getCompleted()
+            foundCitiesResponse = result.getCompleted()
         )
     }
 
@@ -49,6 +52,7 @@ object WeatherRepository {
         return Mapper.mapWeatherDataEntityToWeatherData(db.getLastKnownWeatherData())
     }
 
+    @ExperimentalCoroutinesApi
     suspend fun getWeatherByCoord(lat: Double, lon: Double): WeatherData {
         updateParams()
         val result =
@@ -59,6 +63,7 @@ object WeatherRepository {
         )
     }
 
+    @ExperimentalCoroutinesApi
     suspend fun getWeatherByCityId(id: Int): WeatherData {
         updateParams()
         val result = weatherApiService.getWeatherByCityId(appid, units, language, id)

@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.location
 
 import android.Manifest
 import android.app.Application
@@ -9,9 +9,9 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
+import com.example.weatherapp.App
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient

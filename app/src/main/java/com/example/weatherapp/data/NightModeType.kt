@@ -1,8 +1,9 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
 import android.os.Build
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.weatherapp.R
 
 enum class NightModeType(
     val customOrdinal: Int,

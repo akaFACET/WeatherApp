@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.weatherapp.viewModels.CurrentWeatherViewModel" />
+            type="com.example.weatherapp.viewModels.WeatherDetailsViewModel" />
     </data>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/current_weather_header"
+        <include layout="@layout/details_weather_header"
             app:viewmodel = "@{viewmodel}"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/current_weather_bottom" />
+    <include layout="@layout/details_weather_bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

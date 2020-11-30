@@ -1,91 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:divider="?android:listDivider"
-    android:dividerPadding="4dp"
-    android:orientation="vertical"
-    android:showDividers="middle"
-    android:weightSum="100"
-    tools:context=".fragments.SettingsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="nightmode"
+            type="String" />
+
+        <variable
+            name="units"
+            type="String" />
+
+        <variable
+            name="language"
+            type="String" />
+    </data>
     <LinearLayout
-        android:id="@+id/nigthModSelector_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:background="@drawable/custom_ripple"
-        android:paddingHorizontal="10dp"
-        android:weightSum="100">
+        android:layout_height="match_parent"
+        android:divider="?android:listDivider"
+        android:dividerPadding="4dp"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:weightSum="100"
+        tools:context=".fragments.SettingsFragment">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="40"
-            android:gravity="center|start"
-            android:text="@string/nightMode" />
+        <LinearLayout
+            android:id="@+id/nigthModSelector_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="@drawable/custom_ripple"
+            android:paddingHorizontal="10dp"
+            android:weightSum="100">
 
-        <TextView
-            android:id="@+id/nigthModSelector_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="60"
-            android:gravity="center|end"
-            android:text="" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center|start"
+                android:text="@string/nightMode" />
+
+            <TextView
+                android:id="@+id/nigthModSelector_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:gravity="center|end"
+                android:text="@{nightmode}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/unitsTypeSelector_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="@drawable/custom_ripple"
+            android:paddingHorizontal="10dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center|start"
+                android:text="@string/units" />
+
+            <TextView
+                android:id="@+id/unitsTypeSelector_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:gravity="center|end"
+                android:text="@{units}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/languageSelector_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="@drawable/custom_ripple"
+            android:paddingHorizontal="10dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center|start"
+                android:text="@string/language" />
+
+            <TextView
+                android:id="@+id/languageSelector_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:gravity="center|end"
+                android:text="@{language}" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/unitsTypeSelector_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:background="@drawable/custom_ripple"
-        android:paddingHorizontal="10dp"
-        android:weightSum="100">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="40"
-            android:gravity="center|start"
-            android:text="@string/units" />
-
-        <TextView
-            android:id="@+id/unitsTypeSelector_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="60"
-            android:gravity="center|end"
-            android:text="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/languageSelector_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:background="@drawable/custom_ripple"
-        android:paddingHorizontal="10dp"
-        android:weightSum="100">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="40"
-            android:gravity="center|start"
-            android:text="@string/language" />
-
-        <TextView
-            android:id="@+id/languageSelector_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="60"
-            android:gravity="center|end"
-            android:text="" />
-    </LinearLayout>
-
-
-</LinearLayout>
-
-
+</layout>

@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.Utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.R
 
 abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
 
@@ -27,7 +28,7 @@ abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCa
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        if (viewHolder?.bindingAdapterPosition == 10) return 0
+        if (viewHolder.bindingAdapterPosition == 10) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
     @SuppressLint("ResourceAsColor")
@@ -66,7 +67,7 @@ abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCa
 
         // Draw the delete icon
         deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
-        deleteIcon!!.draw(c)
+        deleteIcon.draw(c)
 
         super.onChildDraw(
             c,

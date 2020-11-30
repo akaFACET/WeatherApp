@@ -1,6 +1,7 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
 import androidx.annotation.StringRes
+import com.example.weatherapp.R
 
 enum class Language(
     val customOrdinal: Int,
@@ -34,7 +35,7 @@ enum class Language(
     );
 
     companion object {
-        fun fromValue(value: String) = Language.values().firstOrNull {
+        fun fromValue(value: String) = values().firstOrNull {
             it.value == value
         } ?: getDefaultLanguage()
 

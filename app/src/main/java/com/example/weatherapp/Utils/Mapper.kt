@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.Utils
 
 
 import com.example.weatherapp.Utils.Util.getDMFromUnixTime
@@ -32,7 +32,7 @@ class Mapper {
                 sunset = weatherDataEntity.sunset,
                 coordLon = weatherDataEntity.coordLon,
                 coordLat = weatherDataEntity.coordLat,
-                subWeather = Mapper.mapSubWeatherEntityToSubWeather(weatherDataEntity.subWeatherEntity)
+                subWeather = mapSubWeatherEntityToSubWeather(weatherDataEntity.subWeatherEntity)
             )
         }
 
@@ -122,7 +122,7 @@ class Mapper {
         fun mapFoundCitiesResponseToFoundCities(foundCitiesResponse: FoundCitiesResponse): List<FoundCities> {
 
             val result: MutableList<FoundCities> = arrayListOf()
-            foundCitiesResponse?.CitiesList?.forEach {
+            foundCitiesResponse.CitiesList?.forEach {
                 result.add(
                     FoundCities(
                         cityId = it.id!!,

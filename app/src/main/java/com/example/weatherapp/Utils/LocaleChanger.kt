@@ -1,11 +1,11 @@
-package com.example.weatherapp
+package com.example.weatherapp.Utils
 
 import android.content.Context
 import android.content.res.Configuration
 import java.util.*
 
 
-object RuntimeLocaleChanger {
+object LocaleChanger {
 
     fun wrapContext(context: Context, locale: Locale): Context {
 

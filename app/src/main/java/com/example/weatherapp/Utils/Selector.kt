@@ -1,4 +1,6 @@
-package com.example.weatherapp
+package com.example.weatherapp.Utils
+
+import com.example.weatherapp.R
 
 class Selector {
     companion object {

@@ -3,8 +3,8 @@ package com.example.weatherapp.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.Exceptions
-import com.example.weatherapp.WeatherRepository
+import com.example.weatherapp.data.Exceptions
+import com.example.weatherapp.data.WeatherRepository
 import com.example.weatherapp.network.FoundCities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

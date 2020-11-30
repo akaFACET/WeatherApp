@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.weatherapp.Utils.LocaleChanger
+import com.example.weatherapp.data.PreferencesManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -27,13 +28,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(RuntimeLocaleChanger.wrapContext(newBase!!,
+        super.attachBaseContext(
+            LocaleChanger.wrapContext(newBase!!,
             Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry())))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        RuntimeLocaleChanger.overrideLocale(this,Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry()))
+        LocaleChanger.overrideLocale(this,Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

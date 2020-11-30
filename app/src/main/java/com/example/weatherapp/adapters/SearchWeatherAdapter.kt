@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
+import com.example.weatherapp.databinding.ItemWeatherPerDayBinding
+import com.example.weatherapp.databinding.SearchWeatherItemRowBinding
 import com.example.weatherapp.network.FoundCities
 
 class SearchWeatherAdapter(
@@ -15,25 +17,21 @@ class SearchWeatherAdapter(
     val listenerSearch: OnSearchItemClickListener
 ) : RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val name: TextView = itemView.findViewById(R.id.place_tv)
-        private val country: TextView = itemView.findViewById(R.id.country_tv)
-
+    class ViewHolder(val binding : SearchWeatherItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(foundCities: FoundCities, listenerSearch: OnSearchItemClickListener) {
             itemView.setOnClickListener {
                 listenerSearch.onItemClick(foundCities)
             }
-
-            name.text = foundCities.cityName
-            country.text = foundCities.country
+            binding.foundcities = foundCities
+            binding.executePendingBindings()
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.search_weather_item_row, parent, false)
-        return ViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = SearchWeatherItemRowBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {

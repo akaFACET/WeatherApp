@@ -1,6 +1,7 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
 import androidx.annotation.StringRes
+import com.example.weatherapp.R
 
 enum class Exceptions(
     @StringRes val title: Int

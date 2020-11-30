@@ -107,7 +107,6 @@
     <fragment
         android:id="@+id/weatherDetailsFragment"
         android:name="com.example.weatherapp.fragments.WeatherDetailsFragment"
-        android:label="@string/app_name"
         tools:layout="@layout/current_weather_fragment">
         <argument
             android:name="cityId"

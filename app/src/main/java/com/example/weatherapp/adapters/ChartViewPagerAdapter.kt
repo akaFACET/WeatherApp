@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Util
+import com.example.weatherapp.databinding.CurrentWeatherFragmentBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.MarkerView
@@ -370,6 +372,7 @@ class ChartViewPagerAdapter(
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         chartItemClickListener.onChartItemClick(data.get(e?.x!!.toInt()))
+
     }
 
     inner class MyMarkerView(context: Context?, layoutResource: Int) :

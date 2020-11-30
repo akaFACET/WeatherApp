@@ -3,7 +3,7 @@ package com.example.weatherapp.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import com.example.weatherapp.Mapper
+import com.example.weatherapp.Utils.Mapper
 import com.example.weatherapp.network.SubWeather
 import com.example.weatherapp.network.WeatherData
 import com.example.weatherapp.network.WeatherDataEntity

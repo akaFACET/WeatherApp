@@ -9,13 +9,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.weatherapp.*
+import com.example.weatherapp.data.Language
+import com.example.weatherapp.data.NightModeType
+import com.example.weatherapp.data.PreferencesManager
+import com.example.weatherapp.data.UnitsType
+import com.example.weatherapp.databinding.SettingsFragmentBinding
 import kotlinx.android.synthetic.main.settings_fragment.*
 
 
 class SettingsFragment : Fragment() {
 
+    private lateinit var binding: SettingsFragmentBinding
     private lateinit var preferencesManager: PreferencesManager
-
     private var nigthModeChooseItem = 0
     private var unitsTypeChooseItem = 0
     private var languageChooseItem = 0
@@ -23,38 +28,39 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.settings_fragment, container, false)
-    }
+    ): View {
+        binding = SettingsFragmentBinding.inflate(inflater, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         preferencesManager = PreferencesManager(requireContext())
 
         val savedNightMode = preferencesManager.getSavedNightModeValue()
         nigthModeChooseItem = NightModeType.fromValue(savedNightMode).ordinal
-        nigthModSelector_tv.text = getString(NightModeType.fromValue(savedNightMode).title)
+
 
         val savedUnitsType = preferencesManager.getSavedUnitsValue()
         unitsTypeChooseItem = UnitsType.fromValue(savedUnitsType!!).ordinal
-        unitsTypeSelector_tv.text = getString(UnitsType.fromValue(savedUnitsType).title)
+
 
         val savedLanguage = preferencesManager.getSavedLanguage()
         languageChooseItem = Language.fromValue(savedLanguage).ordinal
-        languageSelector_tv.text = getString(Language.fromValue(savedLanguage).title)
 
 
-        nigthModSelector_ll.setOnClickListener {
-            showNightModeAlertDialog()
-        }
+        return binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            nightmode = getString(NightModeType.fromValue(savedNightMode).title)
+            units = getString(UnitsType.fromValue(savedUnitsType).title)
+            language = getString(Language.fromValue(savedLanguage).title)
 
-        unitsTypeSelector_ll.setOnClickListener {
-            showUnitsTypeAlertDialog()
-        }
-
-        languageSelector_ll.setOnClickListener {
-            showLanguageSelectorAlertDialog()
-        }
+            nigthModSelectorLl.setOnClickListener {
+                showNightModeAlertDialog()
+            }
+            unitsTypeSelectorLl.setOnClickListener {
+                showUnitsTypeAlertDialog()
+            }
+            languageSelectorLl.setOnClickListener {
+                showLanguageSelectorAlertDialog()
+            }
+        }.root
 
     }
 

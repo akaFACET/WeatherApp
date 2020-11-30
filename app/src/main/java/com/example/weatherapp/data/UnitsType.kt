@@ -1,6 +1,7 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
 import androidx.annotation.StringRes
+import com.example.weatherapp.R
 
 
 enum class UnitsType(
@@ -25,7 +26,7 @@ enum class UnitsType(
     );
 
     companion object {
-        fun fromValue(value: String) = UnitsType.values().firstOrNull {
+        fun fromValue(value: String) = values().firstOrNull {
             it.value == value
         } ?: getDefaultUnits()
 

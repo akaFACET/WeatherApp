@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.Selector
+import com.example.weatherapp.Utils.Selector
 import com.example.weatherapp.Utils.Util
+import com.example.weatherapp.databinding.ItemWeatherPerDayBinding
 
 class DaysScrollAdapter(
     var values: List<WeatherPerDay>,
@@ -19,19 +20,12 @@ class DaysScrollAdapter(
 
     var selectedPosition = -1
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val image: ImageView = itemView.findViewById(R.id.image_iv)
-        private val date: TextView = itemView.findViewById(R.id.date_tv)
-        private val temp: TextView = itemView.findViewById(R.id.temp_tv)
-
+    inner class ViewHolder(val binding: ItemWeatherPerDayBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(weatherPerDay: WeatherPerDay, listener: OnDaysScrollItemClickListener) {
-            if (selectedPosition == layoutPosition) {
-                itemView.isSelected = true
-            } else {
-                itemView.isSelected = false
-            }
 
+            itemView.isSelected = selectedPosition == layoutPosition
             itemView.setOnClickListener {
                 if (selectedPosition >= 0)
                     notifyItemChanged(selectedPosition)
@@ -40,40 +34,15 @@ class DaysScrollAdapter(
 
                 listener.onItemClick(weatherPerDay.weatherPerHour)
             }
-
-            val units = Util.getTempUnits(weatherPerDay.weatherPerHour[0].units)
-
-            val midItem = weatherPerDay.weatherPerHour.size / 2
-
-            val tempMax = weatherPerDay.weatherPerHour.maxBy { it ->
-                it.mainTemp
-            }?.mainTemp ?: "NA"
-
-            val tempMin = weatherPerDay.weatherPerHour.minBy { it ->
-                it.mainTemp
-            }?.mainTemp ?: "NA"
-
-            date.text = weatherPerDay.day
-
-            image.setImageResource(
-                Selector
-                    .iconPathSelector(
-                        weatherPerDay.weatherPerHour[midItem].weatherId,
-                        weatherPerDay.weatherPerHour[midItem].weatherIcon
-                    )
-            )
-
-            temp.text = "${tempMin}${units} | ${tempMax}${units}"
-
+            binding.weatherperday = weatherPerDay
+            binding.executePendingBindings()
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_weather_per_day, parent, false)
-
-        return ViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemWeatherPerDayBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
