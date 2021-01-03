@@ -10,23 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.weatherapp.*
-import com.example.weatherapp.Utils.Selector
-import com.example.weatherapp.Utils.Util
 import com.example.weatherapp.adapters.*
 import com.example.weatherapp.data.Exceptions
-import com.example.weatherapp.databinding.CurrentWeatherFragmentBinding
 import com.example.weatherapp.databinding.DetailsWeatherFragmentBinding
-import com.example.weatherapp.viewModels.CurrentWeatherViewModel
-import com.example.weatherapp.viewModels.CurrentWeatherViewModelFactory
 import com.example.weatherapp.viewModels.WeatherDetailsViewModel
 import com.example.weatherapp.viewModels.WeatherDetailsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.charts_layout.*
 import kotlinx.android.synthetic.main.charts_layout.view.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.android.synthetic.main.details_weather_bottom.*
 import kotlinx.android.synthetic.main.details_weather_bottom.view.*
 
 class WeatherDetailsFragment : Fragment() {
@@ -109,7 +102,7 @@ class WeatherDetailsFragment : Fragment() {
     }
 
     private fun getLastLocation() {
-        viewModel.getWeatherFromInternet()
+        viewModel.refreshWeatherFromInternet()
     }
 
     private fun createAdapters() {
@@ -160,7 +153,6 @@ class WeatherDetailsFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-
                 Exceptions.others -> {
                     Snackbar.make(
                         current_weather_fragment,
@@ -168,7 +160,6 @@ class WeatherDetailsFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-
             }
         })
     }

@@ -1,11 +1,13 @@
 package com.example.weatherapp.data
 
+import android.util.Log
 import com.example.weatherapp.App
 import com.example.weatherapp.Utils.Mapper
 import com.example.weatherapp.db.WeatherDB
-import com.example.weatherapp.network.FoundCities
-import com.example.weatherapp.network.NetworkModule
-import com.example.weatherapp.network.WeatherData
+import com.example.weatherapp.network.*
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Single
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 object WeatherRepository {
@@ -33,44 +35,42 @@ object WeatherRepository {
     }
 
     fun deleteData(weatherData: WeatherData) {
-        db.delete(weatherData)
+        return db.delete(weatherData)
     }
 
-    fun getWeatherDataByCityIdFromDb(cityId: Int): WeatherData {
-        return Mapper.mapWeatherDataEntityToWeatherData(db.getWeatherDataByCityId(cityId))
+    fun getWeatherDataByCityIdFromDb(cityId: Int): Single<WeatherData> {
+        return db.getWeatherDataByCityId(cityId).map { weatherDataEntity ->
+            Mapper.mapWeatherDataEntityToWeatherData(weatherDataEntity)
+        }
     }
 
-    suspend fun getWeatherByCity(query: String): List<FoundCities> {
-        val result = weatherApiService.getWeatherByCity(appid, units, language, query)
-        result.await()
-        return Mapper.mapFoundCitiesResponseToFoundCities(
-            foundCitiesResponse = result.getCompleted()
-        )
+    fun getWeatherByCity(query: String): Single<List<FoundCities>> {
+        return weatherApiService.getWeatherByCity(appid, units, language, query)
+            .map { foundCitiesResponse ->
+                Mapper.mapFoundCitiesResponseToFoundCities(foundCitiesResponse)
+            }
     }
 
-    fun getLastKnownWeather(): WeatherData {
-        return Mapper.mapWeatherDataEntityToWeatherData(db.getLastKnownWeatherData())
+    fun getLastKnownWeather(): Single<WeatherData> {
+        return db.getLastKnownWeatherData().map { weatherDataEntity ->
+            Mapper.mapWeatherDataEntityToWeatherData(weatherDataEntity)
+        }
     }
 
-    @ExperimentalCoroutinesApi
-    suspend fun getWeatherByCoord(lat: Double, lon: Double): WeatherData {
+    fun getWeatherByCoord(lat: Double, lon: Double): Single<WeatherData> {
         updateParams()
-        val result =
-            weatherApiService.getWeatherByCoord(appid, units, language, lat = lat, lon = lon)
-        result.await()
-        return Mapper.mapWeatherResponseToWeatherData(
-            result.getCompleted(), units
-        )
+        return weatherApiService.getWeatherByCoord(appid, units, language, lat = lat, lon = lon)
+            .map { weatherResponse ->
+                Mapper.mapWeatherResponseToWeatherData(weatherResponse, units)
+            }
     }
 
-    @ExperimentalCoroutinesApi
-    suspend fun getWeatherByCityId(id: Int): WeatherData {
+    fun getWeatherByCityId(id: Int): Single<WeatherData> {
         updateParams()
-        val result = weatherApiService.getWeatherByCityId(appid, units, language, id)
-        result.await()
-        return Mapper.mapWeatherResponseToWeatherData(
-            result.getCompleted(), units
-        )
+        return weatherApiService.getWeatherByCityId(appid, units, language, id)
+            .map { weatherResponse ->
+                Mapper.mapWeatherResponseToWeatherData(weatherResponse, units)
+            }
     }
 
     private fun updateParams() {

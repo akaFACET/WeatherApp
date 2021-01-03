@@ -7,19 +7,25 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.weatherapp.App
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.util.function.Consumer
 
 class Location(private val application: Application) {
     lateinit var locationManager: LocationManager
-    var currentLocation = MutableLiveData<LocationData>()
+
+    private var _currentLocation = MutableLiveData<LocationData>()
+    var currentLocation: LiveData<LocationData> = _currentLocation
     private var mFusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(application.applicationContext)
     private val GmsStatus = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application.applicationContext)
@@ -44,7 +50,7 @@ class Location(private val application: Application) {
                 if (location == null) {
                     getLocationFromLocationManager()
                 } else {
-                    currentLocation.value = LocationData(location.latitude, location.longitude)
+                    _currentLocation.value = LocationData(location.latitude, location.longitude)
                 }
             }
         }else{
@@ -81,23 +87,11 @@ class Location(private val application: Application) {
 
     }
 
+
     private val locationListener: LocationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location?) {
-            if (location != null) {
-                currentLocation.value = LocationData(location.latitude, location.longitude)
-            }
+        override fun onLocationChanged(location: Location) {
+                _currentLocation.value = LocationData(location.latitude, location.longitude)
         }
-
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        }
-
-        override fun onProviderEnabled(provider: String?) {
-        }
-
-        override fun onProviderDisabled(provider: String?) {
-        }
-
     }
-
 }
 

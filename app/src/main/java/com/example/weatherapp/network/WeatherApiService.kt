@@ -1,5 +1,6 @@
 package com.example.weatherapp.network
 
+import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,18 +10,18 @@ interface WeatherApiService {
     fun getWeatherByCity(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("q") q: String
-    ): Deferred<FoundCitiesResponse>
+    ): Single<FoundCitiesResponse>
 
     @GET("forecast")
     fun getWeatherByCoord(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("lat") lat: Double,
         @Query("lon") lon: Double
-    ): Deferred<WeatherResponse>
+    ): Single<WeatherResponse>
 
     @GET("forecast")
     fun getWeatherByCityId(
         @Query("appid") appid: String, @Query("units") units: String,
         @Query("lang") lang: String, @Query("id") id: Int
-    ): Deferred<WeatherResponse>
+    ): Single<WeatherResponse>
 }

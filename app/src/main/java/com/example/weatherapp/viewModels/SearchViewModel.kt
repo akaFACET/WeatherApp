@@ -1,11 +1,16 @@
 package com.example.weatherapp.viewModels
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.data.WeatherRepository
 import com.example.weatherapp.network.FoundCities
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,46 +18,58 @@ import java.net.UnknownHostException
 
 class SearchViewModel : ViewModel() {
 
-    var searchedWeather = MutableLiveData<List<FoundCities>>()
+    private var _exception = MutableLiveData<Exceptions>()
+    private val compositeDisposable = CompositeDisposable()
 
-    var exception = MutableLiveData<Exceptions>()
+    var searchedWeather = MutableLiveData<List<FoundCities>>()
+    var exception: LiveData<Exceptions> = _exception
 
     fun searchWeatherByCityName(query: String?) {
+
         if (query == null) return
 
-        exception.value = Exceptions.noException
+        _exception.value = Exceptions.noException
 
-        viewModelScope.launch {
-            try {
-                withContext(Dispatchers.IO) {
-                    val response = WeatherRepository.getWeatherByCity(query)
-                    searchedWeather.postValue(response)
-                    if (response.isEmpty()) {
-                        exception.postValue(Exceptions.noCity)
+        compositeDisposable.add(
+            WeatherRepository.getWeatherByCity(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ foundCities ->
+                    searchedWeather.postValue(foundCities)
+                    if (foundCities.isEmpty()) {
+                        _exception.postValue(Exceptions.noCity)
                     }
-                }
-            } catch (ex: UnknownHostException) {
-                exception.value = Exceptions.noInternet
-            } catch (ex: retrofit2.HttpException) {
-                exception.value = Exceptions.noCity
-            } catch (ex: Throwable) {
-                exception.value = Exceptions.others
-
-            }
-        }
+                }, { throwable ->
+                    when (throwable) {
+                        is UnknownHostException -> {
+                            _exception.value = Exceptions.noInternet
+                        }
+                        is retrofit2.HttpException -> {
+                            _exception.value = Exceptions.noCity
+                        }
+                        else -> {
+                            _exception.value = Exceptions.others
+                        }
+                    }
+                })
+        )
     }
 
     fun saveData(foundCities: FoundCities) {
-        viewModelScope.launch {
-            try {
-                withContext(Dispatchers.IO) {
-                    val response = WeatherRepository.getWeatherByCityId(foundCities.cityId)
+        compositeDisposable.add(
+            WeatherRepository.getWeatherByCityId(foundCities.cityId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe({ response ->
                     WeatherRepository.saveData(response)
-                }
-            } catch (ex: Throwable) {
-
-            }
-        }
+                }, { throwable ->
+                    Log.e("savingDataError", "${throwable.message}")
+                })
+        )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }

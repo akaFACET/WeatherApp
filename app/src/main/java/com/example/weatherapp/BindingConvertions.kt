@@ -70,7 +70,7 @@ object BindingConvertions {
     @JvmStatic
     fun setFeelsTemp(weatherPerHour: WeatherPerHour?): String {
         return if (weatherPerHour != null)
-            weatherPerHour.mainFeels_like.toString() + Util.getTempUnits(weatherPerHour.units)
+            String.format("%.1f", weatherPerHour.mainFeels_like)  + Util.getTempUnits(weatherPerHour.units)
         else
             ""
     }
