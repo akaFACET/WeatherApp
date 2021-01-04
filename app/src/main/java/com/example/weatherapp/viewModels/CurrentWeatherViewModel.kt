@@ -64,7 +64,6 @@ class CurrentWeatherViewModel(application: Application) : AndroidViewModel(
 
                 },
                     { throwable ->
-                        Log.e("getLastKnownLocation", "$throwable")
                     })
         )
     }
