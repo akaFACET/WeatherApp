@@ -1,15 +1,39 @@
 package com.example.weatherapp
 
 import android.app.Application
+import android.content.Context
+import com.example.weatherapp.di.components.ApplicationComponent
+import com.example.weatherapp.di.components.DaggerApplicationComponent
 
 class App : Application() {
 
+
+//    val applicationComponent: ApplicationComponent by lazy {
+//        initApplicationComponent()
+//    }
+//
+//    fun initApplicationComponent(): ApplicationComponent{
+//        return DaggerApplicationComponent
+//            .factory()
+//            .create(applicationContext)
+//    }
+
+    lateinit var applicationComponent: ApplicationComponent
+
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        initApplicationComponent()
+    }
+    private fun initApplicationComponent() {
+        applicationComponent = DaggerApplicationComponent
+            .factory()
+            .create(applicationContext)
     }
 
     companion object {
-        lateinit var instance: App
+        fun get(context: Context): App {
+            return context.applicationContext as App
+        }
     }
+
 }

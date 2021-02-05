@@ -15,12 +15,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 class SearchViewModel : ViewModel() {
 
     private var _exception = MutableLiveData<Exceptions>()
     private val compositeDisposable = CompositeDisposable()
 
+    @Inject
+    lateinit var weatherRepository: WeatherRepository
     var searchedWeather = MutableLiveData<List<FoundCities>>()
     var exception: LiveData<Exceptions> = _exception
 
@@ -31,7 +34,7 @@ class SearchViewModel : ViewModel() {
         _exception.value = Exceptions.noException
 
         compositeDisposable.add(
-            WeatherRepository.getWeatherByCity(query)
+            weatherRepository.getWeatherByCity(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ foundCities ->
@@ -57,11 +60,11 @@ class SearchViewModel : ViewModel() {
 
     fun saveData(foundCities: FoundCities) {
         compositeDisposable.add(
-            WeatherRepository.getWeatherByCityId(foundCities.cityId)
+            weatherRepository.getWeatherByCityId(foundCities.cityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe({ response ->
-                    WeatherRepository.saveData(response)
+                    weatherRepository.saveData(response)
                 }, { throwable ->
                     Log.e("savingDataError", "${throwable.message}")
                 })

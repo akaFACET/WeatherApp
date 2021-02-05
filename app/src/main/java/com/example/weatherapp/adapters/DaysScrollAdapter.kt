@@ -14,7 +14,7 @@ import com.example.weatherapp.databinding.ItemWeatherPerDayBinding
 
 class DaysScrollAdapter(
     var values: List<WeatherPerDay>,
-    val context: Context,
+    val context: Context,   //TODO maybe should delete, couse it doesn't uses
     val listener: OnDaysScrollItemClickListener
 ) : RecyclerView.Adapter<DaysScrollAdapter.ViewHolder>() {
 
@@ -52,4 +52,5 @@ class DaysScrollAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(values.get(position), listener)
     }
+
 }

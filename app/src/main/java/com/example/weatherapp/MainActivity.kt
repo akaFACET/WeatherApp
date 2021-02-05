@@ -1,4 +1,4 @@
-package com.example.weatherapp
+  package com.example.weatherapp
 
 import android.content.Context
 import android.content.res.Configuration
@@ -15,19 +15,26 @@ import com.example.weatherapp.data.PreferencesManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private var preferencesManager: PreferencesManager
+
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
 
 
     init {
-        preferencesManager = PreferencesManager(App.instance)
+       // preferencesManager = PreferencesManager(App.instance)
+//        App.get(this).applicationComponent.inject(this)
+//        (application as App).applicationComponent.inject(this)
     }
 
     override fun attachBaseContext(newBase: Context?) {
+        //(application as App).applicationComponent.inject(this)
+        App.get(newBase!!).applicationComponent.inject(this)
         super.attachBaseContext(
             LocaleChanger.wrapContext(newBase!!,
             Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry())))

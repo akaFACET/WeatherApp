@@ -253,4 +253,5 @@ class CurrentWeatherFragment : Fragment() {
             else -> ""
         }
     }
+
 }

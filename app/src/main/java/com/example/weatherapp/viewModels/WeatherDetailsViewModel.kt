@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 class WeatherDetailsViewModel(application: Application, private val cityId: Int) :
     AndroidViewModel(application) {
@@ -30,6 +31,9 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
     private var _isLoading = MutableLiveData<Boolean>()
     private var _exception = MutableLiveData<Exceptions>()
 
+
+    @Inject
+    lateinit var weatherRepository: WeatherRepository
     var currentWeather: LiveData<WeatherData?> = _currentWeather
     var listWeatherPerDay: LiveData<List<WeatherPerDay>?> = _listWeatherPerDay
     var weatherPerHour: LiveData<WeatherPerHour> = _weatherPerHour
@@ -42,7 +46,7 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
 
     fun getWeatherFromDb() {
         compositeDisposable.add(
-            WeatherRepository.getWeatherDataByCityIdFromDb(cityId)
+            weatherRepository.getWeatherDataByCityIdFromDb(cityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ weatherData ->
@@ -61,10 +65,10 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
         _isLoading.value = true
 
         compositeDisposable.add(
-            WeatherRepository.getWeatherByCityId(cityId)
+            weatherRepository.getWeatherByCityId(cityId)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess { weatherData ->
-                    WeatherRepository.saveData(weatherData)
+                    weatherRepository.saveData(weatherData)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ weatherData ->

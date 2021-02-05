@@ -3,7 +3,7 @@ package com.example.weatherapp.data
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferencesManager(context: Context) {
+class PreferencesManager(private val sharedPreferences: SharedPreferences) {
 
     companion object {
         private const val PREF_NAME = "weatherAppSettings"
@@ -13,40 +13,40 @@ class PreferencesManager(context: Context) {
         private const val KEY_COUNTRY = "COUNTRY"
     }
 
-    private var mPref: SharedPreferences
+//    private var sharedPreferences: SharedPreferences
 
-    init {
-        mPref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-    }
+//    init {
+//        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+//    }
 
     fun getSavedNightModeValue(): Int{
-        return mPref.getInt(KEY_NIGHT_MODE, NightModeType.getDefaultMode().value)
+        return sharedPreferences.getInt(KEY_NIGHT_MODE, NightModeType.getDefaultMode().value)
     }
 
     fun saveNightModeValue(nightMode: Int){
-        mPref.edit().putInt(KEY_NIGHT_MODE,nightMode).apply()
+        sharedPreferences.edit().putInt(KEY_NIGHT_MODE,nightMode).apply()
     }
 
     fun getSavedUnitsValue(): String?{
-        return mPref.getString(KEY_UNITS, UnitsType.getDefaultUnits().value)
+        return sharedPreferences.getString(KEY_UNITS, UnitsType.getDefaultUnits().value)
     }
 
     fun saveUnitsValue(units: String){
-        mPref.edit().putString(KEY_UNITS,units).apply()
+        sharedPreferences.edit().putString(KEY_UNITS,units).apply()
     }
 
     fun getSavedLanguage(): String{
-        return mPref.getString(KEY_LANG, Language.getDefaultLanguage().value)!!
+        return sharedPreferences.getString(KEY_LANG, Language.getDefaultLanguage().value)!!
     }
 
     fun saveLanguageValue(lang: String){
-        mPref.edit().putString(KEY_LANG, lang).apply()
+        sharedPreferences.edit().putString(KEY_LANG, lang).apply()
     }
 
     fun getSavedCountry(): String{
-        return mPref.getString(KEY_COUNTRY, Language.getDefaultLanguage().country)!!
+        return sharedPreferences.getString(KEY_COUNTRY, Language.getDefaultLanguage().country)!!
     }
     fun saveCountry(country: String){
-        mPref.edit().putString(KEY_COUNTRY,country).apply()
+        sharedPreferences.edit().putString(KEY_COUNTRY,country).apply()
     }
 }

@@ -3,6 +3,7 @@ package com.example.weatherapp.data
 import android.util.Log
 import com.example.weatherapp.App
 import com.example.weatherapp.Utils.Mapper
+import com.example.weatherapp.db.WeatherDAO
 import com.example.weatherapp.db.WeatherDB
 import com.example.weatherapp.network.*
 import io.reactivex.Completable
@@ -10,20 +11,24 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-object WeatherRepository {
+class WeatherRepository(
+    private val preferencesManager: PreferencesManager,
+    private val weatherApiService: WeatherApiService,
+    val db: WeatherDAO
+) {
 
     private val appid = "b7f532dcad2190c9ee565b091e2d8290"
     private var language = "en"
     private var units = "metric"
-    private var preferencesManager: PreferencesManager
+//    private var preferencesManager: PreferencesManager
+//
+//    init {
+//        preferencesManager = PreferencesManager(App.instance)
+//    }
 
-    init {
-        preferencesManager = PreferencesManager(App.instance)
-    }
+//    val db = WeatherDB.getInstance(App.instance).getSavedWeatherDAO()
 
-    val db = WeatherDB.getInstance(App.instance).getSavedWeatherDAO()
-
-    val weatherApiService = NetworkModule.weatherApiService
+//    val weatherApiService = NetworkModule.weatherApiService
 
     fun saveData(weatherData: WeatherData) {
         db.saveWeatherData(weatherData)

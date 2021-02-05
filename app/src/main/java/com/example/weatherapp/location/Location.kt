@@ -13,40 +13,44 @@ import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp.App
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import java.util.function.Consumer
 
-class Location(private val application: Application) {
-
+class Location(
+    private val context: Context,
+    private val mFusedLocationClient: FusedLocationProviderClient,
+    private val locationManager: LocationManager) {
     private var _currentLocation = MutableLiveData<LocationData>()
-    private var mFusedLocationClient: FusedLocationProviderClient =
-        LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
-    private val GmsStatus = GoogleApiAvailability.getInstance()
-        .isGooglePlayServicesAvailable(application.applicationContext)
+//    private var mFusedLocationClient: FusedLocationProviderClient =
+//        LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
-    lateinit var locationManager: LocationManager
+//    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+
+    private val gmsStatus = GoogleApiAvailability.getInstance()
+        .isGooglePlayServicesAvailable(context.applicationContext)
+
+//    lateinit var locationManager: LocationManager
     var currentLocation: LiveData<LocationData> = _currentLocation
 
     fun getLastLocation() {
-        if (GmsStatus == ConnectionResult.SUCCESS) {
-            mFusedLocationClient =
-                LocationServices.getFusedLocationProviderClient(application.applicationContext)
+        if (gmsStatus == ConnectionResult.SUCCESS) {
+//            mFusedLocationClient =
+//                LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
             if (ActivityCompat.checkSelfPermission(
-                    application.applicationContext,
+                    context,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    application.applicationContext,
+                    context,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return
             }
+
             mFusedLocationClient.lastLocation.addOnCompleteListener { task ->
                 val location: Location? = task.result
                 if (location == null) {
@@ -62,7 +66,7 @@ class Location(private val application: Application) {
 
 
     private fun getLocationFromLocationManager() {
-        locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
             val providers = locationManager.getAllProviders()
@@ -76,7 +80,7 @@ class Location(private val application: Application) {
                     locationManager.getCurrentLocation(
                         LocationManager.NETWORK_PROVIDER,
                         null,
-                        application.mainExecutor,
+                        context.mainExecutor,
                         locationCallback
                     )
                 }
@@ -84,7 +88,7 @@ class Location(private val application: Application) {
                     locationManager.getCurrentLocation(
                         LocationManager.GPS_PROVIDER,
                         null,
-                        application.mainExecutor,
+                        context.mainExecutor,
                         locationCallback
                     )
                 }

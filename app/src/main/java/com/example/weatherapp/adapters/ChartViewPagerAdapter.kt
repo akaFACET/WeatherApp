@@ -372,7 +372,6 @@ class ChartViewPagerAdapter(
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         chartItemClickListener.onChartItemClick(data.get(e?.x!!.toInt()))
-
     }
 
     inner class MyMarkerView(context: Context?, layoutResource: Int) :

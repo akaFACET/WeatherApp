@@ -24,6 +24,7 @@ import com.example.weatherapp.viewModels.SavedWeatherViewModel
 import com.example.weatherapp.viewModels.SavedWeatherViewModelFactory
 import kotlinx.android.synthetic.main.saved_weather_fragment.*
 import kotlinx.android.synthetic.main.saved_weather_fragment.view.*
+import javax.inject.Inject
 
 class SavedWeatherFragment : Fragment() {
 
@@ -43,6 +44,9 @@ class SavedWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        App.get(requireContext()).applicationComponent.inject(this)
+
         navController = NavHostFragment.findNavController(this)
         createAdapter()
 
@@ -90,8 +94,19 @@ class SavedWeatherFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(saved_rv)
     }
 
+    //TODO перенести это безобразие в мьюмодель и обсервить от туда
+    @Inject
+    lateinit var weatherRepository: WeatherRepository
+
+
     private fun observeWeatherFromDB() {
-        WeatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
+//        WeatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
+//            val weatherData = Mapper.mapWeatherDataEntityToWeatherData(it)
+//            weather = weatherData
+//            savedWeatherAdapter.values = weatherData
+//            savedWeatherAdapter.notifyDataSetChanged()
+//        })
+        weatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
             val weatherData = Mapper.mapWeatherDataEntityToWeatherData(it)
             weather = weatherData
             savedWeatherAdapter.values = weatherData
