@@ -1,7 +1,6 @@
 package com.example.weatherapp.location
 
 import android.Manifest
-import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -13,6 +12,7 @@ import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.weatherapp.data.LocationData
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -21,24 +21,17 @@ import java.util.function.Consumer
 class Location(
     private val context: Context,
     private val mFusedLocationClient: FusedLocationProviderClient,
-    private val locationManager: LocationManager) {
+    private val locationManager: LocationManager)
+{
     private var _currentLocation = MutableLiveData<LocationData>()
-
-//    private var mFusedLocationClient: FusedLocationProviderClient =
-//        LocationServices.getFusedLocationProviderClient(application.applicationContext)
-
-//    private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     private val gmsStatus = GoogleApiAvailability.getInstance()
         .isGooglePlayServicesAvailable(context.applicationContext)
 
-//    lateinit var locationManager: LocationManager
     var currentLocation: LiveData<LocationData> = _currentLocation
 
     fun getLastLocation() {
         if (gmsStatus == ConnectionResult.SUCCESS) {
-//            mFusedLocationClient =
-//                LocationServices.getFusedLocationProviderClient(application.applicationContext)
 
             if (ActivityCompat.checkSelfPermission(
                     context,
@@ -56,7 +49,11 @@ class Location(
                 if (location == null) {
                     getLocationFromLocationManager()
                 } else {
-                    _currentLocation.value = LocationData(location.latitude, location.longitude)
+                    _currentLocation.value =
+                        LocationData(
+                            location.latitude,
+                            location.longitude
+                        )
                 }
             }
         } else {
@@ -66,15 +63,17 @@ class Location(
 
 
     private fun getLocationFromLocationManager() {
-//        locationManager = App.instance.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         try {
             val providers = locationManager.getAllProviders()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 
                 val locationCallback = Consumer<Location>{ location ->
-                    _currentLocation.value = LocationData(location.latitude, location.longitude)
+                    _currentLocation.value =
+                        LocationData(
+                            location.latitude,
+                            location.longitude
+                        )
                 }
                 if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
                     locationManager.getCurrentLocation(
@@ -106,7 +105,6 @@ class Location(
                     )
                 }
             }
-
         } catch (ex: SecurityException) {
 
         }
@@ -115,7 +113,11 @@ class Location(
     private val locationListener: LocationListener = object : LocationListener {
 
         override fun onLocationChanged(location: Location) {
-                _currentLocation.value = LocationData(location.latitude, location.longitude)
+                _currentLocation.value =
+                    LocationData(
+                        location.latitude,
+                        location.longitude
+                    )
         }
         override fun onProviderEnabled(provider: String) {
 

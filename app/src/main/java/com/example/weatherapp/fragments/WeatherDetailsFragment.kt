@@ -12,47 +12,50 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.weatherapp.*
 import com.example.weatherapp.adapters.*
 import com.example.weatherapp.data.Exceptions
+import com.example.weatherapp.data.WeatherPerHour
 import com.example.weatherapp.databinding.DetailsWeatherFragmentBinding
 import com.example.weatherapp.viewModels.WeatherDetailsViewModel
-import com.example.weatherapp.viewModels.WeatherDetailsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.charts_layout.view.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.details_weather_bottom.view.*
+import javax.inject.Inject
 
 class WeatherDetailsFragment : Fragment() {
+
+    @Inject
+    lateinit var weatherViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: WeatherDetailsViewModel
 
     private lateinit var binding: DetailsWeatherFragmentBinding
     private lateinit var daysScrollAdapter: DaysScrollAdapter
     private lateinit var chartViewPagerAdapter: ChartViewPagerAdapter
-    private var citiId: Int = 0
     private lateinit var navController: NavController
     private lateinit var refreshItem: View
     private lateinit var animation: Animation
 
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            WeatherDetailsViewModelFactory(requireActivity().application, citiId)
-        ).get(WeatherDetailsViewModel::class.java)
-    }
+    private var citiId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        setHasOptionsMenu(true)
+        App.get(requireActivity().application).applicationComponent.inject(this)
+        viewModel = ViewModelProvider(this, weatherViewModelFactory)
+            .get(WeatherDetailsViewModel::class.java)
+
         navController = NavHostFragment.findNavController(this)
         citiId = WeatherDetailsFragmentArgs.fromBundle(requireArguments()).cityId
-        viewModel.getWeatherFromDb()
+        viewModel.getWeatherFromDb(citiId)
 
         binding = DetailsWeatherFragmentBinding.inflate(inflater, container, false)
 
         createAdapters()
 
+        setHasOptionsMenu(true)
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewmodel = viewModel
@@ -69,7 +72,6 @@ class WeatherDetailsFragment : Fragment() {
         createDataObservers()
         createExceptionObservers()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.refresh_item, menu)
@@ -115,7 +117,6 @@ class WeatherDetailsFragment : Fragment() {
 
         daysScrollAdapter = DaysScrollAdapter(
             emptyList(),
-            requireContext(),
             object : OnDaysScrollItemClickListener {
                 override fun onItemClick(weatherPerHour: List<WeatherPerHour>) {
                     chartViewPagerAdapter.data = weatherPerHour
@@ -131,7 +132,6 @@ class WeatherDetailsFragment : Fragment() {
                 chartViewPagerAdapter.data = listWeatherPerDay[0].weatherPerHour
                 chartViewPagerAdapter.notifyDataSetChanged()
                 daysScrollAdapter.values = listWeatherPerDay
-                daysScrollAdapter.selectedPosition = -1
                 daysScrollAdapter.notifyDataSetChanged()
             }
         })

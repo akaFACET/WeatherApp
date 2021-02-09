@@ -20,9 +20,10 @@ import javax.inject.Inject
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var binding: SettingsFragmentBinding
     @Inject
     lateinit var preferencesManager: PreferencesManager
+    private lateinit var binding: SettingsFragmentBinding
+
     private var nigthModeChooseItem = 0
     private var unitsTypeChooseItem = 0
     private var languageChooseItem = 0
@@ -31,10 +32,9 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         App.get(requireContext()).applicationComponent.inject(this)
         binding = SettingsFragmentBinding.inflate(inflater, container, false)
-
-        //preferencesManager = PreferencesManager(requireContext())
 
         val savedNightMode = preferencesManager.getSavedNightModeValue()
         nigthModeChooseItem = NightModeType.fromValue(savedNightMode).ordinal

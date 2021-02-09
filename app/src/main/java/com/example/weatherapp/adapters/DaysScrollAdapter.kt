@@ -1,24 +1,17 @@
 package com.example.weatherapp.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.R
-import com.example.weatherapp.Utils.Selector
-import com.example.weatherapp.Utils.Util
+import com.example.weatherapp.data.WeatherPerDay
 import com.example.weatherapp.databinding.ItemWeatherPerDayBinding
 
 class DaysScrollAdapter(
     var values: List<WeatherPerDay>,
-    val context: Context,   //TODO maybe should delete, couse it doesn't uses
     val listener: OnDaysScrollItemClickListener
 ) : RecyclerView.Adapter<DaysScrollAdapter.ViewHolder>() {
 
-    var selectedPosition = -1
+    var selectedPosition = 0
 
     inner class ViewHolder(val binding: ItemWeatherPerDayBinding) :
         RecyclerView.ViewHolder(binding.root) {

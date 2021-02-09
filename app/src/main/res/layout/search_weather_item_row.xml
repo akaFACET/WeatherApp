@@ -6,7 +6,7 @@
     <data>
         <variable
             name="foundcities"
-            type="com.example.weatherapp.network.FoundCities" />
+            type="com.example.weatherapp.data.FoundCities" />
     </data>
 
     <androidx.cardview.widget.CardView

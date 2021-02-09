@@ -1,6 +1,5 @@
 package com.example.weatherapp.data
 
-import android.content.Context
 import android.content.SharedPreferences
 
 class PreferencesManager(private val sharedPreferences: SharedPreferences) {
@@ -12,12 +11,6 @@ class PreferencesManager(private val sharedPreferences: SharedPreferences) {
         private const val KEY_LANG = "LANG"
         private const val KEY_COUNTRY = "COUNTRY"
     }
-
-//    private var sharedPreferences: SharedPreferences
-
-//    init {
-//        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-//    }
 
     fun getSavedNightModeValue(): Int{
         return sharedPreferences.getInt(KEY_NIGHT_MODE, NightModeType.getDefaultMode().value)

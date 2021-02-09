@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.Utils.Util
-import com.example.weatherapp.databinding.CurrentWeatherFragmentBinding
+import com.example.weatherapp.utils.TimeFormatter
+import com.example.weatherapp.data.WeatherPerHour
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.MarkerView
@@ -73,7 +72,7 @@ class ChartViewPagerAdapter(
         fun bind(position: Int) {
             val values = mutableListOf<BarEntry>()
             val time: List<String> = data.map {
-                Util.getTimeFromUnixTime(it.dt)
+                TimeFormatter.getTimeFromUnixTime(it.dt)
             }
 
             when (position) {
@@ -222,7 +221,7 @@ class ChartViewPagerAdapter(
             val primaryColor = ContextCompat.getColor(context, R.color.primaryColor)
 
             val time: List<String> = data.map {
-                Util.getTimeFromUnixTime(it.dt)
+                TimeFormatter.getTimeFromUnixTime(it.dt)
             }
 
             when (position) {

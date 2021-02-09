@@ -1,4 +1,4 @@
-package com.example.weatherapp.network
+package com.example.weatherapp.db
 
 import androidx.room.Relation
 import com.example.weatherapp.db.SubWeatherEntity

@@ -9,33 +9,35 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.weatherapp.App
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.R
 import com.example.weatherapp.adapters.OnSearchItemClickListener
 import com.example.weatherapp.adapters.SearchWeatherAdapter
 import com.example.weatherapp.databinding.SearchFragmentBinding
-import com.example.weatherapp.network.FoundCities
+import com.example.weatherapp.data.FoundCities
 import com.example.weatherapp.viewModels.SearchViewModel
-import com.example.weatherapp.viewModels.SearchViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.search_fragment.*
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
 
+    @Inject
+    lateinit var weatherViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: SearchViewModel
+
     private lateinit var binding: SearchFragmentBinding
     private lateinit var searchWeatherAdapter: SearchWeatherAdapter
-
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            SearchViewModelFactory()
-        ).get(SearchViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        App.get(requireActivity().application).applicationComponent.inject(this)
+        viewModel = ViewModelProvider(this, weatherViewModelFactory)
+            .get(SearchViewModel::class.java)
         binding = SearchFragmentBinding.inflate(inflater, container, false)
 
         createAdapter()
@@ -65,7 +67,6 @@ class SearchFragment : Fragment() {
     private fun createAdapter() {
         searchWeatherAdapter = SearchWeatherAdapter(
             emptyList(),
-            requireContext(),
             object : OnSearchItemClickListener {
                 override fun onItemClick(foundCities: FoundCities) {
                     viewModel.saveData(foundCities)

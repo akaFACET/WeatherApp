@@ -1,28 +1,20 @@
 package com.example.weatherapp.viewModels
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.weatherapp.data.Exceptions
-import com.example.weatherapp.Utils.Mapper
+import com.example.weatherapp.utils.Mapper
 import com.example.weatherapp.data.WeatherRepository
-import com.example.weatherapp.adapters.WeatherPerDay
-import com.example.weatherapp.adapters.WeatherPerHour
-import com.example.weatherapp.network.WeatherData
+import com.example.weatherapp.data.WeatherPerDay
+import com.example.weatherapp.data.WeatherPerHour
+import com.example.weatherapp.data.WeatherData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class WeatherDetailsViewModel(application: Application, private val cityId: Int) :
-    AndroidViewModel(application) {
+class WeatherDetailsViewModel @Inject constructor(private val weatherRepository: WeatherRepository)
+    : ViewModel() {
 
     private var _currentWeather = MutableLiveData<WeatherData?>()
     private var _listWeatherPerDay = MutableLiveData<List<WeatherPerDay>?>()
@@ -30,10 +22,9 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
     private val compositeDisposable = CompositeDisposable()
     private var _isLoading = MutableLiveData<Boolean>()
     private var _exception = MutableLiveData<Exceptions>()
+    private var cityId: Int = 0
 
 
-    @Inject
-    lateinit var weatherRepository: WeatherRepository
     var currentWeather: LiveData<WeatherData?> = _currentWeather
     var listWeatherPerDay: LiveData<List<WeatherPerDay>?> = _listWeatherPerDay
     var weatherPerHour: LiveData<WeatherPerHour> = _weatherPerHour
@@ -44,7 +35,8 @@ class WeatherDetailsViewModel(application: Application, private val cityId: Int)
         _weatherPerHour.postValue(weatherPerHour)
     }
 
-    fun getWeatherFromDb() {
+    fun getWeatherFromDb(id: Int) {
+        cityId = id
         compositeDisposable.add(
             weatherRepository.getWeatherDataByCityIdFromDb(cityId)
                 .subscribeOn(Schedulers.io())

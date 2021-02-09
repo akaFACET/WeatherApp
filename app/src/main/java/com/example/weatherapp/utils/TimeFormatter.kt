@@ -1,8 +1,8 @@
-package com.example.weatherapp.Utils
+package com.example.weatherapp.utils
 
 import java.util.*
 
-object Util {
+object TimeFormatter {
 
     fun getDateFromUnixTime(unixTime: Long): String{
         val sdf = java.text.SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())

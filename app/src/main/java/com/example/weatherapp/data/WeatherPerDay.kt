@@ -1,4 +1,4 @@
-package com.example.weatherapp.adapters
+package com.example.weatherapp.data
 
 data class WeatherPerDay(
     val day: String,

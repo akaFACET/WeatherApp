@@ -32,7 +32,7 @@ class LocationModule {
         context: Context,
         locationManager: LocationManager,
         fusedLocationProviderClient: FusedLocationProviderClient
-    ):Location {
+    ): Location {
         return Location(context,fusedLocationProviderClient, locationManager)
     }
 }

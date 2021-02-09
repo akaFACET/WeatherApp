@@ -6,14 +6,14 @@
 
     <data>
 
-        <import type="com.example.weatherapp.BindingConvertions"/>
+        <import type="com.example.weatherapp.utils.BindingConvertions"/>
 
         <variable
             name="viewmodel"
             type="com.example.weatherapp.viewModels.CurrentWeatherViewModel" />
     </data>
 
-<com.example.weatherapp.Utils.CollapsibleToolbar
+<com.example.weatherapp.utils.CollapsibleToolbar
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
@@ -165,5 +165,5 @@
         android:gravity="center"
         android:text="@{BindingConvertions.setPreassure(context, viewmodel.weatherPerHour)}" />
 
-</com.example.weatherapp.Utils.CollapsibleToolbar>
+</com.example.weatherapp.utils.CollapsibleToolbar>
 </layout>

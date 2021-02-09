@@ -4,28 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.data.WeatherRepository
-import com.example.weatherapp.network.FoundCities
+import com.example.weatherapp.data.FoundCities
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel @Inject constructor(private val weatherRepository: WeatherRepository)
+    : ViewModel() {
 
     private var _exception = MutableLiveData<Exceptions>()
     private val compositeDisposable = CompositeDisposable()
 
-    @Inject
-    lateinit var weatherRepository: WeatherRepository
     var searchedWeather = MutableLiveData<List<FoundCities>>()
     var exception: LiveData<Exceptions> = _exception
+
 
     fun searchWeatherByCityName(query: String?) {
 

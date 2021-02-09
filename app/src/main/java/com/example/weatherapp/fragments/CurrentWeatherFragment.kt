@@ -4,64 +4,60 @@ import android.Manifest
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.PermissionChecker
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import com.example.weatherapp.viewModels.CurrentWeatherViewModelFactory
+import com.example.weatherapp.App
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.R
 import com.example.weatherapp.adapters.*
+import com.example.weatherapp.data.WeatherPerHour
 import com.example.weatherapp.databinding.CurrentWeatherFragmentBinding
 import com.example.weatherapp.viewModels.CurrentWeatherViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.charts_layout.*
 import kotlinx.android.synthetic.main.charts_layout.view.*
 import kotlinx.android.synthetic.main.current_weather_bottom.view.*
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-
+import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
+
+    @Inject
+    lateinit var weatherViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: CurrentWeatherViewModel
 
     private lateinit var binding: CurrentWeatherFragmentBinding
     private lateinit var daysScrollAdapter: DaysScrollAdapter
     private lateinit var chartViewPagerAdapter: ChartViewPagerAdapter
-    private val PERMISSION_ID = 42
     private lateinit var navController: NavController
     private lateinit var refreshItem: View
     private lateinit var animation: Animation
 
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            CurrentWeatherViewModelFactory(requireActivity().application)
-        ).get(CurrentWeatherViewModel::class.java)
-    }
+    private val PERMISSION_ID = 42
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
 
+        App.get(requireActivity().application).applicationComponent.inject(this)
+        viewModel = ViewModelProvider(this, weatherViewModelFactory)
+            .get(CurrentWeatherViewModel::class.java)
         binding = CurrentWeatherFragmentBinding.inflate(inflater, container, false)
 
         createAdapters()
 
+        setHasOptionsMenu(true)
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewmodel = viewModel
@@ -173,7 +169,6 @@ class CurrentWeatherFragment : Fragment() {
 
         daysScrollAdapter = DaysScrollAdapter(
             emptyList(),
-            requireContext(),
             object : OnDaysScrollItemClickListener {
                 override fun onItemClick(weatherPerHour: List<WeatherPerHour>) {
                     chartViewPagerAdapter.data = weatherPerHour
@@ -189,7 +184,6 @@ class CurrentWeatherFragment : Fragment() {
                 chartViewPagerAdapter.data = listWeatherPerDay[0].weatherPerHour
                 chartViewPagerAdapter.notifyDataSetChanged()
                 daysScrollAdapter.values = listWeatherPerDay
-                daysScrollAdapter.selectedPosition = -1
                 daysScrollAdapter.notifyDataSetChanged()
             }
         })

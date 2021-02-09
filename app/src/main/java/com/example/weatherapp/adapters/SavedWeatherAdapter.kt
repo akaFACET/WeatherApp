@@ -1,15 +1,13 @@
 package com.example.weatherapp.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.SavedWeatherItemRowBinding
-import com.example.weatherapp.network.WeatherData
+import com.example.weatherapp.data.WeatherData
 
 class SavedWeatherAdapter(
     var values: List<WeatherData>,
-    val context: Context,
     val listenerSaved: OnSavedItemClickListener
 ) : RecyclerView.Adapter<SavedWeatherAdapter.ViewHolder>() {
 
@@ -23,7 +21,6 @@ class SavedWeatherAdapter(
             binding.weatherdata = weatherData
             binding.executePendingBindings()
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

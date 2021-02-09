@@ -1,15 +1,10 @@
 package com.example.weatherapp.data
 
-import android.util.Log
-import com.example.weatherapp.App
-import com.example.weatherapp.Utils.Mapper
+import com.example.weatherapp.utils.Mapper
 import com.example.weatherapp.db.WeatherDAO
-import com.example.weatherapp.db.WeatherDB
 import com.example.weatherapp.network.*
-import io.reactivex.Completable
-import io.reactivex.Maybe
+import io.reactivex.Flowable
 import io.reactivex.Single
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class WeatherRepository(
     private val preferencesManager: PreferencesManager,
@@ -20,15 +15,6 @@ class WeatherRepository(
     private val appid = "b7f532dcad2190c9ee565b091e2d8290"
     private var language = "en"
     private var units = "metric"
-//    private var preferencesManager: PreferencesManager
-//
-//    init {
-//        preferencesManager = PreferencesManager(App.instance)
-//    }
-
-//    val db = WeatherDB.getInstance(App.instance).getSavedWeatherDAO()
-
-//    val weatherApiService = NetworkModule.weatherApiService
 
     fun saveData(weatherData: WeatherData) {
         db.saveWeatherData(weatherData)
@@ -43,6 +29,12 @@ class WeatherRepository(
         return db.delete(weatherData)
     }
 
+    fun getAllWeatherData(): Flowable<List<WeatherData>> {
+
+        return db.getAllWeatherData().map { weatherDataEntity ->
+            Mapper.mapWeatherDataEntityToWeatherData(weatherDataEntity)
+        }
+    }
     fun getWeatherDataByCityIdFromDb(cityId: Int): Single<WeatherData> {
         return db.getWeatherDataByCityId(cityId).map { weatherDataEntity ->
             Mapper.mapWeatherDataEntityToWeatherData(weatherDataEntity)

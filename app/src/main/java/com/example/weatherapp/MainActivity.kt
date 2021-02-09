@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.example.weatherapp.Utils.LocaleChanger
+import com.example.weatherapp.utils.LocaleChanger
 import com.example.weatherapp.data.PreferencesManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,30 +19,23 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
+    @Inject
+    lateinit var localeChanger: LocaleChanger
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
-    @Inject
-    lateinit var preferencesManager: PreferencesManager
-
-
-    init {
-       // preferencesManager = PreferencesManager(App.instance)
-//        App.get(this).applicationComponent.inject(this)
-//        (application as App).applicationComponent.inject(this)
-    }
-
     override fun attachBaseContext(newBase: Context?) {
-        //(application as App).applicationComponent.inject(this)
         App.get(newBase!!).applicationComponent.inject(this)
         super.attachBaseContext(
-            LocaleChanger.wrapContext(newBase!!,
+            localeChanger.wrapContext(newBase!!,
             Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry())))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        LocaleChanger.overrideLocale(this,Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry()))
+        localeChanger.overrideLocale(this,Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

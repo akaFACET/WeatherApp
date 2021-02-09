@@ -1,11 +1,11 @@
-package com.example.weatherapp.Utils
+package com.example.weatherapp.utils
 
 
-import com.example.weatherapp.Utils.Util.getDMFromUnixTime
-import com.example.weatherapp.adapters.WeatherPerDay
-import com.example.weatherapp.adapters.WeatherPerHour
+import com.example.weatherapp.utils.TimeFormatter.getDMFromUnixTime
+import com.example.weatherapp.data.*
 import com.example.weatherapp.db.CitiesEntity
 import com.example.weatherapp.db.SubWeatherEntity
+import com.example.weatherapp.db.WeatherDataEntity
 import com.example.weatherapp.network.*
 import java.util.*
 
@@ -174,13 +174,23 @@ class Mapper {
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 } else {
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
-                    result.add(WeatherPerDay(day, weatherPerHour))
+                    result.add(
+                        WeatherPerDay(
+                            day,
+                            weatherPerHour
+                        )
+                    )
                     day = getDay(item.dt)
                     weatherPerHour = arrayListOf()
                     weatherPerHour.add(mapSubWeatherToWeatherPerHour(item))
                 }
             }
-            result.add(WeatherPerDay(day, weatherPerHour))
+            result.add(
+                WeatherPerDay(
+                    day,
+                    weatherPerHour
+                )
+            )
             if (result.last().weatherPerHour.size == 1) {
                 result.removeAt(result.size - 1)
             }

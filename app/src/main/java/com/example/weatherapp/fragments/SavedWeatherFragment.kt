@@ -12,33 +12,27 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.*
-import com.example.weatherapp.Utils.Mapper
-import com.example.weatherapp.Utils.SwipeToDeleteCallback
+import com.example.weatherapp.utils.SwipeToDeleteCallback
 
 import com.example.weatherapp.adapters.OnSavedItemClickListener
 import com.example.weatherapp.adapters.SavedWeatherAdapter
-import com.example.weatherapp.data.WeatherRepository
 import com.example.weatherapp.databinding.SavedWeatherFragmentBinding
-import com.example.weatherapp.network.WeatherData
+import com.example.weatherapp.data.WeatherData
 import com.example.weatherapp.viewModels.SavedWeatherViewModel
-import com.example.weatherapp.viewModels.SavedWeatherViewModelFactory
 import kotlinx.android.synthetic.main.saved_weather_fragment.*
 import kotlinx.android.synthetic.main.saved_weather_fragment.view.*
 import javax.inject.Inject
 
 class SavedWeatherFragment : Fragment() {
 
+    @Inject
+    lateinit var weatherViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: SavedWeatherViewModel
+
     private lateinit var binding: SavedWeatherFragmentBinding
     private lateinit var savedWeatherAdapter: SavedWeatherAdapter
     private lateinit var weather: List<WeatherData>
     private lateinit var navController: NavController
-
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            SavedWeatherViewModelFactory()
-        ).get(SavedWeatherViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +40,8 @@ class SavedWeatherFragment : Fragment() {
     ): View {
 
         App.get(requireContext()).applicationComponent.inject(this)
+        viewModel = ViewModelProvider(this, weatherViewModelFactory)
+            .get(SavedWeatherViewModel::class.java)
 
         navController = NavHostFragment.findNavController(this)
         createAdapter()
@@ -65,14 +61,13 @@ class SavedWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeWeatherFromDB()
+        observeWeatherData()
         createSwipeToDeleteHelper()
     }
 
     private fun createAdapter() {
         savedWeatherAdapter = SavedWeatherAdapter(
             emptyList(),
-            requireContext(),
             object : OnSavedItemClickListener {
                 override fun onSavedItemClick(cityId: Int) {
                     val action = SavedWeatherFragmentDirections.weatherDetailsFragment()
@@ -94,20 +89,8 @@ class SavedWeatherFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(saved_rv)
     }
 
-    //TODO перенести это безобразие в мьюмодель и обсервить от туда
-    @Inject
-    lateinit var weatherRepository: WeatherRepository
-
-
-    private fun observeWeatherFromDB() {
-//        WeatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
-//            val weatherData = Mapper.mapWeatherDataEntityToWeatherData(it)
-//            weather = weatherData
-//            savedWeatherAdapter.values = weatherData
-//            savedWeatherAdapter.notifyDataSetChanged()
-//        })
-        weatherRepository.db.getAllWeatherData().observe(viewLifecycleOwner, Observer {
-            val weatherData = Mapper.mapWeatherDataEntityToWeatherData(it)
+    private fun observeWeatherData() {
+        viewModel.weatherData.observe(viewLifecycleOwner, Observer {weatherData->
             weather = weatherData
             savedWeatherAdapter.values = weatherData
             savedWeatherAdapter.notifyDataSetChanged()

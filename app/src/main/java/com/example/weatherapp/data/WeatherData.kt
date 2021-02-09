@@ -1,4 +1,4 @@
-package com.example.weatherapp.network
+package com.example.weatherapp.data
 
 data class WeatherData(
     val cityId: Int,

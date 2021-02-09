@@ -1,13 +1,11 @@
 package com.example.weatherapp.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import com.example.weatherapp.Utils.Mapper
-import com.example.weatherapp.network.SubWeather
-import com.example.weatherapp.network.WeatherData
-import com.example.weatherapp.network.WeatherDataEntity
-import io.reactivex.Completable
+import com.example.weatherapp.utils.Mapper
+import com.example.weatherapp.data.SubWeather
+import com.example.weatherapp.data.WeatherData
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
@@ -69,7 +67,7 @@ interface WeatherDAO {
 
     @Transaction
     @Query("SELECT * FROM CitiesEntity WHERE isLastKnownLocation = 0")
-    fun getAllWeatherData(): LiveData<List<WeatherDataEntity>>
+    fun getAllWeatherData(): Flowable<List<WeatherDataEntity>>
 
     @Transaction
     @Query("SELECT * FROM CitiesEntity WHERE cityId = :cityId ")

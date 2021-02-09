@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.weatherapp.BindingConvertions"/>
+        <import type="com.example.weatherapp.utils.BindingConvertions"/>
         <variable
             name="weatherdata"
-            type="com.example.weatherapp.network.WeatherData" />
+            type="com.example.weatherapp.data.WeatherData" />
     </data>
 
     <androidx.cardview.widget.CardView

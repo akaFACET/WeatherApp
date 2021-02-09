@@ -27,7 +27,8 @@ class App : Application() {
     private fun initApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
             .factory()
-            .create(applicationContext)
+            .create(this)
+
     }
 
     companion object {

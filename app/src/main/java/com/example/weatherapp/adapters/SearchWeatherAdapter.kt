@@ -1,19 +1,13 @@
 package com.example.weatherapp.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.R
-import com.example.weatherapp.databinding.ItemWeatherPerDayBinding
 import com.example.weatherapp.databinding.SearchWeatherItemRowBinding
-import com.example.weatherapp.network.FoundCities
+import com.example.weatherapp.data.FoundCities
 
 class SearchWeatherAdapter(
     var values: List<FoundCities>,
-    val context: Context,
     val listenerSearch: OnSearchItemClickListener
 ) : RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
 
@@ -24,7 +18,6 @@ class SearchWeatherAdapter(
             }
             binding.foundcities = foundCities
             binding.executePendingBindings()
-
         }
     }
 
@@ -41,6 +34,4 @@ class SearchWeatherAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(values.get(position), listenerSearch)
     }
-
-
 }

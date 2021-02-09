@@ -1,21 +1,14 @@
-package com.example.weatherapp
+package com.example.weatherapp.utils
 
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.widget.ImageView
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
-import com.example.weatherapp.Utils.Mapper
-import com.example.weatherapp.Utils.Selector
-import com.example.weatherapp.Utils.Util
-import com.example.weatherapp.adapters.WeatherPerDay
-import com.example.weatherapp.adapters.WeatherPerHour
-import com.example.weatherapp.network.WeatherData
+import com.example.weatherapp.R
+import com.example.weatherapp.data.WeatherPerDay
+import com.example.weatherapp.data.WeatherPerHour
+import com.example.weatherapp.data.WeatherData
 
 object BindingConvertions {
-
 
     @JvmStatic
     @BindingAdapter("weatherImage")
@@ -61,16 +54,15 @@ object BindingConvertions {
         return if (weatherPerHour != null) weatherPerHour.mainTemp.toString() else ""
     }
 
-
     @JvmStatic
     fun setTempUnits(weatherPerHour: WeatherPerHour?): String {
-        return if (weatherPerHour != null) Util.getTempUnits(weatherPerHour.units) else ""
+        return if (weatherPerHour != null) TimeFormatter.getTempUnits(weatherPerHour.units) else ""
     }
 
     @JvmStatic
     fun setFeelsTemp(weatherPerHour: WeatherPerHour?): String {
         return if (weatherPerHour != null)
-            String.format("%.1f", weatherPerHour.mainFeels_like)  + Util.getTempUnits(weatherPerHour.units)
+            String.format("%.1f", weatherPerHour.mainFeels_like)  + TimeFormatter.getTempUnits(weatherPerHour.units)
         else
             ""
     }
@@ -110,21 +102,19 @@ object BindingConvertions {
     @JvmStatic
     fun setDateTime(weatherPerHour: WeatherPerHour?): String {
         return if (weatherPerHour != null)
-            Util.getDateFromUnixTime(weatherPerHour.dt)
+            TimeFormatter.getDateFromUnixTime(weatherPerHour.dt)
         else
             ""
     }
-
 
     @JvmStatic
     fun setDateWeatherPerDay(weatherPerDay: WeatherPerDay): String {
         return weatherPerDay.day
     }
 
-
     @JvmStatic
     fun setTempWeatherPerDay(weatherPerDay: WeatherPerDay): String {
-        val units = Util.getTempUnits(weatherPerDay.weatherPerHour[0].units)
+        val units = TimeFormatter.getTempUnits(weatherPerDay.weatherPerHour[0].units)
 
         val tempMax = weatherPerDay.weatherPerHour.maxBy { it ->
             it.mainTemp
@@ -144,7 +134,7 @@ object BindingConvertions {
 
     @JvmStatic
     fun setDateTime(weatherData: WeatherData): String {
-        return Util.getDateFromUnixTime(weatherData.updateDt)
+        return TimeFormatter.getDateFromUnixTime(weatherData.updateDt)
     }
 
     @JvmStatic
@@ -159,7 +149,7 @@ object BindingConvertions {
 
     @JvmStatic
     fun setTempUnits(weatherData: WeatherData): String {
-        return Util.getTempUnits(weatherData.subWeather[0].units)
+        return TimeFormatter.getTempUnits(weatherData.subWeather[0].units)
     }
 
     @JvmStatic
