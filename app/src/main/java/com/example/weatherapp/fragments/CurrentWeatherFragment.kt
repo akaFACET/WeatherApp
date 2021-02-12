@@ -2,14 +2,18 @@ package com.example.weatherapp.fragments
 
 import android.Manifest
 import android.content.Context.LOCATION_SERVICE
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -42,8 +46,11 @@ class CurrentWeatherFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var refreshItem: View
     private lateinit var animation: Animation
+    private lateinit var dialog: AlertDialog
+    private var isWeatherDataExist = false
 
     private val PERMISSION_ID = 42
+    private val GPS_INTENT_REQUEST_CODE = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,7 +96,7 @@ class CurrentWeatherFragment : Fragment() {
         refreshItem = menu.findItem(R.id.action_refresh).actionView
 
         refreshItem.setOnClickListener {
-            getLastLocation()
+            updateWeather()
         }
         viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
             if (isLoading)
@@ -118,14 +125,17 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     private fun checkPermissions(): Boolean {
-        if (PermissionChecker.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PermissionChecker.PERMISSION_GRANTED
-        ) {
-            return true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PermissionChecker.PERMISSION_GRANTED
+            ) {
+                return true
+            }
+            return false
         }
-        return false
+        return true
     }
 
     private fun requestPermissions() {
@@ -149,10 +159,10 @@ class CurrentWeatherFragment : Fragment() {
     private fun getLastLocation() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-                viewModel.getLocation()
+                viewModel.updateWeatherByLocation()
             } else {
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
+                startActivityForResult(intent, GPS_INTENT_REQUEST_CODE )
             }
         } else {
             requestPermissions()
@@ -171,6 +181,12 @@ class CurrentWeatherFragment : Fragment() {
             emptyList(),
             object : OnDaysScrollItemClickListener {
                 override fun onItemClick(weatherPerHour: List<WeatherPerHour>) {
+
+                    if (daysScrollAdapter.selectedPosition == 0) {
+                        viewModel.updateWeatherPerHour(weatherPerHour[0])
+                    } else
+                        viewModel.updateWeatherPerHour(weatherPerHour[weatherPerHour.size / 2])
+
                     chartViewPagerAdapter.data = weatherPerHour
                     chartViewPagerAdapter.notifyDataSetChanged()
                 }
@@ -181,9 +197,11 @@ class CurrentWeatherFragment : Fragment() {
     private fun createDataObservers() {
         viewModel.listWeatherPerDay.observe(viewLifecycleOwner, Observer { listWeatherPerDay ->
             if (listWeatherPerDay != null) {
+                isWeatherDataExist = true
                 chartViewPagerAdapter.data = listWeatherPerDay[0].weatherPerHour
                 chartViewPagerAdapter.notifyDataSetChanged()
                 daysScrollAdapter.values = listWeatherPerDay
+                daysScrollAdapter.selectedPosition = 0
                 daysScrollAdapter.notifyDataSetChanged()
             }
         })
@@ -247,5 +265,59 @@ class CurrentWeatherFragment : Fragment() {
             else -> ""
         }
     }
+
+    private fun updateWeather() {
+        if (isWeatherDataExist) {
+            if (checkPermissions()) {
+                if (isLocationEnabled()) {
+                    viewModel.updateWeatherByLocation()
+                } else {
+                    showDialog()
+                }
+            } else {
+                requestPermissions()
+            }
+        } else {
+            getLastLocation()
+        }
+    }
+
+    private fun showDialog() {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        dialog = alertDialog
+            .setTitle(getString(R.string.useNewGeolocation))
+            .setPositiveButton(getString(R.string.yes)) { dialog, id ->
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivityForResult(intent, GPS_INTENT_REQUEST_CODE )
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, id ->
+                viewModel.updateWeatherByNetwork()
+            }
+            .create()
+        dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            GPS_INTENT_REQUEST_CODE -> {
+                if (isLocationEnabled()) {
+                    if (checkPermissions()) {
+                        viewModel.updateWeatherByLocation()
+                    } else {
+                        requestPermissions()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        if (this::dialog.isInitialized) {
+            dialog.dismiss()
+        }
+        super.onStop()
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.weatherapp.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class SettingsFragment : Fragment() {
     @Inject
     lateinit var preferencesManager: PreferencesManager
     private lateinit var binding: SettingsFragmentBinding
+    private lateinit var dialog: AlertDialog
 
     private var nigthModeChooseItem = 0
     private var unitsTypeChooseItem = 0
@@ -99,9 +101,9 @@ class SettingsFragment : Fragment() {
                     dialog!!.cancel()
                 }
             })
-        val alert: AlertDialog = alertDialog.create()
-        alert.setCanceledOnTouchOutside(true)
-        alert.show()
+        dialog = alertDialog.create()
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
     }
 
     private fun showNightModeAlertDialog() {
@@ -138,9 +140,10 @@ class SettingsFragment : Fragment() {
                     dialog!!.cancel()
                 }
             })
-        val alert: AlertDialog = alertDialog.create()
-        alert.setCanceledOnTouchOutside(true)
-        alert.show()
+        dialog = alertDialog.create()
+
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
     }
 
 
@@ -172,9 +175,16 @@ class SettingsFragment : Fragment() {
                     dialog!!.cancel()
                 }
             })
-        val alert: AlertDialog = alertDialog.create()
-        alert.setCanceledOnTouchOutside(true)
-        alert.show()
+        dialog = alertDialog.create()
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+    }
+
+    override fun onStop() {
+        if (this::dialog.isInitialized) {
+            dialog.dismiss()
+        }
+        super.onStop()
     }
 
 }

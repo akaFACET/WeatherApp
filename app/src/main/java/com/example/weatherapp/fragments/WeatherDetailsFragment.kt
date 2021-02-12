@@ -119,6 +119,12 @@ class WeatherDetailsFragment : Fragment() {
             emptyList(),
             object : OnDaysScrollItemClickListener {
                 override fun onItemClick(weatherPerHour: List<WeatherPerHour>) {
+
+                    if (daysScrollAdapter.selectedPosition == 0) {
+                        viewModel.updateWeatherPerHour(weatherPerHour[0])
+                    } else
+                        viewModel.updateWeatherPerHour(weatherPerHour[weatherPerHour.size / 2])
+
                     chartViewPagerAdapter.data = weatherPerHour
                     chartViewPagerAdapter.notifyDataSetChanged()
                 }
@@ -132,6 +138,7 @@ class WeatherDetailsFragment : Fragment() {
                 chartViewPagerAdapter.data = listWeatherPerDay[0].weatherPerHour
                 chartViewPagerAdapter.notifyDataSetChanged()
                 daysScrollAdapter.values = listWeatherPerDay
+                daysScrollAdapter.selectedPosition = 0
                 daysScrollAdapter.notifyDataSetChanged()
             }
         })

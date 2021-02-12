@@ -31,8 +31,9 @@ class Location(
     var currentLocation: LiveData<LocationData> = _currentLocation
 
     fun getLastLocation() {
-        if (gmsStatus == ConnectionResult.SUCCESS) {
 
+
+        if (gmsStatus == ConnectionResult.SUCCESS) {
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -67,7 +68,6 @@ class Location(
             val providers = locationManager.getAllProviders()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
                 val locationCallback = Consumer<Location>{ location ->
                     _currentLocation.value =
                         LocationData(
@@ -111,7 +111,6 @@ class Location(
     }
 
     private val locationListener: LocationListener = object : LocationListener {
-
         override fun onLocationChanged(location: Location) {
                 _currentLocation.value =
                     LocationData(

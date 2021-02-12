@@ -1,5 +1,6 @@
 package com.example.weatherapp.viewModels
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.location.Location
@@ -26,8 +27,8 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
     private var _exception = MutableLiveData<Exceptions>()
     private val compositeDisposable = CompositeDisposable()
 
-    private val locationObserver: Observer<LocationData> = Observer { locationData ->
-        getWeatherByLocation(locationData.latitude, locationData.longitude)
+    private val locationObserver: Observer<LocationData> = Observer { location ->
+        getWeatherByLocation(location.latitude, location.longitude)
     }
 
     var currentWeather: LiveData<WeatherData?> = _currentWeather
@@ -45,10 +46,16 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
         _weatherPerHour.postValue(weatherPerHour)
     }
 
-    fun getLocation() {
+    fun updateWeatherByLocation() {
         _isLoading.value = true
         _exception.value = Exceptions.noException
         location.getLastLocation()
+    }
+
+    fun updateWeatherByNetwork(){
+        _isLoading.value = true
+        _exception.value = Exceptions.noException
+        currentWeather.value?.cityId?.let { getWeatherByNetwork(it) }
     }
 
     private fun getLastKnownLocation() {
@@ -67,6 +74,37 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
         )
     }
 
+    private fun getWeatherByNetwork(cityId: Int){
+        _exception.value = Exceptions.noException
+        compositeDisposable.add(weatherRepository.getWeatherByCityId(cityId)
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess { weatherData ->
+                weatherData.isLastKnownLocation = true
+                weatherData.subWeather.forEach {
+                    it.isLastKnownLocation = true
+                }
+                weatherRepository.saveLastKnownLocation(weatherData)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ weatherData ->
+                _currentWeather.postValue(weatherData)
+                _listWeatherPerDay.postValue(Mapper.getWeatherPerDays(weatherData))
+                _weatherPerHour.postValue(Mapper.getWeatherPerDays(weatherData)[0].weatherPerHour[0])
+                _isLoading.value = false
+            }, {throwable->
+                when (throwable){
+                    is UnknownHostException -> {
+                        _exception.value = Exceptions.noInternet
+                        _isLoading.value = false
+                    }
+                    else -> {
+                        _exception.value = Exceptions.others
+                        _isLoading.value = false
+                    }
+                }
+            })
+        )
+    }
     private fun getWeatherByLocation(lat: Double, lon: Double) {
         _exception.value = Exceptions.noException
         compositeDisposable.add(weatherRepository.getWeatherByCoord(lat, lon)

@@ -32,5 +32,8 @@
     <string name="percentage">%</string>
     <string name="millimeters">mm</string>
     <string name="metersPerSeconds">m/s</string>
+    <string name="useNewGeolocation">"Use a new geolocation?"</string>
+    <string name="yes">"Yes"</string>
+    <string name="no">"No"</string>
     <string name="url">"https://api.openweathermap.org/data/2.5/"</string>
 </resources>

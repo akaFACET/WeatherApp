@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -55,6 +56,12 @@ class MainActivity : AppCompatActivity() {
 
         val toolBar = findViewById<Toolbar>(R.id.toolbar)
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            title = when (destination.id) {
+                R.id.settingsFragment -> getString(R.string.settings)
+                else -> ""
+            }
+        }
         nav_view.setNavigationItemSelectedListener {
 
             when (it.itemId) {
