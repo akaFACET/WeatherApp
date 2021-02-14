@@ -1,169 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.example.weatherapp.utils.BindingConvertions"/>
+        <import type="com.example.weatherapp.utils.BindingConvertions" />
 
         <variable
             name="viewmodel"
             type="com.example.weatherapp.viewModels.CurrentWeatherViewModel" />
     </data>
 
-<com.example.weatherapp.utils.CollapsibleToolbar
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    android:fitsSystemWindows="true"
-    android:minHeight="116dp"
-    app:layoutDescription="@xml/current_weather_motion_scene"
-    app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
-
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.60" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
-
-    <ImageView
-        android:id="@+id/image_iv"
+    <com.example.weatherapp.utils.CollapsibleToolbar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:src="@drawable/ic_na"
-        app:weatherImage="@{viewmodel.weatherPerHour}"/>
+        android:layout_height="match_parent"
+        android:background="@color/primaryColor"
+        android:fitsSystemWindows="true"
+        android:minHeight="116dp"
+        app:layoutDescription="@xml/current_weather_motion_scene"
+        app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
-    <TextView
-        android:id="@+id/temp_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
-        android:text="@{BindingConvertions.setTemp(viewmodel.weatherPerHour)}" />
 
-    <TextView
-        android:id="@+id/tempDesc_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{BindingConvertions.setTempUnits(viewmodel.weatherPerHour)}" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
 
-    <TextView
-        android:id="@+id/dateTime_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{BindingConvertions.setDateTime(viewmodel.weatherPerHour)}"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
 
-    <TextView
-        android:id="@+id/weatherDesc_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start|top"
-        android:text="@{BindingConvertions.setWeatherDesc(viewmodel.weatherPerHour)}" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
 
-    <ImageView
-        android:id="@+id/humidity_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_wi_humidity" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80" />
 
-    <TextView
-        android:id="@+id/humidityDesc_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/humidity" />
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:weatherImage="@{viewmodel.weatherPerHour}"
+            tools:src="@drawable/ic_na" />
 
-    <TextView
-        android:id="@+id/humidity_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:text="@{BindingConvertions.setHumidity(context, viewmodel.weatherPerHour)}" />
+        <TextView
+            android:id="@+id/temp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:text="@{BindingConvertions.setTemp(viewmodel.weatherPerHour)}" />
 
-    <ImageView
-        android:id="@+id/wind_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_wi_small_craft_advisory" />
+        <TextView
+            android:id="@+id/tempDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{BindingConvertions.setTempUnits(viewmodel.weatherPerHour)}" />
 
-    <TextView
-        android:id="@+id/windDesc_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:text="@string/wind" />
+        <TextView
+            android:id="@+id/dateTime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{BindingConvertions.setDateTime(viewmodel.weatherPerHour)}" />
 
-    <TextView
-        android:id="@+id/wind_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@{BindingConvertions.setWindSpeed(context, viewmodel.weatherPerHour)}" />
+        <TextView
+            android:id="@+id/weatherDesc_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:text="@{BindingConvertions.setWeatherDesc(viewmodel.weatherPerHour)}" />
 
-    <ImageView
-        android:id="@+id/feelsTemp_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_wi_thermometer" />
+        <ImageView
+            android:id="@+id/humidity_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_wi_humidity" />
 
-    <TextView
-        android:id="@+id/feelsTempDesc_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:text="@string/feels" />
+        <TextView
+            android:id="@+id/humidityDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/humidity" />
 
-    <TextView
-        android:id="@+id/feelsTemp_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@{BindingConvertions.setFeelsTemp(viewmodel.weatherPerHour)}" />
+        <TextView
+            android:id="@+id/humidity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@{BindingConvertions.setHumidity(context, viewmodel.weatherPerHour)}" />
 
-    <ImageView
-        android:id="@+id/pressure_iv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_wi_barometer" />
+        <ImageView
+            android:id="@+id/wind_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_wi_small_craft_advisory" />
 
-    <TextView
-        android:id="@+id/pressureDesc_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:text="@string/pressure" />
+        <TextView
+            android:id="@+id/windDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/wind" />
 
-    <TextView
-        android:id="@+id/pressure_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@{BindingConvertions.setPreassure(context, viewmodel.weatherPerHour)}" />
+        <TextView
+            android:id="@+id/wind_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{BindingConvertions.setWindSpeed(context, viewmodel.weatherPerHour)}" />
 
-</com.example.weatherapp.utils.CollapsibleToolbar>
+        <ImageView
+            android:id="@+id/feelsTemp_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_wi_thermometer" />
+
+        <TextView
+            android:id="@+id/feelsTempDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/feels" />
+
+        <TextView
+            android:id="@+id/feelsTemp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{BindingConvertions.setFeelsTemp(viewmodel.weatherPerHour)}" />
+
+        <ImageView
+            android:id="@+id/pressure_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_wi_barometer" />
+
+        <TextView
+            android:id="@+id/pressureDesc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/pressure" />
+
+        <TextView
+            android:id="@+id/pressure_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{BindingConvertions.setPreassure(context, viewmodel.weatherPerHour)}" />
+
+    </com.example.weatherapp.utils.CollapsibleToolbar>
 </layout>

@@ -2,23 +2,23 @@
 
 import android.content.Context
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.example.weatherapp.utils.LocaleChanger
 import com.example.weatherapp.data.PreferencesManager
+import com.example.weatherapp.utils.LocaleChanger
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+
+  class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preferencesManager: PreferencesManager
@@ -30,13 +30,21 @@ class MainActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context?) {
         App.get(newBase!!).applicationComponent.inject(this)
         super.attachBaseContext(
-            localeChanger.wrapContext(newBase!!,
-            Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry())))
+            localeChanger.wrapContext(
+                newBase!!,
+                Locale(preferencesManager.getSavedLanguage(), preferencesManager.getSavedCountry())
+            )
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        localeChanger.overrideLocale(this,Locale(preferencesManager.getSavedLanguage(),preferencesManager.getSavedCountry()))
+        localeChanger.overrideLocale(
+            this, Locale(
+                preferencesManager.getSavedLanguage(),
+                preferencesManager.getSavedCountry()
+            )
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +60,10 @@ class MainActivity : AppCompatActivity() {
 
         sideBar?.setupWithNavController(navController)
 
-        val appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout = drawer_layout)
+        val appBarConfiguration = AppBarConfiguration(
+            navController.graph,
+            drawerLayout = drawer_layout
+        )
 
         val toolBar = findViewById<Toolbar>(R.id.toolbar)
 
@@ -97,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setSupportActionBar(toolBar)
-        toolBar.setupWithNavController(navController,appBarConfiguration)
+        toolBar.setupWithNavController(navController, appBarConfiguration)
 
     }
 }

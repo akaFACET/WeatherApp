@@ -2,7 +2,6 @@ package com.example.weatherapp.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +67,6 @@ class SettingsFragment : Fragment() {
         }.root
 
     }
-
 
     private fun showLanguageSelectorAlertDialog() {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
