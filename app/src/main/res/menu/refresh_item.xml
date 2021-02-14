@@ -5,7 +5,6 @@
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        style="@android:style/Widget.ActionButton"
         app:actionLayout="@layout/refresh_iv"
-        android:title="TODO" />
+        android:title="" />
 </menu>

@@ -7,4 +7,10 @@
         <item name="colorAccent">@color/primaryLightColor</item>
         <item name="android:statusBarColor">@color/primaryColor</item>
     </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>
