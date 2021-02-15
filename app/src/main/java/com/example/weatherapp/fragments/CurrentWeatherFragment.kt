@@ -2,14 +2,12 @@ package com.example.weatherapp.fragments
 
 import android.Manifest
 import android.content.Context.LOCATION_SERVICE
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -43,7 +41,6 @@ class CurrentWeatherFragment : Fragment() {
     private lateinit var binding: CurrentWeatherFragmentBinding
     private lateinit var daysScrollAdapter: DaysScrollAdapter
     private lateinit var chartViewPagerAdapter: ChartViewPagerAdapter
-    private lateinit var navController: NavController
     private lateinit var refreshItem: View
     private lateinit var animation: Animation
     private lateinit var dialog: AlertDialog
@@ -216,28 +213,28 @@ class CurrentWeatherFragment : Fragment() {
     private fun createExceptionObservers() {
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
             when (exception) {
-                Exceptions.noInternet -> {
+                Exceptions.NoInternet -> {
                     Snackbar.make(
                         current_weather_fragment,
                         getString(exception.title),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-                Exceptions.others -> {
+                Exceptions.Others -> {
                     Snackbar.make(
                         current_weather_fragment,
                         getString(exception.title),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-                Exceptions.noGPS -> {
+                Exceptions.NoGPS -> {
                     Snackbar.make(
                         current_weather_fragment,
                         getString(exception.title),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-                Exceptions.noCity -> {
+                Exceptions.NoCity -> {
                     Snackbar.make(
                         current_weather_fragment,
                         getString(exception.title),

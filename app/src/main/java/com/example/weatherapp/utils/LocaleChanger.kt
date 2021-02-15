@@ -9,24 +9,20 @@ class LocaleChanger {
 
     fun wrapContext(context: Context, locale: Locale): Context {
 
-        val savedLocale = locale
-
-        Locale.setDefault(savedLocale)
+        Locale.setDefault(locale)
 
         val newConfig = Configuration()
-        newConfig.setLocale(savedLocale)
+        newConfig.setLocale(locale)
 
         return context.createConfigurationContext(newConfig)
     }
 
     fun overrideLocale(context: Context, locale: Locale) {
 
-        val savedLocale = locale
-
-        Locale.setDefault(savedLocale)
+        Locale.setDefault(locale)
 
         val newConfig = Configuration()
-        newConfig.setLocale(savedLocale)
+        newConfig.setLocale(locale)
 
         context.createConfigurationContext(newConfig)
 

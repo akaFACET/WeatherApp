@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 class PreferencesManager(private val sharedPreferences: SharedPreferences) {
 
     companion object {
-        private const val PREF_NAME = "weatherAppSettings"
         private const val KEY_NIGHT_MODE = "NIGTHT_MODE"
         private const val KEY_UNITS = "UNITS"
         private const val KEY_LANG = "LANG"

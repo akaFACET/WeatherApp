@@ -27,7 +27,7 @@ class SearchViewModel @Inject constructor(private val weatherRepository: Weather
 
         if (query == null) return
 
-        _exception.value = Exceptions.noException
+        _exception.value = Exceptions.NoException
 
         compositeDisposable.add(
             weatherRepository.getWeatherByCity(query)
@@ -36,18 +36,18 @@ class SearchViewModel @Inject constructor(private val weatherRepository: Weather
                 .subscribe({ foundCities ->
                     searchedWeather.postValue(foundCities)
                     if (foundCities.isEmpty()) {
-                        _exception.postValue(Exceptions.noCity)
+                        _exception.postValue(Exceptions.NoCity)
                     }
                 }, { throwable ->
                     when (throwable) {
                         is UnknownHostException -> {
-                            _exception.value = Exceptions.noInternet
+                            _exception.value = Exceptions.NoInternet
                         }
                         is retrofit2.HttpException -> {
-                            _exception.value = Exceptions.noCity
+                            _exception.value = Exceptions.NoCity
                         }
                         else -> {
-                            _exception.value = Exceptions.others
+                            _exception.value = Exceptions.Others
                         }
                     }
                 })

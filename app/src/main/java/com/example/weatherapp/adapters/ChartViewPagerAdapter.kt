@@ -23,24 +23,22 @@ import com.github.mikephil.charting.utils.MPPointF
 class ChartViewPagerAdapter(
     val context: Context,
     var data: List<WeatherPerHour>,
-    val chartItemClickListener: OnChartItemClickListener
+    private val chartItemClickListener: OnChartItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), OnChartValueSelectedListener {
 
-    internal val BAR_CHART = 1
-    internal val LINE_CHART = 2
+    private val BAR_CHART = 1
+    private val LINE_CHART = 2
 
     val textColor = ContextCompat.getColor(context, R.color.secondaryTextColor)
 
     private inner class ViewHolder1 constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        var barChart: BarChart
+        var barChart: BarChart = itemView.findViewById(R.id.chart_bch)
         var primaryDarkColor = ContextCompat.getColor(context, R.color.primaryDarkColor)
         var primaryColor = ContextCompat.getColor(context, R.color.primaryColor)
 
         init {
-            barChart =
-                itemView.findViewById(R.id.chart_bch)
             barChart.setOnChartValueSelectedListener(this@ChartViewPagerAdapter)
             barChart.apply {
                 setViewPortOffsets(40f, 50f, 40f, 50f)
@@ -61,7 +59,7 @@ class ChartViewPagerAdapter(
                 axisRight.axisMinimum = 0f
                 xAxis.spaceMax = 0.40f
                 xAxis.spaceMin = 0.40f
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.setDrawGridLines(false)
                 xAxis.granularity = 1f
                 xAxis.textColor = textColor
@@ -81,8 +79,8 @@ class ChartViewPagerAdapter(
                         it.precipitation
                     }
 
-                    for (i in 0..precipitation.size - 1) {
-                        values.add(BarEntry(i.toFloat(), precipitation.get(i).toFloat()))
+                    for (i in precipitation.indices) {
+                        values.add(BarEntry(i.toFloat(), precipitation[i].toFloat()))
                     }
 
                     val dataSet = BarDataSet(values, "")
@@ -112,7 +110,7 @@ class ChartViewPagerAdapter(
                         xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getFormattedValue(value: Float): String {
                                 if (value.toInt() < time.size) {
-                                    return time.get(value.toInt())
+                                    return time[value.toInt()]
                                 } else
                                     return "0"
                             }
@@ -126,8 +124,8 @@ class ChartViewPagerAdapter(
                         it.cloudsAll
                     }
 
-                    for (i in 0..cloudsAll.size - 1) {
-                        values.add(BarEntry(i.toFloat(), cloudsAll.get(i).toFloat()))
+                    for (i in cloudsAll.indices) {
+                        values.add(BarEntry(i.toFloat(), cloudsAll[i].toFloat()))
                     }
 
                     val dataSet = BarDataSet(values, "")
@@ -158,7 +156,7 @@ class ChartViewPagerAdapter(
                             override fun getFormattedValue(value: Float): String {
                                 if (value.toInt() < time.size) {
 
-                                    return time.get(value.toInt())
+                                    return time[value.toInt()]
                                 } else
                                     return "0"
                             }
@@ -176,14 +174,12 @@ class ChartViewPagerAdapter(
     private inner class ViewHolder2 constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        var lineChart: LineChart
+        var lineChart: LineChart = itemView.findViewById(R.id.chart_lch)
 
 
         var mv = MyMarkerView(context, R.layout.marker_view)
 
         init {
-
-            lineChart = itemView.findViewById(R.id.chart_lch)
 
             lineChart.setOnChartValueSelectedListener(this@ChartViewPagerAdapter)
 
@@ -204,7 +200,7 @@ class ChartViewPagerAdapter(
                 axisRight.setDrawGridLines(false)
                 axisRight.isEnabled = false
                 axisLeft.isEnabled = false
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.setDrawGridLines(false)
                 xAxis.setAvoidFirstLastClipping(true)
                 xAxis.textColor = textColor
@@ -230,8 +226,8 @@ class ChartViewPagerAdapter(
                         it.mainTemp
                     }
 
-                    for (i in 0..temperature.size - 1) {
-                        values.add(Entry(i.toFloat(), temperature.get(i).toFloat()))
+                    for (i in temperature.indices) {
+                        values.add(Entry(i.toFloat(), temperature[i].toFloat()))
                     }
                     val dataSet = LineDataSet(values, "")
 
@@ -267,7 +263,7 @@ class ChartViewPagerAdapter(
                         xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getFormattedValue(value: Float): String {
                                 if (value.toInt() < time.size) {
-                                    return time.get(value.toInt())
+                                    return time[value.toInt()]
                                 } else
                                     return "0"
                             }
@@ -282,8 +278,8 @@ class ChartViewPagerAdapter(
                         it.windSpeed
                     }
 
-                    for (i in 0..windSpeed.size - 1) {
-                        values.add(Entry(i.toFloat(), windSpeed.get(i).toFloat()))
+                    for (i in windSpeed.indices) {
+                        values.add(Entry(i.toFloat(), windSpeed[i].toFloat()))
                     }
 
                     val dataSet = LineDataSet(values, "")
@@ -318,7 +314,7 @@ class ChartViewPagerAdapter(
                         xAxis.valueFormatter = object : ValueFormatter() {
                             override fun getFormattedValue(value: Float): String {
                                 if (value.toInt() < time.size) {
-                                    return time.get(value.toInt())
+                                    return time[value.toInt()]
                                 } else
                                     return "0"
                             }
@@ -370,7 +366,7 @@ class ChartViewPagerAdapter(
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        chartItemClickListener.onChartItemClick(data.get(e?.x!!.toInt()))
+        chartItemClickListener.onChartItemClick(data[e?.x!!.toInt()])
     }
 
     inner class MyMarkerView(context: Context?, layoutResource: Int) :

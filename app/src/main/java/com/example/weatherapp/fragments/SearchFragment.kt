@@ -86,7 +86,7 @@ class SearchFragment : Fragment() {
     private fun createExceptionObservers() {
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
             when (exception) {
-                Exceptions.noInternet -> {
+                Exceptions.NoInternet -> {
                     Snackbar.make(
                         search_fragment,
                         getString(exception.title),
@@ -94,7 +94,7 @@ class SearchFragment : Fragment() {
                     ).show()
                 }
 
-                Exceptions.noCity -> {
+                Exceptions.NoCity -> {
                     Snackbar.make(
                         search_fragment,
                         getString(exception.title),
@@ -102,7 +102,7 @@ class SearchFragment : Fragment() {
                     ).show()
                 }
 
-                Exceptions.others -> {
+                Exceptions.Others -> {
                     Snackbar.make(
                         search_fragment,
                         getString(exception.title),

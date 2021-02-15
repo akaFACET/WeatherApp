@@ -13,7 +13,6 @@ import com.example.weatherapp.viewModels.SearchViewModel
 import com.example.weatherapp.viewModels.WeatherDetailsViewModel
 import dagger.BindsInstance
 import dagger.Component
-import java.util.*
 import javax.inject.Singleton
 
 

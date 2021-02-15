@@ -27,7 +27,7 @@
     <string name="noInternetConnection">No internet connection</string>
     <string name="noGPS">No GPS access</string>
     <string name="noCity">Could not find such a settlement</string>
-    <string name="noException">Ok</string>
+    <string name="noException">OK</string>
     <string name="error">Something went wrong :( Please try later</string>
     <string name="percentage">%</string>
     <string name="millimeters">mm</string>

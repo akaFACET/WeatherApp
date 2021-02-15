@@ -1,6 +1,5 @@
 package com.example.weatherapp.di.modules
 
-import android.app.Application
 import android.content.Context
 import com.example.weatherapp.R
 import com.example.weatherapp.network.WeatherApiService

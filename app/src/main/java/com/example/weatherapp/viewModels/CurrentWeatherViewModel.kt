@@ -1,6 +1,5 @@
 package com.example.weatherapp.viewModels
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.location.Location
@@ -48,13 +47,13 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
 
     fun updateWeatherByLocation() {
         _isLoading.value = true
-        _exception.value = Exceptions.noException
+        _exception.value = Exceptions.NoException
         location.getLastLocation()
     }
 
     fun updateWeatherByNetwork(){
         _isLoading.value = true
-        _exception.value = Exceptions.noException
+        _exception.value = Exceptions.NoException
         currentWeather.value?.cityId?.let { getWeatherByNetwork(it) }
     }
 
@@ -75,7 +74,7 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
     }
 
     private fun getWeatherByNetwork(cityId: Int){
-        _exception.value = Exceptions.noException
+        _exception.value = Exceptions.NoException
         compositeDisposable.add(weatherRepository.getWeatherByCityId(cityId)
             .subscribeOn(Schedulers.io())
             .doOnSuccess { weatherData ->
@@ -94,11 +93,11 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
             }, {throwable->
                 when (throwable){
                     is UnknownHostException -> {
-                        _exception.value = Exceptions.noInternet
+                        _exception.value = Exceptions.NoInternet
                         _isLoading.value = false
                     }
                     else -> {
-                        _exception.value = Exceptions.others
+                        _exception.value = Exceptions.Others
                         _isLoading.value = false
                     }
                 }
@@ -106,7 +105,7 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
         )
     }
     private fun getWeatherByLocation(lat: Double, lon: Double) {
-        _exception.value = Exceptions.noException
+        _exception.value = Exceptions.NoException
         compositeDisposable.add(weatherRepository.getWeatherByCoord(lat, lon)
             .subscribeOn(Schedulers.io())
             .doOnSuccess { weatherData ->
@@ -125,11 +124,11 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
             }, {throwable->
                 when (throwable){
                     is UnknownHostException -> {
-                        _exception.value = Exceptions.noInternet
+                        _exception.value = Exceptions.NoInternet
                         _isLoading.value = false
                     }
                     else -> {
-                        _exception.value = Exceptions.others
+                        _exception.value = Exceptions.Others
                         _isLoading.value = false
                     }
                 }

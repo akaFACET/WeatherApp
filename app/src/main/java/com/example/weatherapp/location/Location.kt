@@ -65,7 +65,7 @@ class Location(
 
     private fun getLocationFromLocationManager() {
         try {
-            val providers = locationManager.getAllProviders()
+            val providers = locationManager.allProviders
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 val locationCallback = Consumer<Location>{ location ->

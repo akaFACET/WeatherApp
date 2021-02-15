@@ -1,7 +1,6 @@
 package com.example.weatherapp.network
 
 import io.reactivex.Single
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 

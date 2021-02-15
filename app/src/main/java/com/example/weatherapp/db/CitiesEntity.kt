@@ -3,7 +3,7 @@ package com.example.weatherapp.db
 import androidx.room.Entity
 
 
-@Entity(primaryKeys = arrayOf("cityId", "isLastKnownLocation"))
+@Entity(primaryKeys = ["cityId", "isLastKnownLocation"])
 data class CitiesEntity(
     val cityId: Int,
     val isLastKnownLocation: Boolean,

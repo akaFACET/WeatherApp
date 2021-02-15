@@ -8,7 +8,7 @@ import com.example.weatherapp.data.FoundCities
 
 class SearchWeatherAdapter(
     var values: List<FoundCities>,
-    val listenerSearch: OnSearchItemClickListener
+    private val listenerSearch: OnSearchItemClickListener
 ) : RecyclerView.Adapter<SearchWeatherAdapter.ViewHolder>() {
 
     class ViewHolder(val binding : SearchWeatherItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +32,6 @@ class SearchWeatherAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(values.get(position), listenerSearch)
+        holder.bind(values[position], listenerSearch)
     }
 }

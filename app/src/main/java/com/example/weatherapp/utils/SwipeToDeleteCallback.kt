@@ -11,12 +11,12 @@ import com.example.weatherapp.R
 
 abstract class SwipeToDeleteCallback(context: Context) :ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
 
-    val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_24)
-    val intrinsicWidth = deleteIcon!!.intrinsicWidth
-    val intrinsicHeight = deleteIcon!!.intrinsicHeight
+    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_delete_24)
+    private val intrinsicWidth = deleteIcon!!.intrinsicWidth
+    private val intrinsicHeight = deleteIcon!!.intrinsicHeight
     val background = ColorDrawable()
-    val backgroundColor = R.color.deleteSwipeColor
-    val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+    private val backgroundColor = R.color.deleteSwipeColor
+    private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
     override fun onMove(
         recyclerView: RecyclerView,

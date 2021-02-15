@@ -6,9 +6,9 @@ import com.example.weatherapp.R
 enum class Exceptions(
     @StringRes val title: Int
 ) {
-    noException(R.string.noException),
-    noInternet(R.string.noInternetConnection),
-    noGPS(R.string.noGPS),
-    noCity(R.string.noCity),
-    others(R.string.error)
+    NoException(R.string.noException),
+    NoInternet(R.string.noInternetConnection),
+    NoGPS(R.string.noGPS),
+    NoCity(R.string.noCity),
+    Others(R.string.error)
 }

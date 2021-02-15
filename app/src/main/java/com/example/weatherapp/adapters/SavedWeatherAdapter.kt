@@ -8,7 +8,7 @@ import com.example.weatherapp.data.WeatherData
 
 class SavedWeatherAdapter(
     var values: List<WeatherData>,
-    val listenerSaved: OnSavedItemClickListener
+    private val listenerSaved: OnSavedItemClickListener
 ) : RecyclerView.Adapter<SavedWeatherAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: SavedWeatherItemRowBinding) :
@@ -34,7 +34,7 @@ class SavedWeatherAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(values.get(position), listenerSaved)
+        holder.bind(values[position], listenerSaved)
     }
 
 

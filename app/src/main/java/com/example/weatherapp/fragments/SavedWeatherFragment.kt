@@ -81,7 +81,7 @@ class SavedWeatherFragment : Fragment() {
     private fun createSwipeToDeleteHelper() {
         val swipeHelper = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                viewModel.deleteData(weather.get(viewHolder.absoluteAdapterPosition))
+                viewModel.deleteData(weather[viewHolder.absoluteAdapterPosition])
                 savedWeatherAdapter.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
             }
         }

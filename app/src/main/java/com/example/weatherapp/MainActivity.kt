@@ -24,14 +24,13 @@ import javax.inject.Inject
     lateinit var preferencesManager: PreferencesManager
     @Inject
     lateinit var localeChanger: LocaleChanger
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
     override fun attachBaseContext(newBase: Context?) {
         App.get(newBase!!).applicationComponent.inject(this)
         super.attachBaseContext(
             localeChanger.wrapContext(
-                newBase!!,
+                newBase,
                 Locale(preferencesManager.getSavedLanguage(), preferencesManager.getSavedCountry())
             )
         )

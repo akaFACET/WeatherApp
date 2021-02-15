@@ -43,7 +43,7 @@ class DaysScrollAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(values.get(position), listener)
+        holder.bind(values[position], listener)
     }
 
 }

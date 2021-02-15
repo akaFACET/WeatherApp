@@ -1,8 +1,6 @@
 package com.example.weatherapp.db
 
 import androidx.room.Relation
-import com.example.weatherapp.db.SubWeatherEntity
-
 
 data class WeatherDataEntity(
     val cityId: Int,

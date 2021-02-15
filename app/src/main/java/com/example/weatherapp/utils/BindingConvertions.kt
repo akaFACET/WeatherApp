@@ -51,7 +51,7 @@ object BindingConvertions {
 
     @JvmStatic
     fun setTemp(weatherPerHour: WeatherPerHour?): String {
-        return if (weatherPerHour != null) weatherPerHour.mainTemp.toString() else ""
+        return weatherPerHour?.mainTemp?.toString() ?: ""
     }
 
     @JvmStatic
@@ -69,10 +69,7 @@ object BindingConvertions {
 
     @JvmStatic
     fun setWeatherDesc(weatherPerHour: WeatherPerHour?): String {
-        return if (weatherPerHour != null)
-            weatherPerHour.weatherDescription.capitalize()
-        else
-            ""
+        return weatherPerHour?.weatherDescription?.capitalize() ?: ""
     }
 
     @JvmStatic
@@ -116,11 +113,11 @@ object BindingConvertions {
     fun setTempWeatherPerDay(weatherPerDay: WeatherPerDay): String {
         val units = TimeFormatter.getTempUnits(weatherPerDay.weatherPerHour[0].units)
 
-        val tempMax = weatherPerDay.weatherPerHour.maxBy { it ->
+        val tempMax = weatherPerDay.weatherPerHour.maxBy {
             it.mainTemp
         }?.mainTemp ?: ""
 
-        val tempMin = weatherPerDay.weatherPerHour.minBy { it ->
+        val tempMin = weatherPerDay.weatherPerHour.minBy {
             it.mainTemp
         }?.mainTemp ?: ""
 

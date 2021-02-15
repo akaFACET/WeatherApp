@@ -46,7 +46,7 @@ class WeatherDetailsViewModel @Inject constructor(private val weatherRepository:
                     _listWeatherPerDay.postValue(Mapper.getWeatherPerDays(weatherData))
                     _weatherPerHour.postValue(Mapper.getWeatherPerDays(weatherData)[0].weatherPerHour[0])
                 }, { throwable ->
-                    _exception.value = Exceptions.others
+                    _exception.value = Exceptions.Others
                 })
         )
 
@@ -71,11 +71,11 @@ class WeatherDetailsViewModel @Inject constructor(private val weatherRepository:
                 }, { throwable ->
                     when (throwable) {
                         is UnknownHostException -> {
-                            _exception.value = Exceptions.noInternet
+                            _exception.value = Exceptions.NoInternet
                             _isLoading.value = false
                         }
                         else -> {
-                            _exception.value = Exceptions.others
+                            _exception.value = Exceptions.Others
                             _isLoading.value = false
                         }
                     }
