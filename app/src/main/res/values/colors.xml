@@ -8,4 +8,6 @@
     <color name="secondaryDarkColor">#26418f</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="deleteSwipeColor">#FFA10101</color>
 </resources>

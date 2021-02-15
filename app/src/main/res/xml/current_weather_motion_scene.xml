@@ -12,7 +12,6 @@
             motion:dragDirection="dragUp"
             motion:touchAnchorSide="bottom" />
 
-
         <KeyFrameSet>
 
             <KeyPosition
@@ -126,6 +125,7 @@
                 app:motionTarget="@+id/pressure_iv"/>
 
         </KeyFrameSet>
+
 
         <KeyFrameSet>
             <KeyAttribute
