@@ -1,5 +1,6 @@
 package com.example.weatherapp.data
 
+import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.utils.Mapper
 import com.example.weatherapp.db.WeatherDAO
 import com.example.weatherapp.network.*
@@ -12,7 +13,8 @@ class WeatherRepository(
     val db: WeatherDAO
 ) {
 
-    private val appid = "b7f532dcad2190c9ee565b091e2d8290"
+    private val appid = BuildConfig.API_KEY
+
     private var language = "en"
     private var units = "metric"
 

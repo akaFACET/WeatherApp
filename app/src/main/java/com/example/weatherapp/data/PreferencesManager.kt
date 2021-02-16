@@ -11,34 +11,35 @@ class PreferencesManager(private val sharedPreferences: SharedPreferences) {
         private const val KEY_COUNTRY = "COUNTRY"
     }
 
-    fun getSavedNightModeValue(): Int{
+    fun getSavedNightModeValue(): Int {
         return sharedPreferences.getInt(KEY_NIGHT_MODE, NightModeType.getDefaultMode().value)
     }
 
-    fun saveNightModeValue(nightMode: Int){
-        sharedPreferences.edit().putInt(KEY_NIGHT_MODE,nightMode).apply()
+    fun saveNightModeValue(nightMode: Int) {
+        sharedPreferences.edit().putInt(KEY_NIGHT_MODE, nightMode).apply()
     }
 
-    fun getSavedUnitsValue(): String?{
+    fun getSavedUnitsValue(): String? {
         return sharedPreferences.getString(KEY_UNITS, UnitsType.getDefaultUnits().value)
     }
 
-    fun saveUnitsValue(units: String){
-        sharedPreferences.edit().putString(KEY_UNITS,units).apply()
+    fun saveUnitsValue(units: String) {
+        sharedPreferences.edit().putString(KEY_UNITS, units).apply()
     }
 
-    fun getSavedLanguage(): String{
-        return sharedPreferences.getString(KEY_LANG, Language.getDefaultLanguage().value)!!
+    fun getSavedLanguage(): String {
+        return sharedPreferences.getString(KEY_LANG, Language.getDefaultLanguage().value).toString()
     }
 
-    fun saveLanguageValue(lang: String){
+    fun saveLanguageValue(lang: String) {
         sharedPreferences.edit().putString(KEY_LANG, lang).apply()
     }
 
-    fun getSavedCountry(): String{
-        return sharedPreferences.getString(KEY_COUNTRY, Language.getDefaultLanguage().country)!!
+    fun getSavedCountry(): String {
+        return sharedPreferences.getString(KEY_COUNTRY, Language.getDefaultLanguage().country).toString()
     }
-    fun saveCountry(country: String){
-        sharedPreferences.edit().putString(KEY_COUNTRY,country).apply()
+
+    fun saveCountry(country: String) {
+        sharedPreferences.edit().putString(KEY_COUNTRY, country).apply()
     }
 }

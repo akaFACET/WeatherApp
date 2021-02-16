@@ -96,7 +96,7 @@ class SettingsFragment : Fragment() {
                     preferencesManager.saveCountry(language.country)
 
                     activity?.recreate()
-                    dialog!!.cancel()
+                    dialog?.cancel()
                 }
             })
         dialog = alertDialog.create()
@@ -135,11 +135,10 @@ class SettingsFragment : Fragment() {
 
                     AppCompatDelegate.setDefaultNightMode(nightMode.value)
 
-                    dialog!!.cancel()
+                    dialog?.cancel()
                 }
             })
         dialog = alertDialog.create()
-
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
@@ -170,7 +169,7 @@ class SettingsFragment : Fragment() {
 
                     preferencesManager.saveUnitsValue(unitsType.value)
 
-                    dialog!!.cancel()
+                    dialog?.cancel()
                 }
             })
         dialog = alertDialog.create()

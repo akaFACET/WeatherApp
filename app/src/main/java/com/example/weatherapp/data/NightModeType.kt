@@ -41,9 +41,9 @@ enum class NightModeType(
         } ?: getDefaultMode()
 
         fun fromCustomOrdinal(ordinal: Int): NightModeType {
-            return if (ordinal == 2){
+            return if (ordinal == 2) {
                 getDefaultMode()
-            }else{
+            } else {
                 values().firstOrNull { it.customOrdinal == ordinal } ?: getDefaultMode()
             }
         }
@@ -51,7 +51,7 @@ enum class NightModeType(
         fun getDefaultMode(): NightModeType {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 MODE_NIGHT_FOLLOW_SYSTEM
-            }else{
+            } else {
                 MODE_NIGHT_NO
             }
         }
