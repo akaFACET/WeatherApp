@@ -12,7 +12,6 @@ class WeatherRepository(
     private val weatherApiService: WeatherApiService,
     val db: WeatherDAO
 ) {
-
     private val appid = BuildConfig.API_KEY
 
     private var language = "en"
