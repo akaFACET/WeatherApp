@@ -31,7 +31,6 @@ data class CitiesList(
     val dt: Int,
     @Json(name = "sys")
     val sys: SysC
-
 )
 
 @JsonClass(generateAdapter = true)

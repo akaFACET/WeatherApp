@@ -10,6 +10,7 @@ import com.example.weatherapp.data.FoundCities
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -39,17 +40,7 @@ class SearchViewModel @Inject constructor(private val weatherRepository: Weather
                         _exception.postValue(Exceptions.NoCity)
                     }
                 }, { throwable ->
-                    when (throwable) {
-                        is UnknownHostException -> {
-                            _exception.value = Exceptions.NoInternet
-                        }
-                        is retrofit2.HttpException -> {
-                            _exception.value = Exceptions.NoCity
-                        }
-                        else -> {
-                            _exception.value = Exceptions.Others
-                        }
-                    }
+                    _exception.value = Exceptions.setException(throwable)
                 })
         )
     }

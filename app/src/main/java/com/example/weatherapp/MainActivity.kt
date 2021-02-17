@@ -1,7 +1,6 @@
   package com.example.weatherapp
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,16 +31,6 @@ import javax.inject.Inject
             localeChanger.wrapContext(
                 newBase,
                 Locale(preferencesManager.getSavedLanguage(), preferencesManager.getSavedCountry())
-            )
-        )
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        localeChanger.overrideLocale(
-            this, Locale(
-                preferencesManager.getSavedLanguage(),
-                preferencesManager.getSavedCountry()
             )
         )
     }

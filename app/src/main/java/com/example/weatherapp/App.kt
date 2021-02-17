@@ -7,23 +7,13 @@ import com.example.weatherapp.di.components.DaggerApplicationComponent
 
 class App : Application() {
 
-
-//    val applicationComponent: ApplicationComponent by lazy {
-//        initApplicationComponent()
-//    }
-//
-//    fun initApplicationComponent(): ApplicationComponent{
-//        return DaggerApplicationComponent
-//            .factory()
-//            .create(applicationContext)
-//    }
-
     lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
         initApplicationComponent()
     }
+
     private fun initApplicationComponent() {
         applicationComponent = DaggerApplicationComponent
             .factory()

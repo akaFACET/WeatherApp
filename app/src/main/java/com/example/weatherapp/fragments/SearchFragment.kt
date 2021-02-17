@@ -18,6 +18,7 @@ import com.example.weatherapp.databinding.SearchFragmentBinding
 import com.example.weatherapp.data.FoundCities
 import com.example.weatherapp.viewModels.SearchViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import javax.inject.Inject
 
@@ -85,30 +86,12 @@ class SearchFragment : Fragment() {
 
     private fun createExceptionObservers() {
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
-            when (exception) {
-                Exceptions.NoInternet -> {
-                    Snackbar.make(
-                        search_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-
-                Exceptions.NoCity -> {
-                    Snackbar.make(
-                        search_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-
-                Exceptions.Others -> {
-                    Snackbar.make(
-                        search_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+            if (exception != Exceptions.NoException) {
+                Snackbar.make(
+                    search_fragment,
+                    getString(Exceptions.getNameException(exception)),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         })
     }

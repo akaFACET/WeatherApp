@@ -21,8 +21,8 @@ import java.util.function.Consumer
 class Location(
     private val context: Context,
     private val mFusedLocationClient: FusedLocationProviderClient,
-    private val locationManager: LocationManager)
-{
+    private val locationManager: LocationManager
+) {
     private var _currentLocation = MutableLiveData<LocationData>()
 
     private val gmsStatus = GoogleApiAvailability.getInstance()
@@ -68,7 +68,7 @@ class Location(
             val providers = locationManager.allProviders
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val locationCallback = Consumer<Location>{ location ->
+                val locationCallback = Consumer<Location> { location ->
                     _currentLocation.value =
                         LocationData(
                             location.latitude,
@@ -112,23 +112,24 @@ class Location(
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-                _currentLocation.value =
-                    LocationData(
-                        location.latitude,
-                        location.longitude
-                    )
+            _currentLocation.value =
+                LocationData(
+                    location.latitude,
+                    location.longitude
+                )
         }
+
         override fun onProviderEnabled(provider: String) {
 
         }
+
         override fun onProviderDisabled(provider: String) {
 
         }
+
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
 
         }
     }
-
-
 }
 

@@ -12,7 +12,6 @@ import com.example.weatherapp.data.WeatherData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class CurrentWeatherViewModel @Inject constructor(private val location: Location,
@@ -73,6 +72,10 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
         )
     }
 
+    fun clearExceptions(){
+        _exception.value = Exceptions.NoException
+    }
+
     private fun getWeatherByNetwork(cityId: Int){
         _exception.value = Exceptions.NoException
         compositeDisposable.add(weatherRepository.getWeatherByCityId(cityId)
@@ -91,16 +94,8 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
                 _weatherPerHour.postValue(Mapper.getWeatherPerDays(weatherData)[0].weatherPerHour[0])
                 _isLoading.value = false
             }, {throwable->
-                when (throwable){
-                    is UnknownHostException -> {
-                        _exception.value = Exceptions.NoInternet
-                        _isLoading.value = false
-                    }
-                    else -> {
-                        _exception.value = Exceptions.Others
-                        _isLoading.value = false
-                    }
-                }
+                _exception.value = Exceptions.setException(throwable)
+                _isLoading.value = false
             })
         )
     }
@@ -122,16 +117,8 @@ class CurrentWeatherViewModel @Inject constructor(private val location: Location
                 _weatherPerHour.postValue(Mapper.getWeatherPerDays(weatherData)[0].weatherPerHour[0])
                 _isLoading.value = false
             }, {throwable->
-                when (throwable){
-                    is UnknownHostException -> {
-                        _exception.value = Exceptions.NoInternet
-                        _isLoading.value = false
-                    }
-                    else -> {
-                        _exception.value = Exceptions.Others
-                        _isLoading.value = false
-                    }
-                }
+                _exception.value = Exceptions.setException(throwable)
+                _isLoading.value = false
             })
         )
     }

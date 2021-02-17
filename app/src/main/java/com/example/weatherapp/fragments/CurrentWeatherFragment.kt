@@ -16,7 +16,6 @@ import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import com.example.weatherapp.App
 import com.example.weatherapp.data.Exceptions
 import com.example.weatherapp.R
@@ -79,6 +78,33 @@ class CurrentWeatherFragment : Fragment() {
         createExceptionObservers()
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            GPS_INTENT_REQUEST_CODE -> {
+                if (isLocationEnabled()) {
+                    if (checkPermissions()) {
+                        viewModel.updateWeatherByLocation()
+                    } else {
+                        requestPermissions()
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.refresh_item, menu)
         animation = RotateAnimation(
@@ -109,16 +135,16 @@ class CurrentWeatherFragment : Fragment() {
         super.onDestroyOptionsMenu()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLastLocation()
-            }
+    override fun onPause() {
+        viewModel.clearExceptions()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        if (this::dialog.isInitialized) {
+            dialog.dismiss()
         }
+        super.onStop()
     }
 
     private fun checkPermissions(): Boolean {
@@ -212,35 +238,12 @@ class CurrentWeatherFragment : Fragment() {
 
     private fun createExceptionObservers() {
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
-            when (exception) {
-                Exceptions.NoInternet -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-                Exceptions.Others -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-                Exceptions.NoGPS -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-                Exceptions.NoCity -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+            if (exception != Exceptions.NoException) {
+                Snackbar.make(
+                    current_weather_fragment,
+                    getString(Exceptions.getNameException(exception)),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         })
     }
@@ -293,28 +296,4 @@ class CurrentWeatherFragment : Fragment() {
             .create()
         dialog.show()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            GPS_INTENT_REQUEST_CODE -> {
-                if (isLocationEnabled()) {
-                    if (checkPermissions()) {
-                        viewModel.updateWeatherByLocation()
-                    } else {
-                        requestPermissions()
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onStop() {
-        if (this::dialog.isInitialized) {
-            dialog.dismiss()
-        }
-        super.onStop()
-    }
-
-
 }

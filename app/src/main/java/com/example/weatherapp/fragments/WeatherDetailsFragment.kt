@@ -152,21 +152,12 @@ class WeatherDetailsFragment : Fragment() {
 
     private fun createExceptionObservers() {
         viewModel.exception.observe(viewLifecycleOwner, Observer { exception ->
-            when (exception) {
-                Exceptions.NoInternet -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-                Exceptions.Others -> {
-                    Snackbar.make(
-                        current_weather_fragment,
-                        getString(exception.title),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+            if (exception != Exceptions.NoException) {
+                Snackbar.make(
+                    current_weather_fragment,
+                    getString(Exceptions.getNameException(exception)),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         })
     }
