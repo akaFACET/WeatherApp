@@ -35,5 +35,6 @@
     <string name="useNewGeolocation">"Use a new geolocation?"</string>
     <string name="yes">"Yes"</string>
     <string name="no">"No"</string>
+    <string name="noGpsPermisson">"No location permission, turn on"</string>
     <string name="url">"https://api.openweathermap.org/data/2.5/"</string>
 </resources>

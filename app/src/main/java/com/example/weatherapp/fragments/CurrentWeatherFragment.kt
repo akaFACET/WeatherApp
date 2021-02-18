@@ -8,6 +8,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -84,9 +85,10 @@ class CurrentWeatherFragment : Fragment() {
         grantResults: IntArray
     ) {
         if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
                 getLastLocation()
-            }
+            else
+                showNoGpsPermissionSnackbar()
         }
     }
 
@@ -246,6 +248,14 @@ class CurrentWeatherFragment : Fragment() {
                 ).show()
             }
         })
+    }
+
+    private fun showNoGpsPermissionSnackbar() {
+        Snackbar.make(
+            current_weather_fragment,
+            getString(R.string.noGpsPermisson),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     private fun getTabName(position: Int): String{
