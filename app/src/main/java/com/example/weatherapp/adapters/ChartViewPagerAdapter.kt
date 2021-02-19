@@ -41,7 +41,7 @@ class ChartViewPagerAdapter(
         init {
             barChart.setOnChartValueSelectedListener(this@ChartViewPagerAdapter)
             barChart.apply {
-                setViewPortOffsets(40f, 50f, 40f, 50f)
+                setViewPortOffsets(40f, 50f, 40f, 70f)
                 description.isEnabled = false
                 setTouchEnabled(true)
                 isDragEnabled = true
@@ -186,7 +186,7 @@ class ChartViewPagerAdapter(
             lineChart.marker = mv
 
             lineChart.apply {
-                setViewPortOffsets(30f, 0f, 30f, 50f)
+                setViewPortOffsets(30f, 0f, 30f, 70f)
                 description.isEnabled = false
                 setTouchEnabled(true)
                 isDragEnabled = true
