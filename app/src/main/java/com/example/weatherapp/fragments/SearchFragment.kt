@@ -1,10 +1,12 @@
 package com.example.weatherapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +20,6 @@ import com.example.weatherapp.databinding.SearchFragmentBinding
 import com.example.weatherapp.data.FoundCities
 import com.example.weatherapp.viewModels.SearchViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import javax.inject.Inject
 
@@ -65,6 +66,11 @@ class SearchFragment : Fragment() {
         createDataObservers()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        hideKeyboard()
+    }
+
     private fun createAdapter() {
         searchWeatherAdapter = SearchWeatherAdapter(
             emptyList(),
@@ -94,6 +100,14 @@ class SearchFragment : Fragment() {
                 ).show()
             }
         })
+    }
+
+    private fun hideKeyboard(){
+        val view = this.view
+        view?.let { v ->
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.windowToken, 0)
+        }
     }
 
 }

@@ -21,3 +21,4 @@
 #-renamesourcefileattribute SourceFile
 
 -keepnames class androidx.navigation.fragment.NavHostFragment
+-keep class com.github.mikephil.charting.** { *; }

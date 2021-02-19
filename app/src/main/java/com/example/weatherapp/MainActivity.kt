@@ -3,6 +3,7 @@
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -39,8 +40,13 @@ import javax.inject.Inject
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        AppCompatDelegate.setDefaultNightMode(preferencesManager.getSavedNightModeValue())
+
         val host: NavHostFragment = supportFragmentManager
+
             .findFragmentById(R.id.nav_host_container) as NavHostFragment? ?: return
+
+
 
         navController = host.navController
 
