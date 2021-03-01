@@ -2,7 +2,7 @@
 This is a sample Android app for viewing weather forecast using gps location or simple network request.
 
 
-[GET .APK](https://github.com/akaFACET/WeatherApp/blob/master/app/release/app-release.apk)
+[GET .APK](https://github.com/akaFACET/WeatherApp/raw/master/app/release/app-release.apk)
 
 ## Using:
 
