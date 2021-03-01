@@ -1,8 +1,10 @@
 ## WeatherApp
 This is a sample Android app for viewing weather forecast using gps location or simple network request.
 
-
 [GET .APK](https://github.com/akaFACET/WeatherApp/raw/master/app/release/app-release.apk)
+
+If you want to build a project please put your api key into **gradle.properties** file.
+Api key you can get on https://openweathermap.org/api
 
 ## Using:
 
@@ -29,3 +31,21 @@ This is a sample Android app for viewing weather forecast using gps location or 
 -[MotionLayout](https://developer.android.com/training/constraint-layout/motionlayout)
 
 -[MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
+-[Open Weather Map API](https://openweathermap.org/api)
+
+## How it looks:
+
+### Start
+
+![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/starting.gif)
+
+
+### Settings
+
+![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/settings.gif)
+
+
+### Search, Save and Delete
+
+![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/saved.gif)
