@@ -38,14 +38,14 @@ Api key you can get on https://openweathermap.org/api
 
 ### Start
 
-![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/starting.gif)
+<img src="https://github.com/akaFACET/WeatherApp/blob/master/demo/starting.gif" width="420" height="700" />
 
 
 ### Settings
 
-![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/settings.gif)
+<img src="https://github.com/akaFACET/WeatherApp/blob/master/demo/settings.gif" width="420" height="700" />
 
 
 ### Search, Save and Delete
 
-![Start](https://github.com/akaFACET/WeatherApp/blob/master/demo/saved.gif)
+<img src="https://github.com/akaFACET/WeatherApp/blob/master/demo/saved.gif" width="420" height="700" />
